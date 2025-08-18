@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <titleJEE Syllabus Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
+            background-color: #0a0a0a;
+            color: #a3a3a3; /* neutral-400 */
+        }
+        
+        .subject-header, .chapter-header {
+            cursor: pointer;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .collapsed .arrow {
+            transform: rotate(-90deg);
+        }
+
+        .expanded .arrow {
+            transform: rotate(0deg);
+        }
+
+        .content-container {
+            max-height: 2000px; /* Large enough value for content */
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out, padding 0.5s ease-in-out;
+            opacity: 1;
+        }
+
+        .collapsed .content-container {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        
+        .status-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%D%22http%3A//www.w3.org/2000/svg%22 viewBox%3D%220 0 20 20%22 fill%3D%22%239ca3af%22%3E%3Cpath fill-rule%3D%22evenodd%22 d%3D%22M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z%22 clip-rule%3D%22evenodd%22 /%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-position: right 0.3rem center;
+            background-size: 1.25em auto;
+            padding-right: 2rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-segment {
+            transition: width 0.5s ease-in-out;
+        }
+
+        /* Clickable Icon Styles */
+        .popover-menu {
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .popover-menu.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .icon-container {
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        #products-icon-container .icon-container:hover {
+            transform: scale(1.1);
+            background-color: #3b82f6; /* blue-500 */
+        }
+
+        .subject-card {
+            background: #171717; /* neutral-900 */
+            border: 1px solid #262626; /* neutral-800 */
+            transition: border-color 0.3s ease;
+        }
+        .subject-card:hover {
+            border-color: #404040; /* neutral-700 */
+        }
+
+    </style>
+</head>
+<body class="bg-black text-neutral-400">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-bold text-neutral-100">Syllabus Tracker</h1>
+            <p class="text-neutral-400 mt-4 max-w-2xl mx-auto">A comprehensive tool to track your JEE preparation progress. All data is saved locally in your browser.</p>
+        </header>
+
+        <div id="loading" class="text-center text-neutral-500">
+            <p>Loading syllabus...</p>
+        </div>
+        
+        <div id="syllabus-container" class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+            <!-- Syllabus cards will be dynamically inserted here -->
+        </div>
+
+        <!-- Official Resources Section -->
+        <div class="max-w-3xl mx-auto mt-16 p-4 border border-neutral-800 rounded-lg bg-neutral-900/50 text-center">
+            <h3 class="font-semibold text-neutral-300 mb-3">Official Resources</h3>
+            <div class="flex justify-center items-center gap-4 text-sm">
+                <a href="https://jeemain.nta.nic.in/images/public/pdf/JEE-Main-2025-Syllabus.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">JEE Main 2025 Syllabus</a>
+                <span class="text-neutral-600">|</span>
+                <a href="https://jeeadv.ac.in/documents/jee-advanced-2025-syllabus.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 hover:underline">JEE Advanced 2025 Syllabus</a>
+            </div>
+            <p class="text-xs text-neutral-500 mt-3">Note: The official syllabus for JEE 2026 has not been released yet. The 2025 syllabus is provided as a reference.</p>
+        </div>
+        
+        <footer class="text-center mt-8 text-neutral-600 text-sm">
+            <p class="mb-2">Your progress is saved automatically in this browser.</p>
+            <p>Built by <a href="https://github.com/svalordev" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white hover:underline">Shaurya Pratap Singh</a> | <a href="https://github.com/SvalTech/syllabustracker" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white hover:underline">View on GitHub</a></p>
+        </footer>
+    </div>
+
+    <!-- Clickable Products Icon -->
+    <div id="products-icon-container" class="fixed bottom-6 right-6">
+        <div id="popover-menu" class="popover-menu absolute bottom-full right-0 mb-3 w-52 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl p-2">
+            <div class="text-xs text-neutral-400 px-3 pb-2 font-semibold">SvalTech JEE</div>
+            <a href="https://svaltech.github.io/kyunhihorahipadhai/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3 py-2 text-sm text-neutral-300 hover:bg-neutral-700 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                <span>JEE Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-neutral-300 hover:bg-neutral-700 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h4a1 1 0 100-2H7zm0 4a1 1 0 100 2h4a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
+                <span>Syllabus Tracker</span>
+            </a>
+        </div>
+        <div id="icon-trigger" class="icon-container w-14 h-14 bg-neutral-800 border border-neutral-700 rounded-full flex items-center justify-center shadow-lg cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const syllabus = [
+                { subject: "Physics", chapters: [{ chapter: "Mechanics", topics: [{ id: "PHY_MEC_01", name: "Kinematics (1D & 2D)" }, { id: "PHY_MEC_02", name: "Newton's Laws of Motion" }, { id: "PHY_MEC_03", name: "Work, Energy, and Power" }, { id: "PHY_MEC_04", name: "Rotational Motion" }, { id: "PHY_MEC_05", name: "Gravitation" }, { id: "PHY_MEC_06", name: "Properties of Solids and Liquids" }, { id: "PHY_MEC_07", name: "Oscillations and Waves (SHM)" }, { id: "PHY_MEC_08", name: "System of Particles & Centre of Mass" }] }, { chapter: "Thermodynamics & KTG", topics: [{ id: "PHY_THE_01", name: "Thermal Properties of Matter" }, { id: "PHY_THE_02", name: "Thermodynamics" }, { id: "PHY_THE_03", name: "Kinetic Theory of Gases" }] }, { chapter: "Electricity & Magnetism", topics: [{ id: "PHY_EM_01", name: "Electrostatics" }, { id: "PHY_EM_02", name: "Current Electricity" }, { id: "PHY_EM_03", name: "Magnetic Effects of Current & Magnetism" }, { id: "PHY_EM_04", name: "Electromagnetic Induction & AC" }, { id: "PHY_EM_05", name: "Electromagnetic Waves" }] }, { chapter: "Optics", topics: [{ id: "PHY_OPT_01", name: "Ray Optics and Optical Instruments" }, { id: "PHY_OPT_02", name: "Wave Optics" }] }, { chapter: "Modern Physics", topics: [{ id: "PHY_MOD_01", name: "Dual Nature of Matter and Radiation" }, { id: "PHY_MOD_02", name: "Atoms and Nuclei" }, { id: "PHY_MOD_03", name: "Electronic Devices (Semiconductors)" }] }] },
+                { subject: "Chemistry", chapters: [{ chapter: "Physical Chemistry", topics: [{ id: "CHE_PHY_01", name: "Mole Concept & Stoichiometry" }, { id: "CHE_PHY_02", name: "Atomic Structure" }, { id: "CHE_PHY_03", name: "States of Matter (Gases & Liquids)" }, { id: "CHE_PHY_04", name: "Thermodynamics & Thermochemistry" }, { id: "CHE_PHY_05", name: "Equilibrium (Chemical & Ionic)" }, { id: "CHE_PHY_06", name: "Redox Reactions & Electrochemistry" }, { id: "CHE_PHY_07", name: "Chemical Kinetics" }, { id: "CHE_PHY_08", name: "Solutions" }, { id: "CHE_PHY_09", name: "Solid State" }, { id: "CHE_PHY_10", name: "Surface Chemistry" }] }, { chapter: "Inorganic Chemistry", topics: [{ id: "CHE_INO_01", name: "Classification of Elements & Periodicity" }, { id: "CHE_INO_02", name: "Chemical Bonding & Molecular Structure" }, { id: "CHE_INO_03", name: "Hydrogen" }, { id: "CHE_INO_04", name: "s-Block Elements" }, { id: "CHE_INO_05", name: "p-Block Elements (Groups 13-18)" }, { id: "CHE_INO_06", name: "d and f-Block Elements" }, { id: "CHE_INO_07", name: "Coordination Compounds" }, { id: "CHE_INO_08", name: "Principles of Qualitative Analysis" }, { id: "CHE_INO_09", name: "Environmental Chemistry" }] }, { chapter: "Organic Chemistry", topics: [{ id: "CHE_ORG_01", name: "General Organic Chemistry (GOC)" }, { id: "CHE_ORG_02", name: "Hydrocarbons" }, { id: "CHE_ORG_03", name: "Organic Compounds Containing Halogens" }, { id: "CHE_ORG_04", name: "Organic Compounds Containing Oxygen" }, { id: "CHE_ORG_05", name: "Organic Compounds Containing Nitrogen" }, { id: "CHE_ORG_06", name: "Biomolecules" }, { id: "CHE_ORG_07", name: "Polymers" }, { id: "CHE_ORG_08", name: "Chemistry in Everyday Life" }, { id: "CHE_ORG_09", name: "Practical Organic Chemistry" }] }] },
+                { subject: "Mathematics", chapters: [{ chapter: "Algebra", topics: [{ id: "MAT_ALG_01", name: "Sets, Relations, and Functions" }, { id: "MAT_ALG_02", name: "Complex Numbers & Quadratic Equations" }, { id: "MAT_ALG_03", name: "Matrices and Determinants" }, { id: "MAT_ALG_04", name: "Permutations and Combinations" }, { id: "MAT_ALG_05", name: "Binomial Theorem" }, { id: "MAT_ALG_06", name: "Sequence and Series" }, { id: "MAT_ALG_07", name: "Mathematical Reasoning" }] }, { chapter: "Calculus", topics: [{ id: "MAT_CAL_01", name: "Limits, Continuity, and Differentiability" }, { id: "MAT_CAL_02", name: "Integral Calculus" }, { id: "MAT_CAL_03", name: "Differential Equations" }, { id: "MAT_CAL_04", name: "Area Under Curves" }] }, { chapter: "Coordinate Geometry", topics: [{ id: "MAT_COG_01", name: "Straight Lines" }, { id: "MAT_COG_02", name: "Circles" }, { id: "MAT_COG_03", name: "Conic Sections (Parabola, Ellipse, Hyperbola)" }] }, { chapter: "3D Geometry & Vectors", topics: [{ id: "MAT_3DV_01", name: "Three Dimensional Geometry" }, { id: "MAT_3DV_02", name: "Vector Algebra" }] }, { chapter: "Trigonometry", topics: [{ id: "MAT_TRI_01", name: "Trigonometric Functions & Identities" }, { id: "MAT_TRI_02", name: "Trigonometric Equations" }, { id: "MAT_TRI_03", name: "Inverse Trigonometric Functions" }, { id: "MAT_TRI_04", name: "Properties of Triangles" }] }, { chapter: "Probability & Statistics", topics: [{ id: "MAT_PRO_01", name: "Statistics" }, { id: "MAT_PRO_02", name: "Probability" }] }] }
+            ];
+
+            const statusConfig = {
+                'not-started': { text: 'Not Started', color: 'bg-neutral-700/50 text-neutral-300', selectColor: 'bg-neutral-600/70 text-neutral-300', weight: 0 },
+                'in-progress': { text: 'In Progress', color: 'bg-yellow-800/40 text-yellow-400', selectColor: 'bg-yellow-900/60 text-yellow-400', weight: 0.5 },
+                'completed': { text: 'Completed', color: 'bg-green-800/40 text-green-400', selectColor: 'bg-green-900/60 text-green-400', weight: 1 },
+                'mastered': { text: 'Mastered', color: 'bg-blue-800/40 text-blue-400', selectColor: 'bg-blue-900/60 text-blue-400', weight: 1 }
+            };
+
+            let topicStatuses = {};
+            let openStates = {}; // To store the open/closed state of accordions
+
+            function storeOpenStates() {
+                openStates = {};
+                document.querySelectorAll('.subject-card, .chapter-branch').forEach((el, index) => {
+                    // Create a unique ID for each collapsible element
+                    const id = el.querySelector('h2, h3')?.textContent || `el-${index}`;
+                    if (el.classList.contains('expanded')) {
+                        openStates[id] = true;
+                    }
+                });
+            }
+
+            function restoreOpenStates() {
+                 document.querySelectorAll('.subject-card, .chapter-branch').forEach((el, index) => {
+                    const id = el.querySelector('h2, h3')?.textContent || `el-${index}`;
+                    if (openStates[id]) {
+                        el.classList.add('expanded');
+                        el.classList.remove('collapsed');
+                    } else {
+                        el.classList.add('collapsed');
+                        el.classList.remove('expanded');
+                    }
+                });
+            }
+
+
+            function loadProgress() {
+                const savedProgress = localStorage.getItem('jeeSyllabusProgress');
+                topicStatuses = savedProgress ? JSON.parse(savedProgress) : {};
+                renderSyllabus();
+                document.getElementById('loading').style.display = 'none';
+            }
+
+            function saveProgress() {
+                localStorage.setItem('jeeSyllabusProgress', JSON.stringify(topicStatuses));
+            }
+
+            function calculateStats(topics) {
+                const total = topics.length;
+                if (total === 0) return { mastered: 0, completed: 0, inProgress: 0, notStarted: total, percentage: 0, masteredPercent: 0, completedPercent: 0, inProgressPercent: 0 };
+                
+                let mastered = 0, completed = 0, inProgress = 0, weightedSum = 0;
+
+                topics.forEach(topic => {
+                    const status = topicStatuses[topic.id] || 'not-started';
+                    if (status === 'mastered') mastered++;
+                    if (status === 'completed') completed++;
+                    if (status === 'in-progress') inProgress++;
+                    weightedSum += statusConfig[status].weight;
+                });
+                
+                const percentage = (weightedSum / total) * 100;
+                const masteredPercent = (mastered / total) * 100;
+                const completedPercent = (completed / total) * 100;
+                const inProgressPercent = (inProgress / total) * 100;
+
+                return { mastered, completed, inProgress, notStarted: total - (mastered + completed + inProgress), percentage: Math.round(percentage), masteredPercent, completedPercent, inProgressPercent };
+            }
+
+            function renderSyllabus() {
+                const container = document.getElementById('syllabus-container');
+                container.innerHTML = '';
+                syllabus.forEach(subject => {
+                    const allSubjectTopics = subject.chapters.flatMap(c => c.topics);
+                    const subjectStats = calculateStats(allSubjectTopics);
+
+                    const subjectDiv = document.createElement('div');
+                    subjectDiv.className = 'subject-card rounded-lg collapsed'; // Default to collapsed
+                    subjectDiv.innerHTML = `
+                        <div class="subject-header p-5">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-2xl font-bold text-neutral-100">${subject.subject}</h2>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xl font-semibold text-neutral-200">${subjectStats.percentage}%</span>
+                                    <svg class="w-6 h-6 text-neutral-400 arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                </div>
+                            </div>
+                            <div class="w-full h-2 rounded-full mt-4 flex overflow-hidden bg-neutral-700">
+                                <div class="progress-bar-segment bg-blue-500" style="width: ${subjectStats.masteredPercent}%"></div>
+                                <div class="progress-bar-segment bg-green-500" style="width: ${subjectStats.completedPercent}%"></div>
+                                <div class="progress-bar-segment bg-yellow-500" style="width: ${subjectStats.inProgressPercent}%"></div>
+                            </div>
+                            <div class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-semibold">
+                                <span class="text-blue-400">Mastered: ${subjectStats.mastered}</span>
+                                <span class="text-green-400">Completed: ${subjectStats.completed}</span>
+                                <span class="text-yellow-400">In Progress: ${subjectStats.inProgress}</span>
+                                <span class="text-neutral-400">Not Started: ${subjectStats.notStarted}</span>
+                            </div>
+                        </div>
+                        <div class="content-container px-5 pb-5"></div>`;
+                    
+                    const chapterList = subjectDiv.querySelector('.content-container');
+                    const chapterContainer = document.createElement('div');
+                    chapterContainer.className = "space-y-2 mt-4 border-t border-neutral-800 pt-4";
+                    subject.chapters.forEach(chapter => {
+                        const chapterDiv = document.createElement('div');
+                        chapterDiv.className = 'chapter-branch collapsed rounded-md overflow-hidden';
+                        chapterDiv.innerHTML = `
+                            <div class="chapter-header flex items-center justify-between p-3 bg-neutral-800/50 hover:bg-neutral-700/70">
+                                <div class="flex items-center">
+                                    <svg class="w-4 h-4 text-neutral-500 arrow mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                    <h3 class="text-md font-semibold text-neutral-300">${chapter.chapter}</h3>
+                                </div>
+                            </div>
+                            <div class="content-container topic-leaf-list p-3 bg-neutral-900/50"></div>`;
+                        
+                        const topicList = chapterDiv.querySelector('.topic-leaf-list');
+                        chapter.topics.forEach(topic => {
+                            const status = topicStatuses[topic.id] || 'not-started';
+                            const config = statusConfig[status];
+                            const topicDiv = document.createElement('div');
+                            topicDiv.className = `topic-leaf border border-neutral-700/50 ${config.color}`;
+                            topicDiv.dataset.topicId = topic.id;
+                            topicDiv.innerHTML = `
+                                <span class="text-sm font-medium flex-grow pr-2">${topic.name}</span>
+                                <select data-topic-id="${topic.id}" class="status-select p-1.5 ${config.selectColor}">
+                                    ${Object.keys(statusConfig).map(key => `<option value="${key}" ${status === key ? 'selected' : ''}>${statusConfig[key].text}</option>`).join('')}
+                                </select>`;
+                            topicList.appendChild(topicDiv);
+                        });
+                        chapterContainer.appendChild(chapterDiv);
+                    });
+                    chapterList.appendChild(chapterContainer)
+                    container.appendChild(subjectDiv);
+                });
+                restoreOpenStates();
+            }
+
+            const container = document.getElementById('syllabus-container');
+            container.addEventListener('click', (e) => {
+                const header = e.target.closest('.subject-header, .chapter-header');
+                if (header) {
+                    const parentNode = header.closest('.subject-card, .chapter-branch');
+                    parentNode.classList.toggle('expanded');
+                    parentNode.classList.toggle('collapsed');
+                }
+            });
+
+            container.addEventListener('change', (e) => {
+                if (e.target.classList.contains('status-select')) {
+                    const select = e.target;
+                    const topicId = select.dataset.topicId;
+                    const newStatus = select.value;
+                    topicStatuses[topicId] = newStatus;
+                    saveProgress();
+                    storeOpenStates(); // Remember what's open
+                    renderSyllabus(); // Re-render to update all stats
+                }
+            });
+
+            const productsIconContainer = document.getElementById('products-icon-container');
+            const popoverMenu = document.getElementById('popover-menu');
+
+            productsIconContainer.addEventListener('click', (event) => {
+                event.stopPropagation();
+                popoverMenu.classList.toggle('visible');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!productsIconContainer.contains(event.target)) {
+                    popoverMenu.classList.remove('visible');
+                }
+            });
+
+            loadProgress();
+        });
+    </script>
+</body>
+</html>
