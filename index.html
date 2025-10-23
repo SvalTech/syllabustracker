@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JEE Syllabus Mastery | SvalTech</title>
+    <title>JEE Syllabus Mastery | MathonGo Priority</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -217,7 +217,6 @@
             const syllabus = [
                 { 
                     subject: "Physics",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
                     units: [
                         { unitName: "Mechanics I", chapters: [
                             { id: "PHY_B_11", name: "Motion In One Dimension", priority: 'B' },
@@ -266,7 +265,6 @@
                 },
                 { 
                     subject: "Chemistry",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.363-.44A2 2 0 0115 13.02l-.538-2.053a2 2 0 00-1.28-1.28l-2.053-.538a2 2 0 01-1.423-.98l-.44-2.363a2 2 0 00-3.546 0l-.44 2.363a2 2 0 01-1.423.98l-2.053.538a2 2 0 00-1.28 1.28l-.538 2.053a2 2 0 01-.98 1.423l-2.363.44a2 2 0 00-.547 1.022l-.44 2.363a2 2 0 001.567 2.458l2.218.41a2 2 0 011.62.9l.71 2.13a2 2 0 003.74 0l.71-2.13a2 2 0 011.62-.9l2.218-.41a2 2 0 001.567-2.458l-.44-2.363z" /></svg>`,
                     units: [
                         { unitName: "Physical Chemistry I", chapters: [
                             { id: "CHE_C_01", name: "Mole Concept", priority: 'C' },
@@ -307,7 +305,6 @@
                 },
                 { 
                     subject: "Mathematics",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 0l-3-3m3 3l-3 3m6-3h3m-3 7h6m0 0l-3-3m3 3l-3 3M9 17h3m-3-7h3m-3 7l3-3m-3 3l3 3" /></svg>`,
                     units: [
                         { unitName: "Algebra", chapters: [
                             { id: "MAT_B_07", name: "Sets and Relations", priority: 'B' },
@@ -729,7 +726,7 @@
                             const chapterDiv = document.createElement('div');
                             chapterDiv.className = `chapter-leaf p-2 rounded-lg flex justify-between items-center transition-all duration-150 ${isOpen ? 'ring-2 ring-indigo-500 bg-neutral-800' : ''}`;
                             chapterDiv.innerHTML = `
-                                <span class_name="text-sm flex-grow pr-2 flex items-center ${config.color} font-medium">
+                                <span class="text-sm flex-grow pr-2 flex items-center ${config.color} font-medium">
                                     ${highlightText(chapter.name, searchTerm)}
                                 </span>
                                 <button data-chapter-id="${chapter.id}" class="status-btn px-2 py-1 rounded font-medium text-xs ${config.color} ${config.selectColor.replace('bg-', 'bg-').replace('/40', '/60')} flex items-center">
@@ -753,9 +750,8 @@
                     subjectDiv.innerHTML = `
                         <div class="subject-header p-5">
                             <div class="flex justify-between items-center">
-                                <h2 class="text-2xl font-bold text-indigo-400 flex items-center">
-                                    ${subject.icon}
-                                    <span class="ml-2.5">${highlightText(subject.subject, searchTerm)}</span>
+                                <h2 class="text-2xl font-bold text-indigo-400">
+                                    ${highlightText(subject.subject, searchTerm)}
                                 </h2>
                                 <div class="flex items-center space-x-3">
                                     <span class="text-2xl font-extrabold ${subjectStats.percentage === 100 ? 'text-green-300' : 'text-white'}">${subjectStats.percentage}%</span>
@@ -946,6 +942,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
