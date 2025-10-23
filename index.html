@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JEE Syllabus Tracker | Svaltech | By Shaurya Pratap Singh</title>
+    <title>JEE Syllabus Mastery | MathonGo Priority</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0d0d0d;
+            --bg-color: #0a0a0a;
             --card-bg: #171717;
             --border-color: #262626;
-            --primary-color: #06b6d4; /* cyan-500 */
+            --primary-color: #6366f1; /* NEW: indigo-500 */
+            --primary-color-faded: rgba(99, 102, 241, 0.1);
+            --primary-color-dark: #4f46e5; /* indigo-600 */
         }
 
         body {
@@ -23,7 +25,7 @@
         }
         
         /* General collapsible styles */
-        .subject-header, .chapter-header-toggle {
+        .subject-header, .group-header-toggle {
             cursor: pointer;
             user-select: none;
         }
@@ -41,7 +43,7 @@
         }
 
         .content-container {
-            max-height: 2000px;
+            max-height: 4000px; /* Increased max-height for flat list */
             overflow: hidden;
             transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
             opacity: 1;
@@ -66,41 +68,41 @@
         }
         .subject-card:hover {
             border-color: #404040; /* neutral-700 */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
         
-        /* Topic row styles */
-        .topic-leaf {
+        /* Chapter row styles */
+        .chapter-leaf {
             transition: all 0.2s ease-out;
-            cursor: pointer; /* Indicate interaction area */
         }
-        .topic-leaf:hover {
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+        .chapter-leaf:hover {
+            background-color: #262626; /* neutral-800 */
             transform: scale(1.005);
         }
 
         /* Status Button styles for tap/click */
-        .status-btn, .chapter-status-btn {
+        .status-btn, .group-status-btn {
             cursor: pointer;
             transition: transform 0.1s;
         }
-        .status-btn:active, .chapter-status-btn:active {
+        .status-btn:active, .group-status-btn:active {
             transform: scale(0.95);
         }
 
         /* Styles for search result highlighting */
         .highlight {
-            background-color: rgba(6, 182, 212, 0.2); /* cyan-500 with opacity */
+            background-color: var(--primary-color-faded);
+            color: var(--primary-color);
             padding: 1px 3px;
             border-radius: 4px;
+            font-weight: 600;
         }
-        
+
         /* Toggle Switch Styling */
-        #filter-main.active, #filter-adv.active {
+        #filter-priority.active, #filter-flat.active {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            background-color: var(--primary-color);
+            color: white;
         }
-        #filter-main.active { background-color: #06b6d4; color: white; }
-        #filter-adv.active { background-color: #06b6d4; color: white; }
         
         /* New Inline Status Menu Styling */
         .inline-status-menu {
@@ -110,8 +112,18 @@
             opacity: 0;
         }
         .inline-status-menu.open {
-            max-height: 200px; /* Sufficient height to show all buttons */
+            max-height: 220px; /* Sufficient height to show all buttons */
             opacity: 1;
+        }
+
+        /* Status Dot Styles */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -119,10 +131,10 @@
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
         <header class="text-center mb-10">
             <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center justify-center">
-                <svg class="w-8 h-8 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                <svg class="w-8 h-8 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                 JEE Syllabus Mastery
             </h1>
-            <p class="text-neutral-500 mt-2 max-w-2xl mx-auto">Track your journey to IITs with real-time progress and visual accountability.</p>
+            <p class="text-neutral-500 mt-2 max-w-2xl mx-auto">Track your progress based on MathonGo's 2026 Chapter Priority.</p>
         </header>
 
         <!-- Main Layout: Overall Stats (Sticky) and Content -->
@@ -134,18 +146,18 @@
                 <div id="overall-progress-data" class="space-y-4">
                     <!-- Stats will be rendered here -->
                 </div>
-                
-                <!-- Filter Toggle -->
+
+                <!-- Group Toggle -->
                 <div class="mt-6 border-t border-neutral-700 pt-4">
-                    <label class="block text-neutral-300 font-semibold mb-2 text-sm">Syllabus Target:</label>
+                    <label class="block text-neutral-300 font-semibold mb-2 text-sm">View Mode:</label>
                     <div class="flex items-center justify-between bg-neutral-700/50 rounded-lg p-1">
-                        <button id="filter-main" data-filter="main" class="flex-1 py-1 text-sm font-medium rounded-lg text-neutral-400 transition hover:bg-neutral-600/70">JEE Main Only</button>
-                        <button id="filter-adv" data-filter="advanced" class="flex-1 py-1 text-sm font-medium rounded-lg active transition hover:bg-neutral-600/70">Main + Advanced</button>
+                        <button id="filter-priority" data-filter="priority" class="flex-1 py-1 text-sm font-medium rounded-lg text-neutral-400 transition hover:bg-neutral-600/70">By Priority</button>
+                        <button id="filter-flat" data-filter="flat" class="flex-1 py-1 text-sm font-medium rounded-lg transition hover:bg-neutral-600/70">By Unit</button>
                     </div>
                 </div>
-
+                
                 <div class="mt-4 space-y-3">
-                    <input type="text" id="syllabus-search" placeholder="Search chapter or topic..." class="w-full p-2 rounded-lg bg-neutral-700/50 text-neutral-200 placeholder-neutral-500 focus:ring-cyan-500 focus:border-cyan-500 border-none transition-shadow" />
+                    <input type="text" id="syllabus-search" placeholder="Search chapter..." class="w-full p-2 rounded-lg bg-neutral-700/50 text-neutral-200 placeholder-neutral-500 focus:ring-indigo-500 focus:border-indigo-500 border-none transition-shadow" />
                     <button id="reset-data-btn" class="w-full py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center text-sm shadow-md">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         Reset Progress
@@ -173,118 +185,226 @@
 
         <!-- Official Resources and Footer -->
         <div class="max-w-4xl mx-auto mt-16 text-center">
-            <h3 class="font-semibold text-neutral-300 mb-4">Official Resources</h3>
-            <div class="flex flex-wrap justify-center items-center gap-4 text-sm bg-neutral-900/50 p-4 rounded-lg border border-neutral-800">
-                <a href="https://jeemain.nta.nic.in/images/public/pdf/JEE-Main-2025-Syllabus.pdf" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 hover:underline transition">JEE Main 2025 Syllabus (Reference)</a>
-                <span class="text-neutral-600 hidden sm:inline">|</span>
-                <a href="https://jeeadv.ac.in/documents/jee-advanced-2025-syllabus.pdf" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 hover:underline transition">JEE Advanced 2025 Syllabus (Reference)</a>
+            <h3 class="font-semibold text-neutral-300 mb-4">Resources</h3>
+            <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm bg-neutral-900/50 p-4 rounded-lg border border-neutral-800">
+                <div>
+                    <span class="text-neutral-500 text-xs">Priority Source: </span>
+                    <span class="text-indigo-400 font-semibold">MathonGo (2026)</span>
+                </div>
+                <div>
+                    <span class="text-neutral-500 text-xs">Official Syllabus: </span>
+                    <a href="https://jeemain.nta.nic.in/document/syllabus-for-jee-main-2025/" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition hover:underline font-semibold">JEE Main 2025</a>
+                </div>
             </div>
-            <p class="text-xs text-neutral-600 mt-4">Note: Syllabus structure is based on the comprehensive JEE curriculum and may be updated.</p>
         </div>
         
         <footer class="text-center mt-12 text-neutral-600 text-sm">
-            <p>Progress saved automatically via Local Storage. Refreshing the browser will retain your status.</p>
+            <p>Created by <a href="https://github.com/svalordev" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition hover:underline">Shaurya Pratap Singh</a></p>
         </footer>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Syllabus Data (Simplified and Grouped for Tracking) ---
+            // --- Storage Keys ---
+            const CURRENT_STORAGE_KEY = 'jeeSyllabusProgress_v2_mathongo';
+            const MIGRATION_STORAGE_KEY = 'jeeSyllabusProgress';
+            const OPEN_STATES_KEY = 'jeeSyllabusOpenStates_v2_mathongo';
+            const VIEW_MODE_KEY = 'jeeSyllabusViewMode_v2'; 
+
+
+            // --- New Syllabus Data (Restructured) ---
+            // Each chapter now has a unit, priority, id, and name.
             const syllabus = [
-                { subject: "Physics", chapters: [
-                    { chapter: "Mechanics I (Kine., NLM, WE)", topics: [{ id: "PHY_MEC_01", name: "Kinematics (1D & 2D)" }, { id: "PHY_MEC_02", name: "Newton's Laws of Motion" }, { id: "PHY_MEC_03", name: "Work, Energy, and Power" }, { id: "PHY_MEC_08", name: "System of Particles & Centre of Mass" }, { id: "PHY_MEC_04", name: "Rotational Motion" }] }, 
-                    { chapter: "Mechanics II (Gravi., Prop. of Matter)", topics: [{ id: "PHY_MEC_05", name: "Gravitation" }, { id: "PHY_MEC_06", name: "Properties of Solids and Liquids" }, { id: "PHY_MEC_07", name: "Oscillations and Waves (SHM)" }] }, 
-                    { chapter: "Thermodynamics & KTG", topics: [{ id: "PHY_THE_01", name: "Thermal Properties of Matter" }, { id: "PHY_THE_02", name: "Thermodynamics" }, { id: "PHY_THE_03", name: "Kinetic Theory of Gases" }] }, 
-                    { chapter: "Electricity & Magnetism", topics: [{ id: "PHY_EM_01", name: "Electrostatics" }, { id: "PHY_EM_02", name: "Current Electricity" }, { id: "PHY_EM_03", name: "Magnetic Effects of Current & Magnetism" }, { id: "PHY_EM_04", name: "Electromagnetic Induction & AC" }, { id: "PHY_EM_05", name: "Electromagnetic Waves" }] }, 
-                    { chapter: "Optics & Modern Physics", topics: [{ id: "PHY_OPT_01", name: "Ray Optics and Optical Instruments" }, { id: "PHY_OPT_02", name: "Wave Optics" }, { id: "PHY_MOD_01", name: "Dual Nature of Matter and Radiation" }, { id: "PHY_MOD_02", name: "Atoms and Nuclei" }, { id: "PHY_MOD_03", name: "Electronic Devices (Semiconductors)" }] }
-                ] },
-                { subject: "Chemistry", chapters: [
-                    { chapter: "Physical Chemistry", topics: [{ id: "CHE_PHY_01", name: "Mole Concept & Stoichiometry" }, { id: "CHE_PHY_02", name: "Atomic Structure" }, { id: "CHE_PHY_03", name: "States of Matter (Gases & Liquids)" }, { id: "CHE_PHY_04", name: "Thermodynamics & Thermochemistry" }, { id: "CHE_PHY_05", name: "Equilibrium (Chemical & Ionic)" }, { id: "CHE_PHY_06", name: "Redox Reactions & Electrochemistry" }, { id: "CHE_PHY_07", "name": "Chemical Kinetics" }] }, 
-                    { chapter: "Solutions & Surface Chemistry", topics: [
-                        { id: "CHE_PHY_08", name: "Solutions" }, 
-                        { id: "CHE_PHY_09", name: "Solid State", level: 'advanced' }, // Advanced Only
-                        { id: "CHE_PHY_10", name: "Surface Chemistry", level: 'advanced' } // Advanced Only
-                    ] }, 
-                    { chapter: "Inorganic Core", topics: [
-                        { id: "CHE_INO_01", name: "Classification of Elements & Periodicity" }, 
-                        { id: "CHE_INO_02", name: "Chemical Bonding & Molecular Structure" }, 
-                        { id: "CHE_INO_03", name: "Hydrogen" }, 
-                        { id: "CHE_INO_04", name: "s-Block Elements" }, 
-                        { id: "CHE_INO_05", name: "p-Block Elements (Groups 13-18)", level: 'advanced' }, // Advanced Heavy
-                        { id: "CHE_INO_06", name: "d and f-Block Elements" }, 
-                        { id: "CHE_INO_07", name: "Coordination Compounds" }
-                    ] }, 
-                    { chapter: "Environmental & Practical Chem", topics: [{ id: "CHE_INO_08", name: "Principles of Qualitative Analysis" }, { id: "CHE_INO_09", name: "Environmental Chemistry" }] }, 
-                    { chapter: "Organic I (GOC & Hydrocarbons)", topics: [{ id: "CHE_ORG_01", name: "General Organic Chemistry (GOC)" }, { id: "CHE_ORG_02", name: "Hydrocarbons" }, { id: "CHE_ORG_03", name: "Organic Compounds Containing Halogens" }] }, 
-                    { chapter: "Organic II (Func. Groups & Polymers)", topics: [{ id: "CHE_ORG_04", name: "Organic Compounds Containing Oxygen" }, { id: "CHE_ORG_05", name: "Organic Compounds Containing Nitrogen" }, { id: "CHE_ORG_06", name: "Biomolecules" }, { id: "CHE_ORG_07", name: "Polymers" }, { id: "CHE_ORG_08", name: "Chemistry in Everyday Life" }, { id: "CHE_ORG_09", name: "Practical Organic Chemistry" }] }
-                ] },
-                { subject: "Mathematics", chapters: [
-                    { chapter: "Algebra I (Seq., P&C, Binom)", topics: [{ id: "MAT_ALG_01", name: "Sets, Relations, and Functions" }, { id: "MAT_ALG_02", name: "Complex Numbers & Quadratic Equations" }, { id: "MAT_ALG_03", name: "Matrices and Determinants" }, { id: "MAT_ALG_04", name: "Permutations and Combinations" }, { id: "MAT_ALG_05", name: "Binomial Theorem" }, { id: "MAT_ALG_06", name: "Sequence and Series" }, { id: "MAT_ALG_07", name: "Mathematical Reasoning" }] }, 
-                    { chapter: "Calculus", topics: [{ id: "MAT_CAL_01", name: "Limits, Continuity, and Differentiability" }, { id: "MAT_CAL_02", name: "Integral Calculus" }, { id: "MAT_CAL_03", name: "Differential Equations" }, { id: "MAT_CAL_04", name: "Area Under Curves" }] }, 
-                    { chapter: "Coordinate Geometry (2D & 3D)", topics: [
-                        { id: "MAT_COG_01", name: "Straight Lines" }, 
-                        { id: "MAT_COG_02", name: "Circles" }, 
-                        { id: "MAT_COG_03", name: "Conic Sections (Parabola, Ellipse, Hyperbola)" }, 
-                        { id: "MAT_3DV_01", name: "Three Dimensional Geometry" }
-                    ] }, 
-                    { chapter: "Vectors, Prob. & Trig.", topics: [
-                        { id: "MAT_3DV_02", name: "Vector Algebra" }, 
-                        { id: "MAT_TRI_01", name: "Trigonometric Functions & Identities" }, 
-                        { id: "MAT_TRI_02", name: "Trigonometric Equations" }, 
-                        { id: "MAT_TRI_03", name: "Inverse Trigonometric Functions" }, 
-                        { id: "MAT_TRI_04", name: "Properties of Triangles", level: 'advanced' }, // Advanced Only
-                        { id: "MAT_PRO_01", name: "Statistics" }, 
-                        { id: "MAT_PRO_02", name: "Probability" }
-                    ] }
-                ] }
+                { 
+                    subject: "Physics",
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
+                    units: [
+                        { unitName: "Mechanics I", chapters: [
+                            { id: "PHY_B_11", name: "Motion In One Dimension", priority: 'B' },
+                            { id: "PHY_D_01", name: "Motion In Two Dimensions", priority: 'D' },
+                            { id: "PHY_B_10", name: "Laws of Motion", priority: 'B' },
+                            { id: "PHY_B_07", name: "Work Power Energy", priority: 'B' },
+                            { id: "PHY_D_05", name: "Center of Mass Momentum", priority: 'D' },
+                            { id: "PHY_B_03", name: "Rotational Motion", priority: 'B' }
+                        ]},
+                        { unitName: "Mechanics II & Waves", chapters: [
+                            { id: "PHY_B_04", name: "Gravitation", priority: 'B' },
+                            { id: "PHY_D_02", name: "Mechanical Properties of Solids", priority: 'D' },
+                            { id: "PHY_B_05", name: "Mechanical Properties of Fluids", priority: 'B' },
+                            { id: "PHY_C_06", name: "Oscillations", priority: 'C' },
+                            { id: "PHY_D_03", name: "Waves and Sound", priority: 'D' }
+                        ]},
+                        { unitName: "Thermodynamics & KTG", chapters: [
+                            { id: "PHY_D_06", name: "Thermal Properties of Matter", priority: 'D' },
+                            { id: "PHY_A_05", name: "Thermodynamics", priority: 'A' },
+                            { id: "PHY_C_05", name: "Kinetic Theory of Gases", priority: 'C' }
+                        ]},
+                        { unitName: "Electricity & Magnetism", chapters: [
+                            { id: "PHY_A_02", name: "Electrostatics", priority: 'A' },
+                            { id: "PHY_C_02", name: "Capacitance", priority: 'C' },
+                            { id: "PHY_A_01", name: "Current Electricity", priority: 'A' },
+                            { id: "PHY_A_04", name: "Magnetic Effects of Current", priority: 'A' },
+                            { id: "PHY_D_07", name: "Magnetic Properties of Matter", priority: 'D' },
+                            { id: "PHY_C_03", name: "Electromagnetic Induction", priority: 'C' },
+                            { id: "PHY_C_01", name: "Alternating Current", priority: 'C' },
+                            { id: "PHY_C_07", name: "Electromagnetic Waves", priority: 'C' }
+                        ]},
+                        { unitName: "Optics & Modern Physics", chapters: [
+                            { id: "PHY_A_03", name: "Ray Optics", priority: 'A' },
+                            { id: "PHY_B_09", name: "Wave Optics", priority: 'B' },
+                            { id: "PHY_A_06", name: "Dual Nature of Matter", priority: 'A' },
+                            { id: "PHY_A_07", name: "Atomic Physics", priority: 'A' },
+                            { id: "PHY_C_04", name: "Nuclear Physics", priority: 'C' },
+                            { id: "PHY_B_06", name: "Semiconductors", priority: 'B' }
+                        ]},
+                        { unitName: "Units & Experimental", chapters: [
+                            { id: "PHY_B_08", name: "Units and Dimensions", priority: 'B' },
+                            { id: "PHY_D_04", name: "Mathematics in Physics", priority: 'D' },
+                            { id: "PHY_D_08", name: "Experimental Physics", priority: 'D' }
+                        ]}
+                    ]
+                },
+                { 
+                    subject: "Chemistry",
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.363-.44A2 2 0 0115 13.02l-.538-2.053a2 2 0 00-1.28-1.28l-2.053-.538a2 2 0 01-1.423-.98l-.44-2.363a2 2 0 00-3.546 0l-.44 2.363a2 2 0 01-1.423.98l-2.053.538a2 2 0 00-1.28 1.28l-.538 2.053a2 2 0 01-.98 1.423l-2.363.44a2 2 0 00-.547 1.022l-.44 2.363a2 2 0 001.567 2.458l2.218.41a2 2 0 011.62.9l.71 2.13a2 2 0 003.74 0l.71-2.13a2 2 0 011.62-.9l2.218-.41a2 2 0 001.567-2.458l-.44-2.363z" /></svg>`,
+                    units: [
+                        { unitName: "Physical Chemistry I", chapters: [
+                            { id: "CHE_C_01", name: "Mole Concept", priority: 'C' },
+                            { id: "CHE_B_01", name: "Structure of Atom", priority: 'B' },
+                            { id: "CHE_A_03", name: "Chemical Bonding", priority: 'A' },
+                            { id: "CHE_A_05", name: "Thermodynamics (C)", priority: 'A' },
+                            { id: "CHE_D_05", name: "Chemical Equilibrium", priority: 'D' },
+                            { id: "CHE_D_03", name: "Ionic Equilibrium", priority: 'D' }
+                        ]},
+                        { unitName: "Physical Chemistry II", chapters: [
+                            { id: "CHE_B_02", name: "Solutions", priority: 'B' },
+                            { id: "CHE_D_04", name: "Redox Reactions", priority: 'D' },
+                            { id: "CHE_A_06", name: "Electrochemistry", priority: 'A' },
+                            { id: "CHE_B_06", name: "Chemical Kinetics", priority: 'B' }
+                        ]},
+                        { unitName: "Inorganic Chemistry", chapters: [
+                            { id: "CHE_C_03", name: "Periodic Table", priority: 'C' },
+                            { id: "CHE_B_05", name: "p Block Elements", priority: 'B' },
+                            { id: "CHE_A_04", name: "d and f Block Elements", priority: 'A' },
+                            { id: "CHE_A_02", name: "Coordination Compounds", priority: 'A' }
+                        ]},
+                        { unitName: "Organic Chemistry I", chapters: [
+                            { id: "CHE_A_01", name: "General Organic Chemistry", priority: 'A' },
+                            { id: "CHE_B_03", name: "Hydrocarbons", priority: 'B' },
+                            { id: "CHE_C_04", name: "Haloalkanes and Haloarenes", priority: 'C' }
+                        ]},
+                        { unitName: "Organic Chemistry II", chapters: [
+                            { id: "CHE_C_05", name: "Alcohols Phenols and Ethers", priority: 'C' },
+                            { id: "CHE_C_02", name: "Aldehydes and Ketones", priority: 'C' },
+                            { id: "CHE_D_02", name: "Carboxylic Acid Derivatives", priority: 'D' },
+                            { id: "CHE_B_04", name: "Amines", priority: 'B' }
+                        ]},
+                        { unitName: "Applied Chemistry", chapters: [
+                            { id: "CHE_B_07", name: "Biomolecules", priority: 'B' },
+                            { id: "CHE_D_01", name: "Practical Chemistry", priority: 'D' }
+                        ]}
+                    ]
+                },
+                { 
+                    subject: "Mathematics",
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 0l-3-3m3 3l-3 3m6-3h3m-3 7h6m0 0l-3-3m3 3l-3 3M9 17h3m-3-7h3m-3 7l3-3m-3 3l3 3" /></svg>`,
+                    units: [
+                        { unitName: "Algebra", chapters: [
+                            { id: "MAT_B_07", name: "Sets and Relations", priority: 'B' },
+                            { id: "MAT_B_08", name: "Quadratic Equation", priority: 'B' },
+                            { id: "MAT_B_05", name: "Complex Number", priority: 'B' },
+                            { id: "MAT_A_03", name: "Matrices Determinants", priority: 'A' },
+                            { id: "MAT_B_02", name: "Permutation Combination", priority: 'B' },
+                            { id: "MAT_A_07", name: "Binomial Theorem", priority: 'A' },
+                            { id: "MAT_A_02", name: "Sequences and Series", priority: 'A' }
+                        ]},
+                        { unitName: "Calculus", chapters: [
+                            { id: "MAT_D_06", name: "Basic of Mathematics", priority: 'D' },
+                            { id: "MAT_A_06", name: "Functions", priority: 'A' },
+                            { id: "MAT_C_03", name: "Limits", priority: 'C' },
+                            { id: "MAT_C_06", name: "Continuity and Differentiability", priority: 'C' },
+                            { id: "MAT_D_04", name: "Differentiation", priority: 'D' },
+                            { id: "MAT_B_06", name: "Application of Derivatives", priority: 'B' },
+                            { id: "MAT_D_02", name: "Indefinite Integration", priority: 'D' },
+                            { id: "MAT_A_05", name: "Definite Integration", priority: 'A' },
+                            { id: "MAT_B_04", name: "Area Under Curves", priority: 'B' },
+                            { id: "MAT_A_08", name: "Differential Equations", priority: 'A' }
+                        ]},
+                        { unitName: "Coordinate Geometry & Vectors", chapters: [
+                            { id: "MAT_B_03", name: "Straight Lines", priority: 'B' },
+                            { id: "MAT_C_01", name: "Circle", priority: 'C' },
+                            { id: "MAT_C_04", name: "Parabola", priority: 'C' },
+                            { id: "MAT_C_07", name: "Ellipse", priority: 'C' },
+                            { id: "MAT_C_05", name: "Hyperbola", priority: 'C' },
+                            { id: "MAT_A_01", name: "Three-Dimensional Geometry", priority: 'A' },
+                            { id: "MAT_A_04", name: "Vector Algebra", priority: 'A' }
+                        ]},
+                        { unitName: "Trigonometry", chapters: [
+                            { id: "MAT_D_05", name: "Trigonometric Ratios & Identities", priority: 'D' },
+                            { id: "MAT_D_03", name: "Trigonometric Equations", priority: 'D' },
+                            { id: "MAT_D_01", name: "Inverse Trigonometric Functions", priority: 'D' }
+                        ]},
+                        { unitName: "Statistics & Probability", chapters: [
+                            { id: "MAT_C_02", name: "Statistics", priority: 'C' },
+                            { id: "MAT_B_01", name: "Probability", priority: 'B' }
+                        ]}
+                    ]
+                }
             ];
+
+
+            // --- Data Migration Map ---
+            // Maps old topic IDs to new chapter IDs
+            const MIGRATION_MAP = {
+                "PHY_MEC_01": ["PHY_B_11", "PHY_D_01"], "PHY_MEC_02": "PHY_B_10", "PHY_MEC_03": "PHY_B_07", "PHY_MEC_08": "PHY_D_05", "PHY_MEC_04": "PHY_B_03", "PHY_MEC_05": "PHY_B_04", "PHY_MEC_06": ["PHY_B_05", "PHY_D_02"], "PHY_MEC_07": ["PHY_C_06", "PHY_D_03"], "PHY_THE_01": "PHY_D_06", "PHY_THE_02": "PHY_A_05", "PHY_THE_03": "PHY_C_05", "PHY_EM_01": ["PHY_A_02", "PHY_C_02"], "PHY_EM_02": "PHY_A_01", "PHY_EM_03": ["PHY_A_04", "PHY_D_07"], "PHY_EM_04": ["PHY_C_03", "PHY_C_01"], "PHY_EM_05": "PHY_C_07", "PHY_OPT_01": "PHY_A_03", "PHY_OPT_02": "PHY_B_09", "PHY_MOD_01": "PHY_A_06", "PHY_MOD_02": ["PHY_A_07", "PHY_C_04"], "PHY_MOD_03": "PHY_B_06",
+                "CHE_PHY_01": "CHE_C_01", "CHE_PHY_02": "CHE_B_01", "CHE_PHY_04": "CHE_A_05", "CHE_PHY_05": ["CHE_D_05", "CHE_D_03"], "CHE_PHY_06": ["CHE_D_04", "CHE_A_06"], "CHE_PHY_07": "CHE_B_06", "CHE_PHY_08": "CHE_B_02", "CHE_INO_01": "CHE_C_03", "CHE_INO_02": "CHE_A_03", "CHE_INO_05": "CHE_B_05", "CHE_INO_06": "CHE_A_04", "CHE_INO_07": "CHE_A_02", "CHE_INO_08": "CHE_D_01", "CHE_ORG_01": "CHE_A_01", "CHE_ORG_02": "CHE_B_03", "CHE_ORG_03": "CHE_C_04", "CHE_ORG_04": ["CHE_C_02", "CHE_C_05", "CHE_D_02"], "CHE_ORG_05": "CHE_B_04", "CHE_ORG_06": "CHE_B_07", "CHE_ORG_09": "CHE_D_01",
+                "MAT_ALG_01": ["MAT_B_07", "MAT_A_06"], "MAT_ALG_02": ["MAT_B_05", "MAT_B_08"], "MAT_ALG_03": "MAT_A_03", "MAT_ALG_04": "MAT_B_02", "MAT_ALG_05": "MAT_A_07", "MAT_ALG_06": "MAT_A_02", "MAT_CAL_01": ["MAT_C_03", "MAT_C_06", "MAT_D_04"], "MAT_CAL_02": ["MAT_A_05", "MAT_D_02"], "MAT_CAL_03": "MAT_A_08", "MAT_CAL_04": "MAT_B_04", "MAT_COG_01": "MAT_B_03", "MAT_COG_02": "MAT_C_01", "MAT_COG_03": ["MAT_C_04", "MAT_C_07", "MAT_C_05"], "MAT_3DV_01": "MAT_A_01", "MAT_3DV_02": "MAT_A_04", "MAT_TRI_01": "MAT_D_05", "MAT_TRI_02": "MAT_D_03", "MAT_TRI_03": "MAT_D_01", "MAT_PRO_01": "MAT_C_02", "MAT_PRO_02": "MAT_B_01"
+            };
 
             // --- Configuration ---
             const statusConfig = {
-                'not-started': { text: 'Not Started', color: 'bg-neutral-800/70 text-neutral-400', selectColor: 'bg-neutral-800 text-neutral-400', weight: 0, barColor: 'bg-neutral-700' },
-                'in-progress': { text: 'In Progress', color: 'bg-yellow-800/30 text-yellow-400', selectColor: 'bg-yellow-900/40 text-yellow-300', weight: 0.5, barColor: 'bg-yellow-500' },
-                'completed': { text: 'Completed', color: 'bg-green-800/30 text-green-400', selectColor: 'bg-green-900/40 text-green-300', weight: 1, barColor: 'bg-green-500' },
-                'mastered': { text: 'Mastered', color: 'bg-cyan-800/30 text-cyan-400', selectColor: 'bg-cyan-900/40 text-cyan-300', weight: 1, barColor: 'bg-cyan-500' }
+                'not-started': { text: 'Not Started', color: 'text-neutral-500', selectColor: 'bg-neutral-800 text-neutral-400', weight: 0, barColor: 'bg-neutral-700', dotColor: 'bg-neutral-500' },
+                'in-progress': { text: 'In Progress', color: 'text-yellow-500', selectColor: 'bg-yellow-900/40 text-yellow-300', weight: 0.5, barColor: 'bg-yellow-500', dotColor: 'bg-yellow-500' },
+                'completed': { text: 'Completed', color: 'text-green-500', selectColor: 'bg-green-900/40 text-green-300', weight: 1, barColor: 'bg-green-500', dotColor: 'bg-green-500' },
+                'mastered': { text: 'Mastered', color: 'text-indigo-400', selectColor: 'bg-indigo-900/40 text-indigo-300', weight: 1, barColor: 'bg-indigo-500', dotColor: 'bg-indigo-400' }
             };
 
             // --- State Variables ---
-            let topicStatuses = {};
+            let chapterStatuses = {};
             let openStates = {};
             let searchTerm = '';
-            let syllabusFilter = 'advanced'; // 'main' or 'advanced'
-            let activeTopicId = null; // Holds the ID of the topic whose inline menu is open.
-            let activeChapterName = null; // NEW: Holds the Name of the chapter whose bulk status menu is open.
+            let groupByPriority = true; // View mode state
+            let activeChapterId = null; // Holds the ID of the chapter whose inline menu is open.
+            let activeGroupName = null; // Holds the Name of the group (Unit or Priority) whose bulk status menu is open.
 
             // --- Persistence (Local Storage) ---
 
-            function loadFilterState() {
-                const savedFilter = localStorage.getItem('jeeSyllabusFilter');
-                if (savedFilter) {
-                    syllabusFilter = savedFilter;
-                }
+            function loadViewMode() {
+                const savedMode = localStorage.getItem(VIEW_MODE_KEY);
+                groupByPriority = savedMode === 'flat' ? false : true;
             }
 
-            function saveFilterState() {
-                localStorage.setItem('jeeSyllabusFilter', syllabusFilter);
+            function saveViewMode() {
+                localStorage.setItem(VIEW_MODE_KEY, groupByPriority ? 'priority' : 'flat');
             }
-            
+
             function storeOpenStates() {
                 openStates = {};
-                document.querySelectorAll('.subject-card, .chapter-branch').forEach((el) => {
-                    const id = el.querySelector('h2, h3')?.textContent;
+                document.querySelectorAll('.subject-card, .group-branch').forEach((el) => {
+                    const id = el.dataset.id; // Use data-id for persistent tracking
                     if (id && el.classList.contains('expanded')) {
                         openStates[id] = true;
                     }
                 });
-                localStorage.setItem('jeeSyllabusOpenStates', JSON.stringify(openStates));
+                localStorage.setItem(OPEN_STATES_KEY, JSON.stringify(openStates));
             }
 
             function restoreOpenStates() {
-                const savedStates = localStorage.getItem('jeeSyllabusOpenStates');
+                const savedStates = localStorage.getItem(OPEN_STATES_KEY);
                 openStates = savedStates ? JSON.parse(savedStates) : {};
                 
-                document.querySelectorAll('.subject-card, .chapter-branch').forEach((el) => {
-                    const id = el.querySelector('h2, h3')?.textContent;
+                document.querySelectorAll('.subject-card, .group-branch').forEach((el) => {
+                    const id = el.dataset.id;
                     if (id && openStates[id]) {
                         el.classList.add('expanded');
                         el.classList.remove('collapsed');
@@ -296,29 +416,65 @@
             }
 
             function loadProgress() {
-                const savedProgress = localStorage.getItem('jeeSyllabusProgress');
-                topicStatuses = savedProgress ? JSON.parse(savedProgress) : {};
+                const oldData = localStorage.getItem(MIGRATION_STORAGE_KEY);
+                const newData = localStorage.getItem(CURRENT_STORAGE_KEY);
+                
+                if (oldData && !newData) {
+                    console.log("Running one-time data migration...");
+                    runMigration(oldData);
+                }
+                const savedProgress = localStorage.getItem(CURRENT_STORAGE_KEY);
+                chapterStatuses = savedProgress ? JSON.parse(savedProgress) : {};
             }
 
             function saveProgress() {
-                localStorage.setItem('jeeSyllabusProgress', JSON.stringify(topicStatuses));
+                localStorage.setItem(CURRENT_STORAGE_KEY, JSON.stringify(chapterStatuses));
             }
 
-            // --- Calculation Logic ---
-            function calculateStats(topics) {
-                // Filter topics based on the current syllabus filter setting
-                const filteredTopics = topics.filter(topic => {
-                    const level = topic.level || 'main';
-                    return syllabusFilter === 'advanced' || level === 'main';
-                });
+            // --- Data Migration Function ---
+            function runMigration(oldDataJSON) {
+                try {
+                    const oldData = JSON.parse(oldDataJSON);
+                    const newProgress = {};
+                    const getWeight = (status) => (statusConfig[status] || statusConfig['not-started']).weight;
 
-                const total = filteredTopics.length;
-                if (total === 0) return { total: 0, mastered: 0, completed: 0, inProgress: 0, notStarted: 0, percentage: 0, masteredPercent: 0, completedPercent: 0, inProgressPercent: 0, topics: filteredTopics };
+                    for (const oldId in oldData) {
+                        if (oldData.hasOwnProperty(oldId)) {
+                            const oldStatus = oldData[oldId];
+                            const newIdOrIds = MIGRATION_MAP[oldId];
+
+                            if (newIdOrIds) {
+                                const ids = Array.isArray(newIdOrIds) ? newIdOrIds : [newIdOrIds];
+                                ids.forEach(newId => {
+                                    const existingStatus = newProgress[newId];
+                                    if (existingStatus) {
+                                        if (getWeight(oldStatus) > getWeight(existingStatus)) {
+                                            newProgress[newId] = oldStatus;
+                                        }
+                                    } else {
+                                        newProgress[newId] = oldStatus;
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    localStorage.setItem(CURRENT_STORAGE_KEY, JSON.stringify(newProgress));
+                } catch (e) {
+                    console.error("Failed to migrate data:", e);
+                    localStorage.setItem(CURRENT_STORAGE_KEY, JSON.stringify({}));
+                }
+            }
+
+
+            // --- Calculation Logic ---
+            function calculateStats(chapters) {
+                const total = chapters.length;
+                if (total === 0) return { total: 0, mastered: 0, completed: 0, inProgress: 0, notStarted: 0, percentage: 0, masteredPercent: 0, completedPercent: 0, inProgressPercent: 0, chapters: chapters };
                 
                 let mastered = 0, completed = 0, inProgress = 0, weightedSum = 0;
 
-                filteredTopics.forEach(topic => {
-                    const status = topicStatuses[topic.id] || 'not-started';
+                chapters.forEach(chapter => {
+                    const status = chapterStatuses[chapter.id] || 'not-started';
                     const weight = statusConfig[status].weight;
                     
                     if (status === 'mastered') mastered++;
@@ -332,51 +488,53 @@
                 const notStarted = total - (mastered + completed + inProgress);
 
                 return { 
-                    total, 
-                    mastered, 
-                    completed, 
-                    inProgress, 
-                    notStarted, 
+                    total, mastered, completed, inProgress, notStarted, 
                     percentage: Math.round(percentage), 
                     masteredPercent: (mastered / total) * 100, 
                     completedPercent: (completed / total) * 100, 
                     inProgressPercent: (inProgress / total) * 100,
-                    topics: filteredTopics
+                    chapters: chapters
                 };
             }
 
             function calculateOverallStats() {
-                const allTopics = syllabus.flatMap(s => s.chapters.flatMap(c => c.topics));
-                return calculateStats(allTopics);
+                const allChapters = syllabus.flatMap(s => s.units.flatMap(u => u.chapters));
+                return calculateStats(allChapters);
             }
 
             // --- Status Update Logic ---
 
-            function updateTopicStatus(topicId, newStatus) {
-                topicStatuses[topicId] = newStatus;
+            function updateChapterStatus(chapterId, newStatus) {
+                chapterStatuses[chapterId] = newStatus;
                 saveProgress();
-                storeOpenStates();
-                activeTopicId = null; 
-                activeChapterName = null;
+                storeOpenStates(); 
+                activeChapterId = null; 
+                activeGroupName = null;
                 renderSyllabus(); 
                 renderOverallStats(); 
             }
 
-            function updateChapterStatus(chapterName, newStatus) {
-                const subjectData = syllabus.find(s => s.chapters.some(c => c.chapter === chapterName));
-                const chapterData = subjectData.chapters.find(c => c.chapter === chapterName);
+            function updateGroupStatus(subjectName, groupName, newStatus) {
+                let chaptersToUpdate = [];
+                const subjectData = syllabus.find(s => s.subject === subjectName);
+
+                if (groupByPriority) {
+                    // 'groupName' is "Priority A", "Priority B", etc.
+                    const priority = groupName.split(' ')[1]; // "A"
+                    chaptersToUpdate = subjectData.units.flatMap(u => u.chapters).filter(c => c.priority === priority);
+                } else {
+                    // 'groupName' is "Mechanics I", "Calculus", etc.
+                    chaptersToUpdate = subjectData.units.find(u => u.unitName === groupName).chapters;
+                }
                 
-                const stats = calculateStats(chapterData.topics);
-                
-                // Only update the filtered/visible topics
-                stats.topics.forEach(topic => {
-                    topicStatuses[topic.id] = newStatus;
+                chaptersToUpdate.forEach(chapter => {
+                    chapterStatuses[chapter.id] = newStatus;
                 });
 
                 saveProgress();
                 storeOpenStates();
-                activeTopicId = null;
-                activeChapterName = null; 
+                activeChapterId = null;
+                activeGroupName = null; 
                 renderSyllabus(); 
                 renderOverallStats(); 
             }
@@ -384,38 +542,33 @@
             // --- Rendering Functions ---
             function highlightText(text, term) {
                 if (!term) return text;
-                const regex = new RegExp(`(${term})`, 'gi');
+                const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
                 return text.replace(regex, '<span class="highlight">$1</span>');
             }
-            
-            function updateFilterUI() {
-                const mainBtn = document.getElementById('filter-main');
-                const advBtn = document.getElementById('filter-adv');
 
-                mainBtn.classList.remove('active', 'bg-cyan-600', 'text-white');
-                advBtn.classList.remove('active', 'bg-cyan-600', 'text-white');
-                mainBtn.classList.add('text-neutral-400');
-                advBtn.classList.add('text-neutral-400');
+            function updateViewModeUI() {
+                const priorityBtn = document.getElementById('filter-priority');
+                const flatBtn = document.getElementById('filter-flat');
 
-                if (syllabusFilter === 'main') {
-                    mainBtn.classList.add('active', 'bg-cyan-600', 'text-white');
-                    mainBtn.classList.remove('text-neutral-400');
+                priorityBtn.classList.remove('active');
+                flatBtn.classList.remove('active');
+
+                if (groupByPriority) {
+                    priorityBtn.classList.add('active');
                 } else {
-                    advBtn.classList.add('active', 'bg-cyan-600', 'text-white');
-                    advBtn.classList.remove('text-neutral-400');
+                    flatBtn.classList.add('active');
                 }
             }
-
+            
             function renderOverallStats() {
                 const stats = calculateOverallStats();
                 const container = document.getElementById('overall-progress-data');
 
                 container.innerHTML = `
                     <div class="text-center mb-5">
-                        <p class="text-neutral-300 text-sm font-semibold mb-1">${syllabusFilter === 'main' ? 'JEE Main Topics' : 'Total Topics'}</p>
-                        <p class="text-4xl font-extrabold text-cyan-400">${stats.total}</p>
+                        <p class="text-neutral-300 text-sm font-semibold mb-1">Total Chapters</p>
+                        <p class="text-4xl font-extrabold text-indigo-400">${stats.total}</p>
                     </div>
-
                     <div class="w-full h-3 rounded-full flex overflow-hidden bg-neutral-700">
                         <div class="progress-bar-segment ${statusConfig['mastered'].barColor}" style="width: ${stats.masteredPercent}%"></div>
                         <div class="progress-bar-segment ${statusConfig['completed'].barColor}" style="width: ${stats.completedPercent}%"></div>
@@ -425,7 +578,6 @@
                          <span class="text-4xl font-extrabold text-white">${stats.percentage}%</span>
                          <span class="text-base font-semibold text-neutral-400 block">Overall Coverage</span>
                     </div>
-
                     <div class="grid grid-cols-2 gap-3 text-sm pt-4 border-t border-neutral-700">
                         <div class="flex items-center">
                             <span class="inline-block w-3 h-3 rounded-full ${statusConfig['mastered'].barColor} mr-2"></span>
@@ -445,60 +597,49 @@
                         </div>
                     </div>
                 `;
-                updateFilterUI();
+                updateViewModeUI(); 
             }
             
             // Reusable function to render the status menu buttons
-            function createStatusMenuItems(targetId, isChapterMenu = false) {
-                const currentStatus = isChapterMenu ? 'chapter-menu' : topicStatuses[targetId] || 'not-started';
-                const dataAttribute = isChapterMenu ? 'data-chapter-menu' : 'data-menu-status';
+            function createStatusMenuItems(targetId, isGroupMenu = false) {
+                const currentStatus = isGroupMenu ? 'group-menu' : chapterStatuses[targetId] || 'not-started';
+                const dataAttribute = isGroupMenu ? 'data-group-menu' : 'data-menu-status';
 
                 return Object.keys(statusConfig).map(key => {
                     const config = statusConfig[key];
-                    const baseClass = 'w-full text-left px-3 py-1.5 rounded-md transition-colors font-medium text-sm';
+                    const baseClass = 'w-full text-left px-3 py-1.5 rounded-md transition-colors font-medium text-sm flex items-center';
                     let statusClass = '';
 
-                    // Define distinct hover/active colors for each status button
                     if (key === 'not-started') statusClass = 'text-neutral-300 hover:bg-neutral-700/80';
                     if (key === 'in-progress') statusClass = 'text-yellow-300 hover:bg-yellow-800/50';
                     if (key === 'completed') statusClass = 'text-green-300 hover:bg-green-800/50';
-                    if (key === 'mastered') statusClass = 'text-cyan-300 hover:bg-cyan-800/50';
+                    if (key === 'mastered') statusClass = 'text-indigo-300 hover:bg-indigo-800/50';
                     
-                    // Chapter menu does not have an "active" status since it's an action, not a state display
-                    const activeStyle = !isChapterMenu && key === currentStatus ? ` bg-neutral-700/50 ring-2 ring-cyan-500` : '';
-                    const checkmark = !isChapterMenu && key === currentStatus ? `<span class="ml-2 float-right text-cyan-400">✓</span>` : '';
+                    const activeStyle = !isGroupMenu && key === currentStatus ? ` bg-neutral-700/50 ring-2 ring-indigo-500` : '';
+                    const checkmark = !isGroupMenu && key === currentStatus ? `<span class="ml-auto text-indigo-400">✓</span>` : '';
 
-
-                    return `<button 
-                                ${dataAttribute}="${key}" 
-                                data-target-id="${targetId}" 
-                                class="${baseClass} ${statusClass}${activeStyle}">
+                    return `<button ${dataAttribute}="${key}" data-target-id="${targetId}" class="${baseClass} ${statusClass}${activeStyle}">
+                                <span class="status-dot ${config.dotColor}"></span>
                                 ${config.text}
                                 ${checkmark}
                             </button>`;
                 }).join('');
             }
             
-            // Renders the inline menu for a single TOPIC
-            function renderTopicStatusMenu(topicId) {
-                return `
-                    <div class="inline-status-menu mt-2 p-2 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${topicId}">
-                        ${createStatusMenuItems(topicId, false)}
-                    </div>
-                `;
+            // Renders the inline menu for a single CHAPTER
+            function renderChapterStatusMenu(chapterId) {
+                return `<div class="inline-status-menu mt-2 p-2 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${chapterId}">${createStatusMenuItems(chapterId, false)}</div>`;
             }
             
-            // Renders the inline menu for an entire CHAPTER (bulk update)
-            function renderChapterStatusMenu(chapterName) {
-                return `
-                    <div class="inline-status-menu chapter-menu mt-2 p-3 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${chapterName}">
-                        <p class="text-neutral-400 text-xs font-semibold pb-1 border-b border-neutral-700 mb-2">Apply status to all visible topics in this chapter:</p>
-                        ${createStatusMenuItems(chapterName, true)}
-                    </div>
-                `;
+            // Renders the inline menu for an entire GROUP (bulk update)
+            function renderGroupStatusMenu(groupName) {
+                return `<div class="inline-status-menu group-menu mt-2 p-3 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${groupName}">
+                            <p class="text-neutral-400 text-xs font-semibold pb-1 border-b border-neutral-700 mb-2">Apply status to all chapters in this group:</p>
+                            ${createStatusMenuItems(groupName, true)}
+                        </div>`;
             }
 
-
+            // --- Main Render Function ---
             function renderSyllabus() {
                 const container = document.getElementById('syllabus-container');
                 container.innerHTML = '';
@@ -506,108 +647,116 @@
                 const currentSearchTerm = searchTerm.toLowerCase();
 
                 syllabus.forEach(subject => {
-                    const allSubjectTopics = subject.chapters.flatMap(c => c.topics);
-                    const subjectStats = calculateStats(allSubjectTopics);
+                    const allSubjectChapters = subject.units.flatMap(u => u.chapters);
+                    const subjectStats = calculateStats(allSubjectChapters);
 
                     const subjectMatch = subject.subject.toLowerCase().includes(currentSearchTerm);
-                    let chapterMatchCount = 0;
-
+                    
                     const subjectDiv = document.createElement('div');
                     subjectDiv.className = 'subject-card rounded-xl collapsed shadow-xl';
+                    subjectDiv.dataset.id = subject.subject; 
                     
-                    const chapterContainerDiv = document.createElement('div');
-                    chapterContainerDiv.className = 'content-container px-5 pb-5';
-                    chapterContainerDiv.innerHTML = `<div class="space-y-3 mt-4 border-t border-neutral-800 pt-4"></div>`;
-                    const chapterList = chapterContainerDiv.querySelector('div');
+                    const groupContainerDiv = document.createElement('div');
+                    groupContainerDiv.className = 'content-container px-5 pb-5';
+                    groupContainerDiv.innerHTML = `<div class="space-y-3 mt-4 border-t border-neutral-800 pt-4"></div>`;
+                    const groupList = groupContainerDiv.querySelector('div');
 
-                    subject.chapters.forEach(chapter => {
-                        const chapterTopicsFiltered = chapter.topics.filter(topic => {
-                            const level = topic.level || 'main';
-                            return syllabusFilter === 'advanced' || level === 'main';
+                    let visibleChapterCount = 0;
+                    let groupsToRender = [];
+
+                    if (groupByPriority) {
+                        // --- START: PRIORITY VIEW ---
+                        const chaptersByPriority = { A: [], B: [], C: [], D: [] };
+                        allSubjectChapters.forEach(chapter => {
+                            chaptersByPriority[chapter.priority].push(chapter);
                         });
-
-                        const chapterStats = calculateStats(chapterTopicsFiltered);
-                        const chapterMatch = chapter.chapter.toLowerCase().includes(currentSearchTerm);
-                        const topicMatches = chapterTopicsFiltered.filter(t => t.name.toLowerCase().includes(currentSearchTerm));
                         
-                        const isVisible = (subjectMatch || chapterMatch || topicMatches.length > 0) && chapterTopicsFiltered.length > 0;
-                        if (isVisible) chapterMatchCount++;
+                        groupsToRender = [
+                            { groupName: "Priority A", chapters: chaptersByPriority.A },
+                            { groupName: "Priority B", chapters: chaptersByPriority.B },
+                            { groupName: "Priority C", chapters: chaptersByPriority.C },
+                            { groupName: "Priority D", chapters: chaptersByPriority.D },
+                        ];
+                        // --- END: PRIORITY VIEW ---
+                    } else {
+                        // --- START: UNIT VIEW ("Flat List") ---
+                        groupsToRender = subject.units.map(u => ({ groupName: u.unitName, chapters: u.chapters }));
+                        // --- END: UNIT VIEW ---
+                    }
 
-                        const isChapterMenuOpen = activeChapterName === chapter.chapter;
-
-                        const chapterDiv = document.createElement('div');
-                        chapterDiv.className = `chapter-branch rounded-lg overflow-hidden ${isVisible ? '' : 'hidden'}`;
+                    // --- COMMON RENDER LOGIC ---
+                    groupsToRender.forEach(group => {
+                        const groupStats = calculateStats(group.chapters);
+                        const groupMatch = group.groupName.toLowerCase().includes(currentSearchTerm);
+                        const chapterMatches = group.chapters.filter(c => c.name.toLowerCase().includes(currentSearchTerm));
                         
-                        chapterDiv.innerHTML = `
-                            <div class="chapter-header p-3 transition-colors ${chapterStats.percentage === 100 ? 'bg-green-900/20 hover:bg-green-900/40' : 'bg-neutral-800/50 hover:bg-neutral-700/70'} ${isChapterMenuOpen ? 'ring-2 ring-cyan-500' : ''}">
+                        const isVisible = (subjectMatch || groupMatch || chapterMatches.length > 0) && group.chapters.length > 0;
+                        if (isVisible) visibleChapterCount++;
+
+                        const isGroupMenuOpen = activeGroupName === group.groupName;
+
+                        const groupDiv = document.createElement('div');
+                        groupDiv.className = `group-branch rounded-lg overflow-hidden ${isVisible ? '' : 'hidden'}`;
+                        groupDiv.dataset.id = `${subject.subject}-${group.groupName}`; // data-id
+                        
+                        groupDiv.innerHTML = `
+                            <div class="group-header p-3 transition-colors ${groupStats.percentage === 100 ? 'bg-green-900/20 hover:bg-green-900/40' : 'bg-neutral-800/50 hover:bg-neutral-700/70'} ${isGroupMenuOpen ? 'ring-2 ring-indigo-500' : ''}">
                                 <div class="flex items-center justify-between">
-                                    <!-- Accordion Toggle Area -->
-                                    <div data-chapter-name="${chapter.chapter}" class="chapter-header-toggle flex items-center flex-grow py-1">
-                                        <svg class="w-4 h-4 text-neutral-500 arrow mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                                        <h3 class="text-md font-semibold ${chapterStats.percentage === 100 ? 'text-green-300' : 'text-neutral-300'}">${highlightText(chapter.chapter, searchTerm)}</h3>
+                                    <div data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-header-toggle flex items-center flex-grow py-1 min-w-0">
+                                        <svg class="w-4 h-4 text-neutral-500 arrow mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        <h3 class="text-md font-semibold ${groupStats.percentage === 100 ? 'text-green-300' : 'text-neutral-300'} truncate">${highlightText(group.groupName, searchTerm)}</h3>
                                     </div>
-                                    
-                                    <!-- Bulk Status Button -->
-                                    <button 
-                                        data-chapter-name="${chapter.chapter}" 
-                                        class="chapter-status-btn text-sm font-bold text-white px-3 py-1 rounded-full transition bg-cyan-700/40 hover:bg-cyan-700/80">
-                                        ${chapterStats.percentage}%
-                                    </button>
+                                    <button data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-status-btn text-sm font-bold text-white px-3 py-1 rounded-full transition bg-indigo-700/40 hover:bg-indigo-700/80 ml-2">${groupStats.percentage}%</button>
                                 </div>
-                                ${isChapterMenuOpen ? renderChapterStatusMenu(chapter.chapter) : ''}
+                                ${isGroupMenuOpen ? renderGroupStatusMenu(group.groupName) : ''}
                             </div>
-                            <div class="content-container topic-leaf-list p-3 bg-neutral-900/50 space-y-2"></div>`;
+                            <div class="content-container chapter-leaf-list p-3 bg-neutral-900/50 space-y-1"></div>`;
                         
-                        const topicList = chapterDiv.querySelector('.topic-leaf-list');
+                        const chapterListEl = groupDiv.querySelector('.chapter-leaf-list');
                         
-                        chapterTopicsFiltered.forEach(topic => {
-                            const status = topicStatuses[topic.id] || 'not-started';
+                        group.chapters.forEach(chapter => {
+                            const status = chapterStatuses[chapter.id] || 'not-started';
                             const config = statusConfig[status];
-                            const topicMatch = topic.name.toLowerCase().includes(currentSearchTerm);
-                            const isAdvanced = topic.level === 'advanced';
-                            const isOpen = activeTopicId === topic.id;
+                            const chapterMatch = chapter.name.toLowerCase().includes(currentSearchTerm);
+                            const isOpen = activeChapterId === chapter.id;
 
-                            const topicContainer = document.createElement('div');
-                            topicContainer.dataset.topicId = topic.id;
+                            const chapterContainer = document.createElement('div');
+                            chapterContainer.dataset.chapterId = chapter.id;
+                            if (!chapterMatch && !groupMatch && !subjectMatch) {
+                                chapterContainer.className = 'hidden';
+                            }
                             
-                            const topicDiv = document.createElement('div');
-                            topicDiv.className = `topic-leaf p-2 rounded-lg flex justify-between items-center transition-all duration-150 ${config.color} ${topicMatch || chapterMatch || subjectMatch ? '' : 'hidden'} ${isOpen ? 'ring-2 ring-cyan-500' : ''}`;
-                            
-                            // Advanced badge for visual clarity
-                            const advancedBadge = isAdvanced ? `<span class="ml-2 px-1.5 py-0.5 text-xs font-bold rounded-full bg-red-800/50 text-red-300">ADV</span>` : '';
-
-                            topicDiv.innerHTML = `
-                                <span class="text-sm flex-grow pr-2 flex items-center">
-                                    ${highlightText(topic.name, searchTerm)}
-                                    ${advancedBadge}
+                            const chapterDiv = document.createElement('div');
+                            chapterDiv.className = `chapter-leaf p-2 rounded-lg flex justify-between items-center transition-all duration-150 ${isOpen ? 'ring-2 ring-indigo-500 bg-neutral-800' : ''}`;
+                            chapterDiv.innerHTML = `
+                                <span class_name="text-sm flex-grow pr-2 flex items-center ${config.color} font-medium">
+                                    ${highlightText(chapter.name, searchTerm)}
                                 </span>
-                                <button 
-                                    data-topic-id="${topic.id}" 
-                                    class="status-btn px-2 py-1 rounded font-semibold text-xs ${config.selectColor.replace('bg-', 'bg-').replace('/40', '/70')}"
-                                >
+                                <button data-chapter-id="${chapter.id}" class="status-btn px-2 py-1 rounded font-medium text-xs ${config.color} ${config.selectColor.replace('bg-', 'bg-').replace('/40', '/60')} flex items-center">
+                                    <span class="status-dot ${config.dotColor} mr-1.5"></span>
                                     ${config.text}
                                 </button>`;
                             
-                            topicContainer.appendChild(topicDiv);
-
-                            // Add inline status menu if activeTopicId matches
+                            chapterContainer.appendChild(chapterDiv);
                             if (isOpen) {
-                                topicContainer.innerHTML += renderTopicStatusMenu(topic.id);
+                                chapterContainer.innerHTML += renderChapterStatusMenu(chapter.id);
                             }
-
-                            topicList.appendChild(topicContainer);
+                            chapterListEl.appendChild(chapterContainer);
                         });
-                        chapterList.appendChild(chapterDiv);
+                        groupList.appendChild(groupDiv);
                     });
 
                     // Hide subject card if no chapter/topic matches the filter AND the subject name doesn't match
-                    const subjectVisible = subjectMatch || chapterMatchCount > 0;
+                    const subjectVisible = subjectMatch || visibleChapterCount > 0;
                     subjectDiv.style.display = subjectVisible ? 'block' : 'none';
 
                     subjectDiv.innerHTML = `
                         <div class="subject-header p-5">
                             <div class="flex justify-between items-center">
-                                <h2 class="text-2xl font-bold ${subjectStats.percentage === 100 ? 'text-green-300' : 'text-cyan-400'}">${highlightText(subject.subject, searchTerm)}</h2>
+                                <h2 class="text-2xl font-bold text-indigo-400 flex items-center">
+                                    ${subject.icon}
+                                    <span class="ml-2.5">${highlightText(subject.subject, searchTerm)}</span>
+                                </h2>
                                 <div class="flex items-center space-x-3">
                                     <span class="text-2xl font-extrabold ${subjectStats.percentage === 100 ? 'text-green-300' : 'text-white'}">${subjectStats.percentage}%</span>
                                     <svg class="w-6 h-6 text-neutral-400 arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
@@ -619,25 +768,24 @@
                                 <div class="progress-bar-segment ${statusConfig['in-progress'].barColor}" style="width: ${subjectStats.inProgressPercent}%"></div>
                             </div>
                             <div class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-medium">
-                                <span class="text-cyan-400">Mastered: ${subjectStats.mastered} / ${subjectStats.total}</span>
+                                <span class="text-indigo-400">Mastered: ${subjectStats.mastered} / ${subjectStats.total}</span>
                                 <span class="text-green-400">Completed: ${subjectStats.completed}</span>
                                 <span class="text-yellow-400">In Progress: ${subjectStats.inProgress}</span>
                                 <span class="text-neutral-400">Not Started: ${subjectStats.notStarted}</span>
                             </div>
                         </div>
-                        <!-- Content container will be added below -->
                     `;
-                    subjectDiv.appendChild(chapterContainerDiv);
+                    subjectDiv.appendChild(groupContainerDiv);
                     container.appendChild(subjectDiv);
                 });
 
                 // Apply open class to the inline menus
-                if (activeTopicId) {
-                    const menuEl = document.querySelector(`[data-menu-id="${activeTopicId}"]`);
+                if (activeChapterId) {
+                    const menuEl = document.querySelector(`[data-menu-id="${activeChapterId}"]`);
                     if (menuEl) menuEl.classList.add('open');
                 }
-                if (activeChapterName) {
-                    const menuEl = document.querySelector(`[data-menu-id="${activeChapterName}"]`);
+                if (activeGroupName) {
+                    const menuEl = document.querySelector(`[data-menu-id="${activeGroupName}"]`);
                     if (menuEl) menuEl.classList.add('open');
                 }
 
@@ -649,109 +797,94 @@
 
             // 1. Accordion Toggle and Status Button Click
             document.getElementById('syllabus-container').addEventListener('click', (e) => {
-                const chapterToggle = e.target.closest('.chapter-header-toggle');
+                const groupToggle = e.target.closest('.group-header-toggle');
                 const subjectHeader = e.target.closest('.subject-header');
-                const chapterStatusBtn = e.target.closest('.chapter-status-btn');
+                const groupStatusBtn = e.target.closest('.group-status-btn');
 
                 if (subjectHeader) {
-                    // Close all menus when a Subject header is clicked (top-level collapse)
-                    activeTopicId = null;
-                    activeChapterName = null;
+                    activeChapterId = null;
+                    activeGroupName = null;
                     
                     const parentNode = subjectHeader.closest('.subject-card');
                     parentNode.classList.toggle('expanded');
                     parentNode.classList.toggle('collapsed');
                     storeOpenStates(); 
-                    renderSyllabus(); // Re-render to clear menu classes
 
-                } else if (chapterToggle) {
-                    // Handle Chapter Accordion Toggle
-                    activeTopicId = null; // Close topic menu
-                    activeChapterName = null; // Close chapter menu
+                } else if (groupToggle) {
+                    activeChapterId = null; 
+                    activeGroupName = null; 
                     
-                    const parentNode = chapterToggle.closest('.chapter-branch');
+                    const parentNode = groupToggle.closest('.group-branch');
                     parentNode.classList.toggle('expanded');
                     parentNode.classList.toggle('collapsed');
                     storeOpenStates(); 
+
+                } else if (groupStatusBtn) {
+                    const groupName = groupStatusBtn.dataset.groupName;
+                    activeChapterId = null;
+                    activeGroupName = (activeGroupName === groupName) ? null : groupName;
                     renderSyllabus(); 
-
-                } else if (chapterStatusBtn) {
-                    // Handle Chapter Bulk Status Button Click
-                    const chapterName = chapterStatusBtn.dataset.chapterName;
-                    
-                    // Close topic menu
-                    activeTopicId = null;
-
-                    // Toggle chapter menu state
-                    activeChapterName = (activeChapterName === chapterName) ? null : chapterName;
-                    
-                    // Re-render to show/hide the chapter menu
-                    renderSyllabus();
-                    e.stopPropagation(); // Stop propagation to prevent body close listener from closing immediately
+                    e.stopPropagation(); 
 
                 } else {
-                    // Handle Topic Menu Clicks (Status Button or Menu Option)
-                    const statusButton = e.target.closest('.status-btn');
+                    const chapterLeaf = e.target.closest('.chapter-leaf');
                     const menuOption = e.target.closest('[data-menu-status]');
+                    const groupMenuOption = e.target.closest('[data-group-menu]');
 
-                    if (statusButton) {
-                        const topicId = statusButton.dataset.topicId;
-                        
-                        // Close Chapter Menu
-                        activeChapterName = null;
+                    if (menuOption) { // Check for menu click first
+                        const chapterId = menuOption.dataset.targetId;
+                        const newStatus = menuOption.dataset.menuStatus;
+                        updateChapterStatus(chapterId, newStatus); 
+                        e.stopPropagation();
 
-                        // Toggle topic menu state
-                        activeTopicId = (activeTopicId === topicId) ? null : topicId;
-                        
+                    } else if (groupMenuOption) { // Check for group menu click second
+                        const groupName = groupMenuOption.dataset.targetId;
+                        const newStatus = groupMenuOption.dataset.groupMenu;
+                        // Find the subject this group belongs to
+                        const subjectName = groupMenuOption.closest('.group-branch').querySelector('.group-header-toggle').dataset.subjectName;
+                        updateGroupStatus(subjectName, groupName, newStatus); 
+                        e.stopPropagation();
+
+                    } else if (chapterLeaf) { // Check for row click last
+                        const chapterId = chapterLeaf.parentElement.dataset.chapterId;
+                        activeGroupName = null;
+                        activeChapterId = (activeChapterId === chapterId) ? null : chapterId;
                         renderSyllabus(); 
                         e.stopPropagation(); 
-                        
-                    } else if (menuOption) {
-                        // This is an option inside the topic menu
-                        const topicId = menuOption.dataset.targetId;
-                        const newStatus = menuOption.dataset.menuStatus;
-                        updateTopicStatus(topicId, newStatus);
-                        e.stopPropagation();
-
-                    } else if (e.target.closest('[data-chapter-menu]')) {
-                        // This is an option inside the chapter menu
-                        const chapterName = e.target.closest('[data-chapter-menu]').dataset.targetId;
-                        const newStatus = e.target.closest('[data-chapter-menu]').dataset.chapterMenu;
-                        updateChapterStatus(chapterName, newStatus);
-                        e.stopPropagation();
                     }
                 }
             });
 
-
-            // 2. Filter Toggle Handler
+            // 2. View Mode Toggle Handler
             document.getElementById('overall-stats-container').addEventListener('click', (e) => {
                 const button = e.target.closest('button[data-filter]');
                 if (button) {
-                    activeTopicId = null; // Close any open menu
-                    activeChapterName = null;
-                    syllabusFilter = button.dataset.filter;
-                    saveFilterState(); 
-                    renderSyllabus(); 
-                    renderOverallStats(); 
+                    const mode = button.dataset.filter;
+                    if (mode === 'priority' || mode === 'flat') {
+                        activeChapterId = null; 
+                        activeGroupName = null;
+                        groupByPriority = (mode === 'priority');
+                        saveViewMode(); 
+                        updateViewModeUI();
+                        renderSyllabus(); 
+                    }
                 }
             });
 
 
             // 3. Search Filter 
             document.getElementById('syllabus-search').addEventListener('input', (e) => {
-                activeTopicId = null; // Close any open menu
-                activeChapterName = null;
+                activeChapterId = null; 
+                activeGroupName = null;
                 searchTerm = e.target.value.trim();
                 renderSyllabus(); 
             });
 
             // 4. Global click to close menu if open (outside syllabus container)
             document.body.addEventListener('click', (e) => {
-                // If a menu is open, and the click target is NOT inside the syllabus container
-                if ((activeTopicId || activeChapterName) && !e.target.closest('#syllabus-container')) {
-                    activeTopicId = null;
-                    activeChapterName = null;
+                if ((activeChapterId || activeGroupName) && !e.target.closest('#syllabus-container')) {
+                    activeChapterId = null;
+                    activeGroupName = null;
                     renderSyllabus(); 
                 }
             });
@@ -768,32 +901,35 @@
             });
 
             document.getElementById('confirm-reset-btn').addEventListener('click', () => {
-                localStorage.removeItem('jeeSyllabusProgress');
+                localStorage.removeItem(CURRENT_STORAGE_KEY);
+                localStorage.removeItem(MIGRATION_STORAGE_KEY);
+                localStorage.removeItem(OPEN_STATES_KEY);
+                localStorage.removeItem(VIEW_MODE_KEY); 
+                localStorage.removeItem('jeeSyllabusFilter');
                 localStorage.removeItem('jeeSyllabusOpenStates');
-                localStorage.removeItem('jeeSyllabusFilter'); // Added for completeness, though filter is handled by load/save functions.
-                topicStatuses = {};
-                openStates = {};
-                
-                // Close any open menus
-                activeTopicId = null;
-                activeChapterName = null;
 
-                // Re-render everything
+                chapterStatuses = {};
+                openStates = {};
+                groupByPriority = true; 
+                
+                activeChapterId = null;
+                activeGroupName = null;
+
                 renderSyllabus();
                 renderOverallStats();
                 
                 resetModal.style.display = 'none';
 
-                // Optional: Flash a message
                 const header = document.querySelector('header');
+                const existingMessage = header.querySelector('.reset-message');
+                if (existingMessage) existingMessage.remove();
+
                 const message = document.createElement('p');
-                message.className = 'text-green-400 font-semibold mt-4 transition-opacity duration-500 opacity-0';
+                message.className = 'text-green-400 font-semibold mt-4 transition-opacity duration-500 opacity-0 reset-message';
                 message.textContent = 'Progress successfully reset!';
                 header.appendChild(message);
                 
-                setTimeout(() => {
-                    message.classList.add('opacity-100');
-                }, 10);
+                setTimeout(() => { message.classList.add('opacity-100'); }, 10);
                 setTimeout(() => {
                     message.classList.remove('opacity-100');
                     setTimeout(() => message.remove(), 500);
@@ -802,11 +938,15 @@
 
 
             // --- Initialization ---
-            loadProgress();
-            loadFilterState();
+            loadViewMode(); 
+            loadProgress(); 
             renderOverallStats();
             renderSyllabus();
         });
     </script>
 </body>
 </html>
+
+
+
+
