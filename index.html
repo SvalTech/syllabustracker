@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,9 +73,11 @@
         /* Chapter row styles */
         .chapter-leaf {
             transition: all 0.2s ease-out;
+            cursor: pointer;
+            background-color: rgba(38, 38, 38, 0.5); /* bg-neutral-800/50 */
         }
         .chapter-leaf:hover {
-            background-color: #262626; /* neutral-800 */
+            background-color: rgba(38, 38, 38, 0.8); /* bg-neutral-800/80 */
             transform: scale(1.005);
         }
 
@@ -130,13 +131,7 @@
 </head>
 <body class="bg-black text-neutral-400">
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <header class="text-center mb-10">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center justify-center">
-                <svg class="w-8 h-8 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                JEE Syllabus Mastery
-            </h1>
-            <p class="text-neutral-500 mt-2 max-w-2xl mx-auto">Track your progress based on MathonGo's 2026 Chapter Priority.</p>
-        </header>
+
 
         <!-- Main Layout: Overall Stats (Sticky) and Content -->
         <div class="flex flex-col xl:flex-row gap-8 items-start">
@@ -373,7 +368,7 @@
             let searchTerm = '';
             let groupByPriority = true; // View mode state
             let activeChapterId = null; // Holds the ID of the chapter whose inline menu is open.
-            let activeGroupName = null; // Holds the Name of the group (Unit or Priority) whose bulk status menu is open.
+            let activeGroupId = null; // REPLACED: activeGroupName. Now stores unique ID like "Subject-GroupName"
 
             // --- Persistence (Local Storage) ---
 
@@ -507,7 +502,7 @@
                 saveProgress();
                 storeOpenStates(); 
                 activeChapterId = null; 
-                activeGroupName = null;
+                activeGroupId = null;
                 renderSyllabus(); 
                 renderOverallStats(); 
             }
@@ -532,7 +527,7 @@
                 saveProgress();
                 storeOpenStates();
                 activeChapterId = null;
-                activeGroupName = null; 
+                activeGroupId = null; 
                 renderSyllabus(); 
                 renderOverallStats(); 
             }
@@ -630,8 +625,8 @@
             }
             
             // Renders the inline menu for an entire GROUP (bulk update)
-            function renderGroupStatusMenu(groupName) {
-                return `<div class="inline-status-menu group-menu mt-2 p-3 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${groupName}">
+            function renderGroupStatusMenu(uniqueGroupId, groupName) {
+                return `<div class="inline-status-menu group-menu mt-2 p-3 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${uniqueGroupId}">
                             <p class="text-neutral-400 text-xs font-semibold pb-1 border-b border-neutral-700 mb-2">Apply status to all chapters in this group:</p>
                             ${createStatusMenuItems(groupName, true)}
                         </div>`;
@@ -691,7 +686,8 @@
                         const isVisible = (subjectMatch || groupMatch || chapterMatches.length > 0) && group.chapters.length > 0;
                         if (isVisible) visibleChapterCount++;
 
-                        const isGroupMenuOpen = activeGroupName === group.groupName;
+                        const uniqueGroupId = `${subject.subject}-${group.groupName}`; // Create unique ID
+                        const isGroupMenuOpen = activeGroupId === uniqueGroupId; // Check against unique ID
 
                         const groupDiv = document.createElement('div');
                         groupDiv.className = `group-branch rounded-lg overflow-hidden ${isVisible ? '' : 'hidden'}`;
@@ -706,7 +702,7 @@
                                     </div>
                                     <button data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-status-btn text-sm font-bold text-white px-3 py-1 rounded-full transition bg-indigo-700/40 hover:bg-indigo-700/80 ml-2">${groupStats.percentage}%</button>
                                 </div>
-                                ${isGroupMenuOpen ? renderGroupStatusMenu(group.groupName) : ''}
+                                ${isGroupMenuOpen ? renderGroupStatusMenu(uniqueGroupId, group.groupName) : ''}
                             </div>
                             <div class="content-container chapter-leaf-list p-3 bg-neutral-900/50 space-y-1"></div>`;
                         
@@ -725,9 +721,9 @@
                             }
                             
                             const chapterDiv = document.createElement('div');
-                            chapterDiv.className = `chapter-leaf p-2 rounded-lg flex justify-between items-center transition-all duration-150 ${isOpen ? 'ring-2 ring-indigo-500 bg-neutral-800' : ''}`;
+                            chapterDiv.className = `chapter-leaf p-3 rounded-lg flex justify-between items-center transition-all duration-150 ${isOpen ? 'ring-2 ring-indigo-500 bg-neutral-800' : ''}`; /* isOpen bg-neutral-800 overrides default */
                             chapterDiv.innerHTML = `
-                                <span class="text-sm flex-grow pr-2 flex items-center ${config.color} font-medium">
+                                <span class="text-sm flex-grow pr-3 flex items-center ${config.color} font-medium">
                                     ${highlightText(chapter.name, searchTerm)}
                                 </span>
                                 <button data-chapter-id="${chapter.id}" class="status-btn px-2 py-1 rounded font-medium text-xs ${config.color} ${config.selectColor.replace('bg-', 'bg-').replace('/40', '/60')} flex items-center">
@@ -781,8 +777,8 @@
                     const menuEl = document.querySelector(`[data-menu-id="${activeChapterId}"]`);
                     if (menuEl) menuEl.classList.add('open');
                 }
-                if (activeGroupName) {
-                    const menuEl = document.querySelector(`[data-menu-id="${activeGroupName}"]`);
+                if (activeGroupId) {
+                    const menuEl = document.querySelector(`[data-menu-id="${activeGroupId}"]`);
                     if (menuEl) menuEl.classList.add('open');
                 }
 
@@ -800,7 +796,7 @@
 
                 if (subjectHeader) {
                     activeChapterId = null;
-                    activeGroupName = null;
+                    activeGroupId = null;
                     
                     const parentNode = subjectHeader.closest('.subject-card');
                     parentNode.classList.toggle('expanded');
@@ -809,7 +805,7 @@
 
                 } else if (groupToggle) {
                     activeChapterId = null; 
-                    activeGroupName = null; 
+                    activeGroupId = null; 
                     
                     const parentNode = groupToggle.closest('.group-branch');
                     parentNode.classList.toggle('expanded');
@@ -818,13 +814,16 @@
 
                 } else if (groupStatusBtn) {
                     const groupName = groupStatusBtn.dataset.groupName;
+                    const subjectName = groupStatusBtn.dataset.subjectName; // Get subject
+                    const uniqueGroupId = `${subjectName}-${groupName}`; // Create unique ID
+
                     activeChapterId = null;
-                    activeGroupName = (activeGroupName === groupName) ? null : groupName;
+                    activeGroupId = (activeGroupId === uniqueGroupId) ? null : uniqueGroupId; // Toggle unique ID
                     renderSyllabus(); 
                     e.stopPropagation(); 
 
                 } else {
-                    const chapterLeaf = e.target.closest('.chapter-leaf');
+                    const chapterContainer = e.target.closest('[data-chapter-id]'); // Find container by data-id
                     const menuOption = e.target.closest('[data-menu-status]');
                     const groupMenuOption = e.target.closest('[data-group-menu]');
 
@@ -842,9 +841,9 @@
                         updateGroupStatus(subjectName, groupName, newStatus); 
                         e.stopPropagation();
 
-                    } else if (chapterLeaf) { // Check for row click last
-                        const chapterId = chapterLeaf.parentElement.dataset.chapterId;
-                        activeGroupName = null;
+                    } else if (chapterContainer) { // Check for row click last
+                        const chapterId = chapterContainer.dataset.chapterId; // Get ID directly
+                        activeGroupId = null;
                         activeChapterId = (activeChapterId === chapterId) ? null : chapterId;
                         renderSyllabus(); 
                         e.stopPropagation(); 
@@ -859,7 +858,7 @@
                     const mode = button.dataset.filter;
                     if (mode === 'priority' || mode === 'flat') {
                         activeChapterId = null; 
-                        activeGroupName = null;
+                        activeGroupId = null;
                         groupByPriority = (mode === 'priority');
                         saveViewMode(); 
                         updateViewModeUI();
@@ -872,16 +871,16 @@
             // 3. Search Filter 
             document.getElementById('syllabus-search').addEventListener('input', (e) => {
                 activeChapterId = null; 
-                activeGroupName = null;
+                activeGroupId = null;
                 searchTerm = e.target.value.trim();
                 renderSyllabus(); 
             });
 
             // 4. Global click to close menu if open (outside syllabus container)
             document.body.addEventListener('click', (e) => {
-                if ((activeChapterId || activeGroupName) && !e.target.closest('#syllabus-container')) {
+                if ((activeChapterId || activeGroupId) && !e.target.closest('#syllabus-container')) {
                     activeChapterId = null;
-                    activeGroupName = null;
+                    activeGroupId = null;
                     renderSyllabus(); 
                 }
             });
@@ -910,7 +909,7 @@
                 groupByPriority = true; 
                 
                 activeChapterId = null;
-                activeGroupName = null;
+                activeGroupId = null;
 
                 renderSyllabus();
                 renderOverallStats();
@@ -943,6 +942,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
