@@ -4,26 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JEE Syllabus Mastery | SvalTech</title>
+
+    <!-- --- NEW: SEO & Social Meta Tags --- -->
+    <meta name="description" content="A modern, interactive dashboard to track your complete JEE 2026 syllabus progress for Physics, Chemistry, and Mathematics. Master your prep.">
+    <meta name="keywords" content="JEE, JEE 2026, JEE Syllabus, JEE Tracker, Syllabus Tracker, IIT JEE, JEE Main, JEE Advanced, SvalTech, Shaurya Pratap Singh">
+    <link rel="canonical" href="https://sval.tech/jee-syllabus-tracker/"> <!-- Replace with your actual final URL -->
+    
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="JEE Syllabus Mastery | SvalTech">
+    <meta property="og:description" content="Track your JEE 2026 syllabus progress with a modern, interactive dashboard.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sval.tech/jee-syllabus-tracker/"> <!-- Replace with your actual final URL -->
+    <meta property="og:image" content="https://placehold.co/1200x630/6366f1/white?text=JEE+Syllabus+Mastery"> <!-- Replace with a link to your own preview image -->
+    <meta property="og:site_name" content="SvalTech">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="JEE Syllabus Mastery | SvalTech">
+    <meta name="twitter:description" content="Track your JEE 2026 syllabus progress with a modern, interactive dashboard.">
+    <meta name="twitter:image" content="https://placehold.co/1200x630/6366f1/white?text=JEE+Syllabus+Mastery"> <!-- Replace with a link to your own preview image -->
+
+    <!-- Favicon (Emoji placeholder, replace with your own .ico or .png) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+    <!-- --- End of SEO Tags --- -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- NEW: CUBIC-BEZIER Easing functions for smoother animations -->
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #171717;
-            --border-color: #262626;
-            --primary-color: #6366f1; /* NEW: indigo-500 */
-            --primary-color-faded: rgba(99, 102, 241, 0.1);
+            --bg-color: #0F0F12; /* Slightly off-black */
+            --card-bg: #1A1A1E; /* Darker card bg */
+            --card-bg-light: #212125; /* Lighter card/hover bg */
+            --border-color: #2a2a30;
+            --primary-color: #6366f1; /* indigo-500 */
             --primary-color-dark: #4f46e5; /* indigo-600 */
+            --primary-glow-subtle: 0 0 15px 0 rgba(99, 102, 241, 0.2);
+            --primary-glow-strong: 0 0 25px 5px rgba(99, 102, 241, 0.25);
+            
+            /* Easing functions */
+            --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+            --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+            --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: #a3a3a3; /* neutral-400 */
+            /* Subtle background noise for a "premium" feel */
+            background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 25%),
+                              radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 25%);
         }
         
+        /* --- NEW: Glassmorphism --- */
+        .glassmorphism {
+            background: rgba(26, 26, 30, 0.6); /* --card-bg at 60% opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+        }
+
         /* General collapsible styles */
         .subject-header, .group-header-toggle {
             cursor: pointer;
@@ -31,147 +87,255 @@
         }
 
         .arrow {
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s var(--ease-in-out-cubic);
         }
+        .collapsed .arrow { transform: rotate(-90deg); }
+        .expanded .arrow { transform: rotate(0deg); }
 
-        .collapsed .arrow {
-            transform: rotate(-90deg);
-        }
-
-        .expanded .arrow {
-            transform: rotate(0deg);
-        }
-
+        /* --- REFINED: Accordion Animations --- */
         .content-container {
-            max-height: 4000px; /* Increased max-height for flat list */
+            max-height: 4000px;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            transition: max-height 0.5s var(--ease-out-quart), opacity 0.4s var(--ease-out-quad);
             opacity: 1;
         }
-
         .collapsed .content-container {
             max-height: 0;
             opacity: 0;
+            transition: max-height 0.4s var(--ease-out-cubic), opacity 0.2s ease-out;
             padding-top: 0 !important;
             padding-bottom: 0 !important;
         }
         
         .progress-bar-segment {
-            transition: width 0.5s ease-in-out;
+            transition: width 0.6s var(--ease-in-out-cubic);
         }
 
+        /* --- REFINED: Subject Card --- */
         .subject-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 0.75rem; /* rounded-xl */
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            /* NEW: Animation */
+            animation: fadeInUp 0.5s var(--ease-out-cubic) backwards;
         }
         .subject-card:hover {
-            border-color: #404040; /* neutral-700 */
+            border-color: var(--primary-color);
+            box-shadow: var(--primary-glow-subtle);
         }
-        
-        /* Chapter row styles */
+        /* Stagger card animations */
+        .subject-card:nth-child(2n) { animation-delay: 0.1s; }
+        .subject-card:nth-child(3n) { animation-delay: 0.2s; }
+
+        /* --- REFINED: Chapter Row --- */
         .chapter-leaf {
-            transition: all 0.2s ease-out;
+            transition: background-color 0.2s ease-out;
             cursor: pointer;
-            background-color: rgba(38, 38, 38, 0.5); /* bg-neutral-800/50 */
+            background-color: transparent;
+            border: 1px solid var(--border-color);
         }
         .chapter-leaf:hover {
-            background-color: rgba(38, 38, 38, 0.8); /* bg-neutral-800/80 */
-            transform: scale(1.005);
+            background-color: var(--card-bg-light);
+            border-color: #444;
+        }
+        .chapter-leaf.is-open {
+            background-color: var(--card-bg-light);
+            border-color: var(--primary-color);
+            box-shadow: var(--primary-glow-subtle);
         }
 
-        /* Status Button styles for tap/click */
+        /* --- REFINED: Status Buttons --- */
         .status-btn, .group-status-btn {
             cursor: pointer;
-            transition: transform 0.1s;
+            transition: transform 0.15s var(--ease-out-quad), box-shadow 0.2s ease;
+        }
+        .status-btn:hover, .group-status-btn:hover {
+            box-shadow: var(--primary-glow-subtle);
         }
         .status-btn:active, .group-status-btn:active {
             transform: scale(0.95);
         }
 
-        /* Styles for search result highlighting */
         .highlight {
-            background-color: var(--primary-color-faded);
+            background-color: rgba(99, 102, 241, 0.15);
             color: var(--primary-color);
-            padding: 1px 3px;
+            padding: 2px 4px;
             border-radius: 4px;
             font-weight: 600;
         }
 
-        /* Toggle Switch Styling */
-        #filter-priority.active, #filter-flat.active {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-            background-color: var(--primary-color);
+        /* --- NEW: Custom View Mode Toggle Switch --- */
+        .view-mode-toggle {
+            position: relative;
+            background-color: var(--card-bg);
+            border-radius: 99px;
+            padding: 4px;
+            display: flex;
+            border: 1px solid var(--border-color);
+        }
+        .view-mode-toggle .toggle-option {
+            flex: 1;
+            padding: 4px 0;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #737373; /* neutral-500 */
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: color 0.3s var(--ease-in-out-cubic);
+        }
+        .view-mode-toggle .toggle-option.active {
             color: white;
         }
-        
-        /* New Inline Status Menu Styling */
+        .view-mode-toggle .toggle-slider {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: calc(50% - 4px);
+            height: calc(100% - 8px);
+            background-color: var(--primary-color);
+            border-radius: 99px;
+            box-shadow: var(--primary-glow-subtle);
+            transition: transform 0.3s var(--ease-in-out-cubic);
+            z-index: 5;
+        }
+        .view-mode-toggle[data-mode="flat"] .toggle-slider {
+            transform: translateX(calc(100% + 4px));
+        }
+
+        /* --- REFINED: Inline Status Menu --- */
         .inline-status-menu {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.2s ease-in-out, opacity 0.2s ease-in-out;
+            transition: max-height 0.3s var(--ease-in-out-cubic), opacity 0.2s ease-out,
+                        transform 0.3s var(--ease-in-out-cubic), padding 0.3s ease;
             opacity: 0;
+            transform: translateY(-10px);
+            padding-top: 0; padding-bottom: 0;
+            background-color: rgba(33, 33, 37, 0.7); /* --card-bg-light at 70% */
+            backdrop-filter: blur(8px);
         }
         .inline-status-menu.open {
-            max-height: 220px; /* Sufficient height to show all buttons */
+            max-height: 250px;
             opacity: 1;
+            transform: translateY(0);
+            padding-top: 0.5rem; padding-bottom: 0.5rem; /* p-2 */
+        }
+        .inline-status-menu-btn {
+            transition: background-color 0.2s ease;
+        }
+        .inline-status-menu-btn.active {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+            font-weight: 600;
+        }
+        .inline-status-menu-btn:not(.active):hover {
+            background-color: var(--card-bg-light);
         }
 
-        /* Status Dot Styles */
         .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-            flex-shrink: 0;
+            width: 8px; height: 8px; border-radius: 50%;
+            display: inline-block; margin-right: 8px; flex-shrink: 0;
         }
 
-        /* FAB (Floating Action Button) Styles */
+        /* --- REFINED: FAB (Floating Action Button) --- */
         .fab-container .fab-menu {
             visibility: hidden;
             opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.2s ease-out;
+            transform: translateY(10px) scale(0.95);
+            transition: all 0.25s var(--ease-out-cubic);
             position: absolute;
             bottom: 100%;
             right: 0;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem; /* mb-3 */
         }
         .fab-container:hover .fab-menu {
             visibility: visible;
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
+        .fab-main-btn {
+            transition: all 0.3s var(--ease-in-out-cubic);
+            box-shadow: 0 4px 15px -2px rgba(0,0,0,0.4);
+        }
+        .fab-main-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px 0 rgba(99, 102, 241, 0.4);
+            transform: scale(1.05);
+        }
+        .fab-main-btn:hover svg {
+            transform: rotate(15deg);
+        }
+        .fab-main-btn svg {
+            transition: transform 0.3s var(--ease-in-out-cubic);
+        }
+        
+        /* --- REFINED: Modal --- */
+        #reset-modal {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
     </style>
 </head>
-<body class="bg-black text-neutral-400">
+<body class="bg-bg-color text-neutral-400">
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
 
+        <!-- --- REFINED: Header --- -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-500 mb-3 relative">
+                <span class="relative z-10">JEE Syllabus Mastery</span>
+                <!-- NEW: Glow effect -->
+                <span class="absolute -inset-2 block bg-gradient-to-r from-indigo-500 to-indigo-600 opacity-20 blur-3xl -z-10"></span>
+            </h1>
+            <p class="text-small text-neutral-400 max-w-2xl mx-auto">
+                Powered by <span class="font-bold text-neutral-300">sval.tech</span>
+            </p>
+        </header>
 
         <!-- Main Layout: Overall Stats (Sticky) and Content -->
         <div class="flex flex-col xl:flex-row gap-8 items-start">
             
-            <!-- Overall Progress Dashboard (Sticky on Desktop, Full Width on Mobile) -->
-            <div id="overall-stats-container" class="w-full xl:w-80 xl:sticky xl:top-8 p-5 rounded-xl shadow-2xl bg-gradient-to-br from-neutral-800 to-neutral-900 border border-neutral-700/60 transition-all duration-300">
-                <h2 class="text-xl font-bold text-white mb-4 border-b border-neutral-700 pb-2">Overall Progress</h2>
-                <div id="overall-progress-data" class="space-y-4">
+            <!-- --- REFINED: Overall Progress Dashboard --- -->
+            <div id="overall-stats-container" class="w-full xl:w-80 xl:sticky xl:top-8 p-6 rounded-2xl shadow-2xl glassmorphism transition-all duration-300">
+                <h2 class="text-xl font-bold text-white mb-5 border-b border-neutral-700 pb-3">Overall Progress</h2>
+                
+                <!-- NEW: Redesigned Progress Display -->
+                <div id="overall-progress-data" class="space-y-5">
                     <!-- Stats will be rendered here -->
+                    <!-- This will be populated by JS, but here is a sample structure: -->
+                    <div class="text-center">
+                        <span class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-500 relative">
+                            0%
+                            <span class="absolute -inset-4 opacity-30 bg-indigo-500 blur-3xl -z-10"></span>
+                        </span>
+                        <span class="text-base font-semibold text-neutral-400 block mt-1">Overall Coverage</span>
+                    </div>
+                    <div class="w-full h-2.5 rounded-full flex overflow-hidden bg-neutral-700">
+                        <!-- Progress segments here -->
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-sm pt-4 border-t border-neutral-700">
+                        <!-- Status items here -->
+                    </div>
                 </div>
 
-                <!-- Group Toggle -->
-                <div class="mt-6 border-t border-neutral-700 pt-4">
+                <!-- --- NEW: Redesigned View Mode Toggle --- -->
+                <div class="mt-6 border-t border-neutral-700 pt-5">
                     <label class="block text-neutral-300 font-semibold mb-2 text-sm">View Mode:</label>
-                    <div class="flex items-center justify-between bg-neutral-700/50 rounded-lg p-1">
-                        <button id="filter-priority" data-filter="priority" class="flex-1 py-1 text-sm font-medium rounded-lg text-neutral-400 transition hover:bg-neutral-600/70">By Priority</button>
-                        <button id="filter-flat" data-filter="flat" class="flex-1 py-1 text-sm font-medium rounded-lg transition hover:bg-neutral-600/70">By Unit</button>
+                    <div class="view-mode-toggle" data-mode="priority">
+                        <div class="toggle-slider"></div>
+                        <div id="filter-priority" data-filter="priority" class="toggle-option active">Priority</div>
+                        <div id="filter-flat" data-filter="flat" class="toggle-option">Unit</div>
                     </div>
                 </div>
                 
-                <div class="mt-4 space-y-3">
-                    <input type="text" id="syllabus-search" placeholder="Search chapter..." class="w-full p-2 rounded-lg bg-neutral-700/50 text-neutral-200 placeholder-neutral-500 focus:ring-indigo-500 focus:border-indigo-500 border-none transition-shadow" />
-                    <button id="reset-data-btn" class="w-full py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center text-sm shadow-md">
+                <div class="mt-5 space-y-3">
+                    <input type="text" id="syllabus-search" placeholder="Search chapter..." class="w-full p-2.5 rounded-lg bg-neutral-800/60 text-neutral-200 placeholder-neutral-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 border border-neutral-700 transition-shadow" />
+                    <button id="reset-data-btn" class="w-full py-2.5 bg-red-600/90 hover:bg-red-600 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center text-sm shadow-lg hover:shadow-red-500/30">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         Reset Progress
                     </button>
@@ -184,20 +348,20 @@
             </div>
         </div>
 
-        <!-- Confirmation Modal for Reset -->
-        <div id="reset-modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
-            <div class="bg-neutral-800 p-6 rounded-lg shadow-xl w-96 border border-neutral-700">
+        <!-- --- REFINED: Confirmation Modal --- -->
+        <div id="reset-modal" class="fixed inset-0 hidden items-center justify-center z-50 transition-opacity duration-300">
+            <div class="glassmorphism p-6 rounded-lg shadow-xl w-96 max-w-[90%] border border-neutral-700">
                 <h3 class="text-lg font-bold text-red-400 mb-3">Confirm Reset</h3>
                 <p class="text-neutral-300 mb-6">Are you sure you want to delete ALL of your saved JEE syllabus progress? This action cannot be undone.</p>
                 <div class="flex justify-end space-x-3">
                     <button id="cancel-reset-btn" class="px-4 py-2 text-sm font-medium rounded-lg text-neutral-300 bg-neutral-700 hover:bg-neutral-600 transition">Cancel</button>
-                    <button id="confirm-reset-btn" class="px-4 py-2 text-sm font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 transition">Yes, Clear All Data</button>
+                    <button id="confirm-reset-btn" class="px-4 py-2 text-sm font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 transition shadow-lg hover:shadow-red-500/30">Yes, Clear All Data</button>
                 </div>
             </div>
         </div>
 
         <!-- Official Resources and Footer -->
-        <div class="max-w-4xl mx-auto mt-16 text-center">
+        <div class="max-w-4xl mx-auto mt-20 text-center">
             <h3 class="font-semibold text-neutral-300 mb-4">Resources</h3>
             <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm bg-neutral-900/50 p-4 rounded-lg border border-neutral-800">
                 <div>
@@ -211,29 +375,29 @@
             </div>
         </div>
         
-        <footer class="text-center mt-12 text-neutral-600 text-sm">
+        <footer class="text-center mt-12 mb-6 text-neutral-600 text-sm">
             <p>Created by <a href="https://github.com/svalordev" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition hover:underline">Shaurya Pratap Singh</a></p>
         </footer>
     </div>
     
-    <!-- FAB (Floating Action Button) -->
+    <!-- --- REFINED: FAB (Floating Action Button) --- -->
     <div class="fab-container fixed bottom-6 right-6 z-40">
         <!-- Pop-up Menu -->
-        <div class="fab-menu w-56 p-2 space-y-1 border rounded-xl shadow-xl" style="background-color: var(--card-bg); border-color: var(--border-color);">
-            <h3 class="text-sm font-bold px-2 text-neutral-500">sval.tech</h3>
+        <div class="fab-menu w-56 p-2 space-y-1 rounded-xl shadow-xl glassmorphism">
+            <h3 class="text-sm font-bold px-2 py-1 text-neutral-500">sval.tech</h3>
             <!-- Link 1: Dashboard -->
-            <a href="https://sval.tech/studylocus/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-800 text-neutral-200 transition-colors">
+            <a href="https://sval.tech/studylocus/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-2 rounded-md hover:bg-neutral-800 text-neutral-200 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M7 3v18"></path><path d="M12 3v18"></path><path d="M17 3v18"></path><path d="M3 7.5h18"></path><path d="M3 12h18"></path><path d="M3 16.5h18"></path></svg>
                 <span>Dashboard</span>
             </a>
             <!-- Link 2: Syllabus Tracker (Current Page) -->
-            <a href="#" class="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-800 text-neutral-200 transition-colors" aria-current="page">
+            <a href="#" class="flex items-center gap-3 p-2 rounded-md bg-indigo-500/20 text-indigo-300 transition-colors" aria-current="page">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m10 14-2 2 2 2"></path><path d="m14 6-2 2 2 2"></path></svg>
                 <span>Syllabus Tracker</span>
             </a>
         </div>
         <!-- Main Button -->
-        <button class="w-14 h-14 rounded-full border shadow-lg flex items-center justify-center text-white hover:bg-neutral-800 transition-colors" style="background-color: var(--card-bg); border-color: var(--border-color);" aria-label="Toggle sval.tech products menu">
+        <button class="fab-main-btn w-14 h-14 rounded-full border shadow-lg flex items-center justify-center text-white" style="background-color: var(--card-bg); border-color: var(--border-color);" aria-label="Toggle sval.tech products menu">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
         </button>
     </div>
@@ -246,9 +410,7 @@
             const OPEN_STATES_KEY = 'jeeSyllabusOpenStates_v2_mathongo';
             const VIEW_MODE_KEY = 'jeeSyllabusViewMode_v2'; 
 
-
-            // --- New Syllabus Data (Restructured) ---
-            // Each chapter now has a unit, priority, id, and name.
+            // --- Syllabus Data ---
             const syllabus = [
                 { 
                     subject: "Physics",
@@ -384,9 +546,7 @@
                 }
             ];
 
-
             // --- Data Migration Map ---
-            // Maps old topic IDs to new chapter IDs
             const MIGRATION_MAP = {
                 "PHY_MEC_01": ["PHY_B_11", "PHY_D_01"], "PHY_MEC_02": "PHY_B_10", "PHY_MEC_03": "PHY_B_07", "PHY_MEC_08": "PHY_D_05", "PHY_MEC_04": "PHY_B_03", "PHY_MEC_05": "PHY_B_04", "PHY_MEC_06": ["PHY_B_05", "PHY_D_02"], "PHY_MEC_07": ["PHY_C_06", "PHY_D_03"], "PHY_THE_01": "PHY_D_06", "PHY_THE_02": "PHY_A_05", "PHY_THE_03": "PHY_C_05", "PHY_EM_01": ["PHY_A_02", "PHY_C_02"], "PHY_EM_02": "PHY_A_01", "PHY_EM_03": ["PHY_A_04", "PHY_D_07"], "PHY_EM_04": ["PHY_C_03", "PHY_C_01"], "PHY_EM_05": "PHY_C_07", "PHY_OPT_01": "PHY_A_03", "PHY_OPT_02": "PHY_B_09", "PHY_MOD_01": "PHY_A_06", "PHY_MOD_02": ["PHY_A_07", "PHY_C_04"], "PHY_MOD_03": "PHY_B_06",
                 "CHE_PHY_01": "CHE_C_01", "CHE_PHY_02": "CHE_B_01", "CHE_PHY_04": "CHE_A_05", "CHE_PHY_05": ["CHE_D_05", "CHE_D_03"], "CHE_PHY_06": ["CHE_D_04", "CHE_A_06"], "CHE_PHY_07": "CHE_B_06", "CHE_PHY_08": "CHE_B_02", "CHE_INO_01": "CHE_C_03", "CHE_INO_02": "CHE_A_03", "CHE_INO_05": "CHE_B_05", "CHE_INO_06": "CHE_A_04", "CHE_INO_07": "CHE_A_02", "CHE_INO_08": "CHE_D_01", "CHE_ORG_01": "CHE_A_01", "CHE_ORG_02": "CHE_B_03", "CHE_ORG_03": "CHE_C_04", "CHE_ORG_04": ["CHE_C_02", "CHE_C_05", "CHE_D_02"], "CHE_ORG_05": "CHE_B_04", "CHE_ORG_06": "CHE_B_07", "CHE_ORG_09": "CHE_D_01",
@@ -395,10 +555,10 @@
 
             // --- Configuration ---
             const statusConfig = {
-                'not-started': { text: 'Not Started', color: 'text-neutral-500', selectColor: 'bg-neutral-800 text-neutral-400', weight: 0, barColor: 'bg-neutral-700', dotColor: 'bg-neutral-500' },
-                'in-progress': { text: 'In Progress', color: 'text-yellow-500', selectColor: 'bg-yellow-900/40 text-yellow-300', weight: 0.5, barColor: 'bg-yellow-500', dotColor: 'bg-yellow-500' },
-                'completed': { text: 'Completed', color: 'text-green-500', selectColor: 'bg-green-900/40 text-green-300', weight: 1, barColor: 'bg-green-500', dotColor: 'bg-green-500' },
-                'mastered': { text: 'Mastered', color: 'text-indigo-400', selectColor: 'bg-indigo-900/40 text-indigo-300', weight: 1, barColor: 'bg-indigo-500', dotColor: 'bg-indigo-400' }
+                'not-started': { text: 'Not Started', color: 'text-neutral-500', selectColor: 'hover:bg-neutral-700/80', weight: 0, barColor: 'bg-neutral-700', dotColor: 'bg-neutral-500' },
+                'in-progress': { text: 'In Progress', color: 'text-yellow-500', selectColor: 'hover:bg-yellow-800/50', weight: 0.5, barColor: 'bg-yellow-500', dotColor: 'bg-yellow-500' },
+                'completed': { text: 'Completed', color: 'text-green-500', selectColor: 'hover:bg-green-800/50', weight: 1, barColor: 'bg-green-500', dotColor: 'bg-green-500' },
+                'mastered': { text: 'Mastered', color: 'text-indigo-400', selectColor: 'hover:bg-indigo-800/50', weight: 1, barColor: 'bg-indigo-500', dotColor: 'bg-indigo-400' }
             };
 
             // --- State Variables ---
@@ -406,8 +566,8 @@
             let openStates = {};
             let searchTerm = '';
             let groupByPriority = true; // View mode state
-            let activeChapterId = null; // Holds the ID of the chapter whose inline menu is open.
-            let activeGroupId = null; // REPLACED: activeGroupName. Now stores unique ID like "Subject-GroupName"
+            let activeChapterId = null; 
+            let activeGroupId = null; 
 
             // --- Persistence (Local Storage) ---
 
@@ -423,7 +583,7 @@
             function storeOpenStates() {
                 openStates = {};
                 document.querySelectorAll('.subject-card, .group-branch').forEach((el) => {
-                    const id = el.dataset.id; // Use data-id for persistent tracking
+                    const id = el.dataset.id;
                     if (id && el.classList.contains('expanded')) {
                         openStates[id] = true;
                     }
@@ -551,11 +711,9 @@
                 const subjectData = syllabus.find(s => s.subject === subjectName);
 
                 if (groupByPriority) {
-                    // 'groupName' is "Priority A", "Priority B", etc.
                     const priority = groupName.split(' ')[1]; // "A"
                     chaptersToUpdate = subjectData.units.flatMap(u => u.chapters).filter(c => c.priority === priority);
                 } else {
-                    // 'groupName' is "Mechanics I", "Calculus", etc.
                     chaptersToUpdate = subjectData.units.find(u => u.unitName === groupName).chapters;
                 }
                 
@@ -578,53 +736,56 @@
                 return text.replace(regex, '<span class="highlight">$1</span>');
             }
 
+            // --- UPDATED: View Mode UI ---
             function updateViewModeUI() {
+                const toggle = document.querySelector('.view-mode-toggle');
                 const priorityBtn = document.getElementById('filter-priority');
                 const flatBtn = document.getElementById('filter-flat');
 
-                priorityBtn.classList.remove('active');
-                flatBtn.classList.remove('active');
-
                 if (groupByPriority) {
+                    toggle.dataset.mode = 'priority';
                     priorityBtn.classList.add('active');
+                    flatBtn.classList.remove('active');
                 } else {
+                    toggle.dataset.mode = 'flat';
+                    priorityBtn.classList.remove('active');
                     flatBtn.classList.add('active');
                 }
             }
             
+            // --- UPDATED: Overall Stats Render ---
             function renderOverallStats() {
                 const stats = calculateOverallStats();
                 const container = document.getElementById('overall-progress-data');
 
                 container.innerHTML = `
-                    <div class="text-center mb-5">
-                        <p class="text-neutral-300 text-sm font-semibold mb-1">Total Chapters</p>
-                        <p class="text-4xl font-extrabold text-indigo-400">${stats.total}</p>
+                    <div class="text-center">
+                        <span class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-500 relative">
+                            ${stats.percentage}%
+                            <span class="absolute -inset-4 opacity-30 bg-indigo-500 blur-3xl -z-10"></span>
+                        </span>
+                        <span class="text-base font-semibold text-neutral-400 block mt-1">Overall Coverage</span>
                     </div>
-                    <div class="w-full h-3 rounded-full flex overflow-hidden bg-neutral-700">
+                    <div class="w-full h-2.5 rounded-full flex overflow-hidden bg-neutral-700">
                         <div class="progress-bar-segment ${statusConfig['mastered'].barColor}" style="width: ${stats.masteredPercent}%"></div>
                         <div class="progress-bar-segment ${statusConfig['completed'].barColor}" style="width: ${stats.completedPercent}%"></div>
                         <div class="progress-bar-segment ${statusConfig['in-progress'].barColor}" style="width: ${stats.inProgressPercent}%"></div>
                     </div>
-                    <div class="text-center mt-2">
-                         <span class="text-4xl font-extrabold text-white">${stats.percentage}%</span>
-                         <span class="text-base font-semibold text-neutral-400 block">Overall Coverage</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3 text-sm pt-4 border-t border-neutral-700">
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm pt-4 border-t border-neutral-700">
                         <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 rounded-full ${statusConfig['mastered'].barColor} mr-2"></span>
+                            <span class="status-dot ${statusConfig['mastered'].dotColor}"></span>
                             <span class="font-medium text-neutral-300">Mastered: ${stats.mastered}</span>
                         </div>
                         <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 rounded-full ${statusConfig['completed'].barColor} mr-2"></span>
+                            <span class="status-dot ${statusConfig['completed'].dotColor}"></span>
                             <span class="font-medium text-neutral-300">Completed: ${stats.completed}</span>
                         </div>
                         <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 rounded-full ${statusConfig['in-progress'].barColor} mr-2"></span>
+                            <span class="status-dot ${statusConfig['in-progress'].dotColor}"></span>
                             <span class="font-medium text-neutral-300">In Progress: ${stats.inProgress}</span>
                         </div>
                         <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 rounded-full ${statusConfig['not-started'].barColor} mr-2"></span>
+                            <span class="status-dot ${statusConfig['not-started'].dotColor}"></span>
                             <span class="font-medium text-neutral-400">Not Started: ${stats.notStarted}</span>
                         </div>
                     </div>
@@ -632,25 +793,18 @@
                 updateViewModeUI(); 
             }
             
-            // Reusable function to render the status menu buttons
+            // --- UPDATED: Status Menu Items (Cleaner) ---
             function createStatusMenuItems(targetId, isGroupMenu = false) {
                 const currentStatus = isGroupMenu ? 'group-menu' : chapterStatuses[targetId] || 'not-started';
                 const dataAttribute = isGroupMenu ? 'data-group-menu' : 'data-menu-status';
 
                 return Object.keys(statusConfig).map(key => {
                     const config = statusConfig[key];
-                    const baseClass = 'w-full text-left px-3 py-1.5 rounded-md transition-colors font-medium text-sm flex items-center';
-                    let statusClass = '';
+                    const isActive = !isGroupMenu && key === currentStatus;
+                    const activeClass = isActive ? 'active' : '';
+                    const checkmark = isActive ? `<span class="ml-auto text-white">✓</span>` : '';
 
-                    if (key === 'not-started') statusClass = 'text-neutral-300 hover:bg-neutral-700/80';
-                    if (key === 'in-progress') statusClass = 'text-yellow-300 hover:bg-yellow-800/50';
-                    if (key === 'completed') statusClass = 'text-green-300 hover:bg-green-800/50';
-                    if (key === 'mastered') statusClass = 'text-indigo-300 hover:bg-indigo-800/50';
-                    
-                    const activeStyle = !isGroupMenu && key === currentStatus ? ` bg-neutral-700/50 ring-2 ring-indigo-500` : '';
-                    const checkmark = !isGroupMenu && key === currentStatus ? `<span class="ml-auto text-indigo-400">✓</span>` : '';
-
-                    return `<button ${dataAttribute}="${key}" data-target-id="${targetId}" class="${baseClass} ${statusClass}${activeStyle}">
+                    return `<button ${dataAttribute}="${key}" data-target-id="${targetId}" class="inline-status-menu-btn w-full text-left px-3 py-2 rounded-md font-medium text-sm flex items-center ${config.color} ${config.selectColor} ${activeClass}">
                                 <span class="status-dot ${config.dotColor}"></span>
                                 ${config.text}
                                 ${checkmark}
@@ -658,16 +812,16 @@
                 }).join('');
             }
             
-            // Renders the inline menu for a single CHAPTER
             function renderChapterStatusMenu(chapterId) {
-                return `<div class="inline-status-menu mt-2 p-2 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${chapterId}">${createStatusMenuItems(chapterId, false)}</div>`;
+                return `<div class="inline-status-menu mt-2 rounded-lg shadow-xl space-y-1" data-menu-id="${chapterId}">${createStatusMenuItems(chapterId, false)}</div>`;
             }
             
-            // Renders the inline menu for an entire GROUP (bulk update)
             function renderGroupStatusMenu(uniqueGroupId, groupName) {
-                return `<div class="inline-status-menu group-menu mt-2 p-3 bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl space-y-1" data-menu-id="${uniqueGroupId}">
-                            <p class="text-neutral-400 text-xs font-semibold pb-1 border-b border-neutral-700 mb-2">Apply status to all chapters in this group:</p>
-                            ${createStatusMenuItems(groupName, true)}
+                return `<div class="inline-status-menu group-menu mt-2 rounded-lg shadow-xl space-y-1" data-menu-id="${uniqueGroupId}">
+                            <p class="text-neutral-400 text-xs font-semibold px-3 pt-2 pb-1 border-b border-neutral-700 mb-1">Apply to all in group:</p>
+                            <div classp="p-2 space-y-1">
+                                ${createStatusMenuItems(groupName, true)}
+                            </div>
                         </div>`;
             }
 
@@ -678,18 +832,20 @@
                 
                 const currentSearchTerm = searchTerm.toLowerCase();
 
-                syllabus.forEach(subject => {
+                syllabus.forEach((subject, index) => {
                     const allSubjectChapters = subject.units.flatMap(u => u.chapters);
                     const subjectStats = calculateStats(allSubjectChapters);
 
                     const subjectMatch = subject.subject.toLowerCase().includes(currentSearchTerm);
                     
                     const subjectDiv = document.createElement('div');
-                    subjectDiv.className = 'subject-card rounded-xl collapsed shadow-xl';
+                    subjectDiv.className = 'subject-card rounded-2xl collapsed shadow-xl';
                     subjectDiv.dataset.id = subject.subject; 
+                    // NEW: Stagger animation
+                    subjectDiv.style.animationDelay = `${index * 50}ms`;
                     
                     const groupContainerDiv = document.createElement('div');
-                    groupContainerDiv.className = 'content-container px-5 pb-5';
+                    groupContainerDiv.className = 'content-container px-4 sm:px-5 pb-5';
                     groupContainerDiv.innerHTML = `<div class="space-y-3 mt-4 border-t border-neutral-800 pt-4"></div>`;
                     const groupList = groupContainerDiv.querySelector('div');
 
@@ -697,23 +853,18 @@
                     let groupsToRender = [];
 
                     if (groupByPriority) {
-                        // --- START: PRIORITY VIEW ---
                         const chaptersByPriority = { A: [], B: [], C: [], D: [] };
                         allSubjectChapters.forEach(chapter => {
                             chaptersByPriority[chapter.priority].push(chapter);
                         });
-                        
                         groupsToRender = [
                             { groupName: "Priority A", chapters: chaptersByPriority.A },
                             { groupName: "Priority B", chapters: chaptersByPriority.B },
                             { groupName: "Priority C", chapters: chaptersByPriority.C },
                             { groupName: "Priority D", chapters: chaptersByPriority.D },
                         ];
-                        // --- END: PRIORITY VIEW ---
                     } else {
-                        // --- START: UNIT VIEW ("Flat List") ---
                         groupsToRender = subject.units.map(u => ({ groupName: u.unitName, chapters: u.chapters }));
-                        // --- END: UNIT VIEW ---
                     }
 
                     // --- COMMON RENDER LOGIC ---
@@ -725,25 +876,26 @@
                         const isVisible = (subjectMatch || groupMatch || chapterMatches.length > 0) && group.chapters.length > 0;
                         if (isVisible) visibleChapterCount++;
 
-                        const uniqueGroupId = `${subject.subject}-${group.groupName}`; // Create unique ID
-                        const isGroupMenuOpen = activeGroupId === uniqueGroupId; // Check against unique ID
+                        const uniqueGroupId = `${subject.subject}-${group.groupName}`;
+                        const isGroupMenuOpen = activeGroupId === uniqueGroupId;
 
                         const groupDiv = document.createElement('div');
-                        groupDiv.className = `group-branch rounded-lg overflow-hidden ${isVisible ? '' : 'hidden'}`;
-                        groupDiv.dataset.id = `${subject.subject}-${group.groupName}`; // data-id
+                        groupDiv.className = `group-branch rounded-lg overflow-hidden border border-neutral-800 ${isVisible ? '' : 'hidden'}`;
+                        groupDiv.dataset.id = `${subject.subject}-${group.groupName}`;
                         
+                        // --- REFINED: Group Header ---
                         groupDiv.innerHTML = `
-                            <div class="group-header p-3 transition-colors ${groupStats.percentage === 100 ? 'bg-green-900/20 hover:bg-green-900/40' : 'bg-neutral-800/50 hover:bg-neutral-700/70'} ${isGroupMenuOpen ? 'ring-2 ring-indigo-500' : ''}">
+                            <div class="group-header p-3.5 transition-colors ${groupStats.percentage === 100 ? 'bg-green-900/10' : 'bg-neutral-800/30'} ${isGroupMenuOpen ? 'ring-2 ring-indigo-500' : ''}">
                                 <div class="flex items-center justify-between">
-                                    <div data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-header-toggle flex items-center flex-grow py-1 min-w-0">
+                                    <div data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-header-toggle flex items-center flex-grow py-1 min-w-0 pr-3">
                                         <svg class="w-4 h-4 text-neutral-500 arrow mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                                        <h3 class="text-md font-semibold ${groupStats.percentage === 100 ? 'text-green-300' : 'text-neutral-300'} truncate">${highlightText(group.groupName, searchTerm)}</h3>
+                                        <h3 class="text-md font-semibold ${groupStats.percentage === 100 ? 'text-green-300' : 'text-neutral-200'} truncate">${highlightText(group.groupName, searchTerm)}</h3>
                                     </div>
-                                    <button data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-status-btn text-sm font-bold text-white px-3 py-1 rounded-full transition bg-indigo-700/40 hover:bg-indigo-700/80 ml-2">${groupStats.percentage}%</button>
+                                    <button data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-status-btn text-sm font-bold text-white px-3 py-1 rounded-full transition bg-indigo-700/40 hover:bg-indigo-700/80 ml-2 flex-shrink-0">${groupStats.percentage}%</button>
                                 </div>
                                 ${isGroupMenuOpen ? renderGroupStatusMenu(uniqueGroupId, group.groupName) : ''}
                             </div>
-                            <div class="content-container chapter-leaf-list p-3 bg-neutral-900/50 space-y-1"></div>`;
+                            <div class="content-container chapter-leaf-list p-2 bg-black/20 space-y-1"></div>`;
                         
                         const chapterListEl = groupDiv.querySelector('.chapter-leaf-list');
                         
@@ -759,13 +911,14 @@
                                 chapterContainer.className = 'hidden';
                             }
                             
+                            // --- REFINED: Chapter Row ---
                             const chapterDiv = document.createElement('div');
-                            chapterDiv.className = `chapter-leaf p-3 rounded-lg flex justify-between items-center transition-all duration-150 ${isOpen ? 'ring-2 ring-indigo-500 bg-neutral-800' : ''}`; /* isOpen bg-neutral-800 overrides default */
+                            chapterDiv.className = `chapter-leaf p-3 rounded-lg flex justify-between items-center ${isOpen ? 'is-open' : ''}`;
                             chapterDiv.innerHTML = `
                                 <span class="text-sm flex-grow pr-3 flex items-center ${config.color} font-medium">
                                     ${highlightText(chapter.name, searchTerm)}
                                 </span>
-                                <button data-chapter-id="${chapter.id}" class="status-btn px-2 py-1 rounded font-medium text-xs ${config.color} ${config.selectColor.replace('bg-', 'bg-').replace('/40', '/60')} flex items-center">
+                                <button data-chapter-id="${chapter.id}" class="status-btn px-2.5 py-1 rounded-md font-medium text-xs ${config.color} bg-neutral-800/50 border border-neutral-700 flex items-center flex-shrink-0">
                                     <span class="status-dot ${config.dotColor} mr-1.5"></span>
                                     ${config.text}
                                 </button>`;
@@ -779,31 +932,31 @@
                         groupList.appendChild(groupDiv);
                     });
 
-                    // Hide subject card if no chapter/topic matches the filter AND the subject name doesn't match
                     const subjectVisible = subjectMatch || visibleChapterCount > 0;
                     subjectDiv.style.display = subjectVisible ? 'block' : 'none';
 
+                    // --- REFINED: Subject Card Header ---
                     subjectDiv.innerHTML = `
                         <div class="subject-header p-5">
-                            <div class="flex justify-between items-center">
-                                <h2 class="text-2xl font-bold text-indigo-400">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-indigo-400">
                                     ${highlightText(subject.subject, searchTerm)}
                                 </h2>
-                                <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-4">
                                     <span class="text-2xl font-extrabold ${subjectStats.percentage === 100 ? 'text-green-300' : 'text-white'}">${subjectStats.percentage}%</span>
                                     <svg class="w-6 h-6 text-neutral-400 arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                                 </div>
                             </div>
-                            <div class="w-full h-2 rounded-full mt-4 flex overflow-hidden bg-neutral-700">
+                            <div class="w-full h-2.5 rounded-full flex overflow-hidden bg-neutral-700">
                                 <div class="progress-bar-segment ${statusConfig['mastered'].barColor}" style="width: ${subjectStats.masteredPercent}%"></div>
                                 <div class="progress-bar-segment ${statusConfig['completed'].barColor}" style="width: ${subjectStats.completedPercent}%"></div>
                                 <div class="progress-bar-segment ${statusConfig['in-progress'].barColor}" style="width: ${subjectStats.inProgressPercent}%"></div>
                             </div>
                             <div class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-medium">
-                                <span class="text-indigo-400">Mastered: ${subjectStats.mastered} / ${subjectStats.total}</span>
-                                <span class="text-green-400">Completed: ${subjectStats.completed}</span>
-                                <span class="text-yellow-400">In Progress: ${subjectStats.inProgress}</span>
-                                <span class="text-neutral-400">Not Started: ${subjectStats.notStarted}</span>
+                                <span class="flex items-center text-indigo-400"><span class="status-dot bg-indigo-400"></span>Mastered: ${subjectStats.mastered} / ${subjectStats.total}</span>
+                                <span class="flex items-center text-green-400"><span class="status-dot bg-green-500"></span>Completed: ${subjectStats.completed}</span>
+                                <span class="flex items-center text-yellow-400"><span class="status-dot bg-yellow-500"></span>In Progress: ${subjectStats.inProgress}</span>
+                                <span class="flex items-center text-neutral-400"><span class="status-dot bg-neutral-500"></span>Not Started: ${subjectStats.notStarted}</span>
                             </div>
                         </div>
                     `;
@@ -827,75 +980,118 @@
 
             // --- Event Handlers ---
 
-            // 1. Accordion Toggle and Status Button Click
+            // 1. Accordion/Menu Clicks (Main Container)
             document.getElementById('syllabus-container').addEventListener('click', (e) => {
                 const groupToggle = e.target.closest('.group-header-toggle');
                 const subjectHeader = e.target.closest('.subject-header');
                 const groupStatusBtn = e.target.closest('.group-status-btn');
 
                 if (subjectHeader) {
-                    activeChapterId = null;
-                    activeGroupId = null;
-                    
+                    // This is an accordion toggle.
+                    closeAllInlineMenus(); // Close any open menus
+                    activeChapterId = null; activeGroupId = null;
                     const parentNode = subjectHeader.closest('.subject-card');
                     parentNode.classList.toggle('expanded');
                     parentNode.classList.toggle('collapsed');
                     storeOpenStates(); 
-
                 } else if (groupToggle) {
-                    activeChapterId = null; 
-                    activeGroupId = null; 
-                    
+                    // This is also an accordion toggle.
+                    closeAllInlineMenus(); // Close any open menus
+                    activeChapterId = null; activeGroupId = null; 
                     const parentNode = groupToggle.closest('.group-branch');
                     parentNode.classList.toggle('expanded');
                     parentNode.classList.toggle('collapsed');
                     storeOpenStates(); 
 
                 } else if (groupStatusBtn) {
-                    const groupName = groupStatusBtn.dataset.groupName;
-                    const subjectName = groupStatusBtn.dataset.subjectName; // Get subject
-                    const uniqueGroupId = `${subjectName}-${groupName}`; // Create unique ID
-
-                    activeChapterId = null;
-                    activeGroupId = (activeGroupId === uniqueGroupId) ? null : uniqueGroupId; // Toggle unique ID
-                    renderSyllabus(); 
+                    // --- NEW LOGIC for Group Menu Toggle (No full render) ---
                     e.stopPropagation(); 
+                    const groupName = groupStatusBtn.dataset.groupName;
+                    const subjectName = groupStatusBtn.dataset.subjectName;
+                    const uniqueGroupId = `${subjectName}-${groupName}`;
+                    const groupHeader = groupStatusBtn.closest('.group-header');
+                    
+                    // Is a menu for this group already open?
+                    const existingMenu = groupHeader.querySelector('.inline-status-menu');
+                    
+                    closeAllInlineMenus(uniqueGroupId); // Close all *except* this one if it's already open
+                    
+                    if (existingMenu) {
+                        // Just close it
+                        activeGroupId = null;
+                        existingMenu.classList.remove('open');
+                        groupHeader.classList.remove('ring-2', 'ring-indigo-500');
+                        setTimeout(() => existingMenu.remove(), 300);
+                    } else {
+                        // Open a new one
+                        activeGroupId = uniqueGroupId; // Set state
+                        groupHeader.classList.add('ring-2', 'ring-indigo-500');
+                        const menuHtml = renderGroupStatusMenu(uniqueGroupId, groupName);
+                        groupHeader.insertAdjacentHTML('beforeend', menuHtml);
+                        setTimeout(() => {
+                            const newMenu = groupHeader.querySelector('.inline-status-menu');
+                            if (newMenu) newMenu.classList.add('open');
+                        }, 10);
+                    }
+                    // --- End of new logic ---
 
                 } else {
-                    const chapterContainer = e.target.closest('[data-chapter-id]'); // Find container by data-id
+                    const chapterContainer = e.target.closest('[data-chapter-id]');
                     const menuOption = e.target.closest('[data-menu-status]');
                     const groupMenuOption = e.target.closest('[data-group-menu]');
 
-                    if (menuOption) { // Check for menu click first
+                    if (menuOption) {
+                        // This is a DATA change. Full refresh is correct.
                         const chapterId = menuOption.dataset.targetId;
                         const newStatus = menuOption.dataset.menuStatus;
                         updateChapterStatus(chapterId, newStatus); 
                         e.stopPropagation();
-
-                    } else if (groupMenuOption) { // Check for group menu click second
+                    } else if (groupMenuOption) {
+                        // This is a DATA change. Full refresh is correct.
                         const groupName = groupMenuOption.dataset.targetId;
                         const newStatus = groupMenuOption.dataset.groupMenu;
-                        // Find the subject this group belongs to
                         const subjectName = groupMenuOption.closest('.group-branch').querySelector('.group-header-toggle').dataset.subjectName;
                         updateGroupStatus(subjectName, groupName, newStatus); 
                         e.stopPropagation();
-
-                    } else if (chapterContainer) { // Check for row click last
-                        const chapterId = chapterContainer.dataset.chapterId; // Get ID directly
-                        activeGroupId = null;
-                        activeChapterId = (activeChapterId === chapterId) ? null : chapterId;
-                        renderSyllabus(); 
+                    } else if (chapterContainer) {
+                        // --- NEW LOGIC for Chapter Menu Toggle (No full render) ---
                         e.stopPropagation(); 
+                        const chapterId = chapterContainer.dataset.chapterId;
+                        const chapterLeaf = chapterContainer.querySelector('.chapter-leaf');
+                        
+                        // Is a menu for this chapter already open?
+                        const existingMenu = chapterContainer.querySelector('.inline-status-menu');
+
+                        closeAllInlineMenus(chapterId); // Close all *except* this one if it's already open
+
+                        if (existingMenu) {
+                            // Just close it
+                            activeChapterId = null;
+                            chapterLeaf.classList.remove('is-open');
+                            existingMenu.classList.remove('open');
+                            setTimeout(() => existingMenu.remove(), 300);
+                        } else {
+                            // Open a new one
+                            activeChapterId = chapterId; // Set state
+                            chapterLeaf.classList.add('is-open');
+                            const menuHtml = renderChapterStatusMenu(chapterId);
+                            chapterContainer.insertAdjacentHTML('beforeend', menuHtml);
+                            setTimeout(() => {
+                                const newMenu = chapterContainer.querySelector('.inline-status-menu');
+                                if (newMenu) newMenu.classList.add('open');
+                            }, 10);
+                        }
+                        // --- End of new logic ---
                     }
                 }
             });
 
-            // 2. View Mode Toggle Handler
+            // 2. View Mode Toggle Handler (Dashboard)
             document.getElementById('overall-stats-container').addEventListener('click', (e) => {
-                const button = e.target.closest('button[data-filter]');
+                const button = e.target.closest('.toggle-option[data-filter]');
                 if (button) {
                     const mode = button.dataset.filter;
-                    if (mode === 'priority' || mode === 'flat') {
+                    if ((mode === 'priority' && !groupByPriority) || (mode === 'flat' && groupByPriority)) {
                         activeChapterId = null; 
                         activeGroupId = null;
                         groupByPriority = (mode === 'priority');
@@ -906,7 +1102,6 @@
                 }
             });
 
-
             // 3. Search Filter 
             document.getElementById('syllabus-search').addEventListener('input', (e) => {
                 activeChapterId = null; 
@@ -915,25 +1110,30 @@
                 renderSyllabus(); 
             });
 
-            // 4. Global click to close menu if open (outside syllabus container)
+            // 4. Global click to close menu
             document.body.addEventListener('click', (e) => {
+                // --- MODIFIED ---
                 if ((activeChapterId || activeGroupId) && !e.target.closest('#syllabus-container')) {
+                    closeAllInlineMenus(); // Use new helper
                     activeChapterId = null;
                     activeGroupId = null;
-                    renderSyllabus(); 
+                    // renderSyllabus(); // REMOVED
                 }
             });
-
 
             // 5. Reset Modal and Functionality
             const resetModal = document.getElementById('reset-modal');
             document.getElementById('reset-data-btn').addEventListener('click', () => {
                 resetModal.style.display = 'flex';
+                setTimeout(() => resetModal.classList.add('opacity-100'), 10);
             });
 
-            document.getElementById('cancel-reset-btn').addEventListener('click', () => {
-                resetModal.style.display = 'none';
-            });
+            function hideResetModal() {
+                resetModal.classList.remove('opacity-100');
+                setTimeout(() => resetModal.style.display = 'none', 300);
+            }
+
+            document.getElementById('cancel-reset-btn').addEventListener('click', hideResetModal);
 
             document.getElementById('confirm-reset-btn').addEventListener('click', () => {
                 localStorage.removeItem(CURRENT_STORAGE_KEY);
@@ -946,14 +1146,13 @@
                 chapterStatuses = {};
                 openStates = {};
                 groupByPriority = true; 
-                
                 activeChapterId = null;
                 activeGroupId = null;
 
                 renderSyllabus();
                 renderOverallStats();
                 
-                resetModal.style.display = 'none';
+                hideResetModal();
 
                 const header = document.querySelector('header');
                 const existingMessage = header.querySelector('.reset-message');
@@ -972,6 +1171,33 @@
             });
 
 
+            // --- NEW Helper Function ---
+            function closeAllInlineMenus(excludeId = null) {
+                // Close chapter menus
+                document.querySelectorAll('.inline-status-menu.open[data-menu-id]').forEach(menu => {
+                    const menuId = menu.dataset.menuId;
+                    if (menuId !== excludeId) {
+                        // Check if it's a chapter menu
+                        const chapterContainer = menu.closest('[data-chapter-id]');
+                        if (chapterContainer) {
+                            chapterContainer.querySelector('.chapter-leaf').classList.remove('is-open');
+                        }
+                        
+                        // Check if it's a group menu
+                        const groupHeader = menu.closest('.group-header');
+                        if (groupHeader) {
+                            groupHeader.classList.remove('ring-2', 'ring-indigo-500');
+                        }
+
+                        menu.classList.remove('open');
+                        setTimeout(() => menu.remove(), 300);
+                    }
+                });
+                
+                if (activeChapterId && activeChapterId !== excludeId) activeChapterId = null;
+                if (activeGroupId && activeGroupId !== excludeId) activeGroupId = null;
+            }
+
             // --- Initialization ---
             loadViewMode(); 
             loadProgress(); 
@@ -981,15 +1207,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
