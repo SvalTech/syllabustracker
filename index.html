@@ -467,20 +467,20 @@
             color: #737373; /* neutral-500 */
         }
 
-        /* --- NEW: Studylocus Promo Banner --- */
-        #studylocus-banner {
+        /* --- UPDATED: Zenith Promo Banner --- */
+        #zenith-banner {
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 0.4s var(--ease-out-cubic), transform 0.4s var(--ease-out-cubic);
             max-height: 0;
             overflow: hidden;
         }
-        #studylocus-banner.show {
+        #zenith-banner.show {
             opacity: 1;
             transform: translateY(0);
             max-height: 500px; /* Arbitrary large number */
         }
-        #studylocus-banner.hide {
+        #zenith-banner.hide {
             opacity: 0;
             transform: translateY(-20px);
             max-height: 0;
@@ -515,7 +515,34 @@
             </p>
         </header>
 
-        <!-- --- NEW: Studylocus Promo Banner --- -->
+        <!-- --- NEW: Zenith Promo Banner (MOVED TO TOP) --- -->
+        <div id="zenith-banner" class="hidden mb-10 glassmorphism rounded-xl shadow-lg relative overflow-hidden max-w-4xl mx-auto">
+            <div class="absolute -top-1/2 -left-1/4 w-full h-full bg-gradient-to-r from-indigo-500/30 to-transparent blur-3xl opacity-50 -z-10"></div>
+            <div class="p-5 sm:p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center border border-indigo-400/30">
+                            <!-- Mountain/Zenith Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Experience Zenith</h3>
+                            <p class="text-sm text-neutral-300 max-w-md">The exam tracker for aspirants who want to visualize their victory. Track tasks, mocks, and progress in one beautiful space. </p>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center gap-3 w-full sm:w-auto">
+                        <a href="https://sval.tech/zenith/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/30">
+                            Launch Zenith
+                        </a>
+                        <button id="close-banner-btn" class="p-2 text-neutral-500 hover:text-white transition-colors rounded-md" aria-label="Close banner">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- --- End of Banner --- -->
 
 
@@ -654,37 +681,6 @@
             </div>
         </div>
 
-
-        <!-- --- NEW: Studylocus Promo Banner (MOVED) --- -->
-        <div id="studylocus-banner" class="hidden mb-10 glassmorphism rounded-xl shadow-lg relative overflow-hidden max-w-4xl mx-auto">
-            <div class="absolute -top-1/2 -left-1/4 w-full h-full bg-gradient-to-r from-indigo-500/30 to-transparent blur-3xl opacity-50 -z-10"></div>
-            <div class="p-5 sm:p-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div class="flex items-center gap-4">
-                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center border border-indigo-400/30">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M7 3v18"></path><path d="M12 3v18"></path><path d="M17 3v18"></path><path d="M3 7.5h18"></path><path d="M3 12h18"></path><path d="M3 16.5h18"></path></svg>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-white">Try the StudyLocus Dashboard!</h3>
-                            <p class="text-sm text-neutral-300 max-w-md">The ultimate hub for all your prep tools, notes, and trackers in one place.</p>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 flex items-center gap-3 w-full sm:w-auto">
-                        <a href="https://sval.tech/studylocus/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/30">
-                            Check it out
-                        </a>
-                        <button id="close-banner-btn" class="p-2 text-neutral-500 hover:text-white transition-colors rounded-md" aria-label="Close banner">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- --- End of Banner --- -->
-
-
         <!-- Official Resources and Footer -->
         <div class="max-w-4xl mx-auto text-center">
             <h3 class="font-semibold text-neutral-300 mb-4">Resources</h3>
@@ -722,8 +718,9 @@
             </a>
             <!-- Share Progress Button (in FAB) -->
             <a href="https://sval.tech/zenith/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-2 rounded-md hover:bg-neutral-800 text-neutral-200 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M7 3v18"></path><path d="M12 3v18"></path><path d="M17 3v18"></path><path d="M3 7.5h18"></path><path d="M3 12h18"></path><path d="M3 16.5h18"></path></svg>
-                <span>Zenith (Beta Test)</span>
+                <!-- Mountain Icon for Zenith -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
+                <span>Zenith</span>
             </a>
         </div>
         <!-- Main Button -->
@@ -738,9 +735,9 @@
             const CURRENT_STORAGE_KEY = 'jeeSyllabusProgress_v2_mathongo';
             const OPEN_STATES_KEY = 'jeeSyllabusOpenStates_v2_mathongo';
             const VIEW_MODE_KEY = 'jeeSyllabusViewMode_v2'; 
-            const BANNER_DISMISSED_KEY = 'studylocusBannerDismissed_v1'; // NEW Banner Key
+            // UPDATED KEY: Changing this resets the dismissed state for all users
+            const BANNER_DISMISSED_KEY = 'zenithBannerDismissed_v1'; 
 
-            // --- Syllabus Data ---
             const syllabus = [
                 { 
                     subject: "Physics",
@@ -1564,7 +1561,7 @@
 
             // --- NEW: Banner Logic ---
             function initBanner() {
-                const banner = document.getElementById('studylocus-banner');
+                const banner = document.getElementById('zenith-banner'); // UPDATED ID
                 const closeBannerBtn = document.getElementById('close-banner-btn');
                 const isDismissed = localStorage.getItem(BANNER_DISMISSED_KEY);
 
@@ -1589,7 +1586,7 @@
             // --- Initialization ---
             loadViewMode(); 
             loadProgress(); 
-            initBanner(); // NEW: Initialize the banner
+            initBanner(); // Initialize the banner
             renderOverallStats();
             renderSyllabus();
         });
