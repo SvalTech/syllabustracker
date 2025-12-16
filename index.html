@@ -1,1594 +1,1362 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JEE Syllabus Tracker | SvalTech</title>
 
-    <!-- --- NEW: SEO & Social Meta Tags --- -->
-    <meta name="description" content="A modern, interactive dashboard to track your complete JEE 2026 syllabus progress for Physics, Chemistry, and Mathematics. Master your prep.">
-    <meta name="keywords" content="JEE, JEE 2026, JEE Syllabus, JEE Tracker, Syllabus Tracker, IIT JEE, JEE Main, JEE Advanced, SvalTech, Shaurya Pratap Singh, JEE Syllabus, JEE 2027, JEE main 2026">
-    <link rel="canonical" href="https://sval.tech/syllabustracker/"> <!-- Replace with your actual final URL -->
+    <!-- SEO & Social Meta Tags -->
+    <meta name="description" content="A modern, interactive dashboard to track your complete JEE 2026 syllabus progress. Master your prep with SvalTech.">
+    <meta name="keywords" content="JEE, JEE 2026, JEE Syllabus, JEE Tracker, Syllabus Tracker, IIT JEE, JEE Main, SvalTech, JEE 2027, JEE 2028">
+    <link rel="canonical" href="https://sval.tech/syllabustracker/">
     
-    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <!-- Open Graph -->
     <meta property="og:title" content="JEE Syllabus Tracker | SvalTech">
     <meta property="og:description" content="Track your JEE 2026 syllabus progress with a modern, interactive dashboard.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sval.tech/syllabustracker/"> <!-- Replace with your actual final URL -->
-    <meta property="og:image" content="https://placehold.co/1200x630/6366f1/white?text=JEE+Syllabus+Mastery"> <!-- Replace with a link to your own preview image -->
+    <meta property="og:image" content="https://placehold.co/1200x630/6366f1/white?text=JEE+Mastery">
     <meta property="og:site_name" content="SvalTech">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="JEE Syllabus Tracker | SvalTech">
-    <meta name="twitter:description" content="Track your JEE 2026 syllabus progress with a modern, interactive dashboard.">
-    <meta name="twitter:image" content="https://placehold.co/1200x630/6366f1/white?text=JEE+Syllabus+Mastery"> <!-- Replace with a link to your own preview image -->
-
-    <!-- Favicon (Emoji placeholder, replace with your own .ico or .png) -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
-    <!-- --- End of SEO Tags --- -->
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- REMOVED: html2canvas library -->
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- CUBIC-BEZIER Easing functions for smoother animations -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        bg: '#09090b', // Zinc 950
+                        card: '#18181b', // Zinc 900
+                        'card-hover': '#27272a', // Zinc 800
+                        border: '#27272a', // Zinc 800
+                        primary: '#6366f1', // Indigo 500
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        blob: "blob 10s infinite",
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --bg-color: #0F0F12; /* Slightly off-black */
-            --card-bg: #1A1A1E; /* Darker card bg */
-            --card-bg-light: #212125; /* Lighter card/hover bg */
-            --border-color: #2a2a30;
-            --primary-color: #6366f1; /* indigo-500 */
-            --primary-color-dark: #4f46e5; /* indigo-600 */
-            --primary-glow-subtle: 0 0 15px 0 rgba(99, 102, 241, 0.2);
-            --primary-glow-strong: 0 0 25px 5px rgba(99, 102, 241, 0.25);
-            
-            /* Easing functions */
-            --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
-            --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
-            --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
+        /* --- Custom Scrollbar (Thinner) --- */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Spinner for loading */
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid currentColor;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        /* --- NEW: Toast Notification --- */
-        .toast-notification {
-            position: fixed;
-            bottom: -100px; /* Start off-screen */
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 12px 20px;
-            border-radius: 0.5rem; /* rounded-lg */
-            background-color: var(--card-bg-light);
-            border: 1px solid var(--border-color);
-            color: white;
-            font-weight: 500;
-            z-index: 100;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
-            transition: bottom 0.4s var(--ease-out-cubic), opacity 0.4s ease;
-            opacity: 0;
-        }
-        .toast-notification.show {
-            bottom: 24px; /* bottom-6 */
-            opacity: 1;
-        }
-        .toast-notification.error {
-            background-color: #991b1b; /* red-800 */
-            border-color: #7f1d1d; /* red-900 */
-            color: white;
-        }
-
+        /* --- Global Styles --- */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: #a3a3a3; /* neutral-400 */
-            /* Subtle background noise for a "premium" feel */
-            background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 25%),
-                              radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 25%);
+            background-color: #09090b;
+            color: #a1a1aa;
+            -webkit-font-smoothing: antialiased;
+            /* Gradient Fallback */
+            background-image: radial-gradient(circle at 50% 0%, #18181b 0%, #09090b 70%);
+        }
+
+        /* --- Glassmorphism Utilities --- */
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-card {
+            background: rgba(39, 39, 42, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Glassmorphism */
-        .glassmorphism {
-            background: rgba(26, 26, 30, 0.6); /* --card-bg at 60% opacity */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(39, 39, 42, 0.6);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
         }
 
-        /* General collapsible styles */
-        .subject-header, .group-header-toggle {
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .arrow {
-            transition: transform 0.3s var(--ease-in-out-cubic);
-        }
-        .collapsed .arrow { transform: rotate(-90deg); }
-        .expanded .arrow { transform: rotate(0deg); }
-
-        /* Accordion Animations */
-        .content-container {
-            max-height: 4000px;
-            overflow: hidden;
-            transition: max-height 0.5s var(--ease-out-quart), opacity 0.4s var(--ease-out-quad);
-            opacity: 1;
-        }
-        .collapsed .content-container {
-            max-height: 0;
-            opacity: 0;
-            transition: max-height 0.4s var(--ease-out-cubic), opacity 0.2s ease-out;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-        }
-        
-        .progress-bar-segment {
-            transition: width 0.6s var(--ease-in-out-cubic);
-        }
-
-        /* Subject Card */
-        .subject-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem; /* rounded-xl */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 0.5s var(--ease-out-cubic) backwards;
-        }
-        .subject-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: var(--primary-glow-subtle);
-        }
-        /* Stagger card animations */
-        .subject-card:nth-child(2n) { animation-delay: 0.1s; }
-        .subject-card:nth-child(3n) { animation-delay: 0.2s; }
-
-        /* Chapter Row */
-        .chapter-leaf {
-            transition: background-color 0.2s ease-out;
-            cursor: pointer;
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-        }
-        .chapter-leaf:hover {
-            background-color: var(--card-bg-light);
-            border-color: #444;
-        }
-        .chapter-leaf.is-open {
-            background-color: var(--card-bg-light);
-            border-color: var(--primary-color);
-            box-shadow: var(--primary-glow-subtle);
-        }
-
-        /* Status Buttons */
-        .status-btn, .group-status-btn {
-            cursor: pointer;
-            transition: transform 0.15s var(--ease-out-quad), box-shadow 0.2s ease;
-        }
-        .status-btn:hover, .group-status-btn:hover {
-            box-shadow: var(--primary-glow-subtle);
-        }
-        .status-btn:active, .group-status-btn:active {
-            transform: scale(0.95);
-        }
-
-        .highlight {
-            background-color: rgba(99, 102, 241, 0.15);
-            color: var(--primary-color);
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        /* Custom View Mode Toggle Switch */
-        .view-mode-toggle {
-            position: relative;
-            background-color: var(--card-bg);
-            border-radius: 99px;
-            padding: 4px;
-            display: flex;
-            border: 1px solid var(--border-color);
-        }
-        .view-mode-toggle .toggle-option {
-            flex: 1;
-            padding: 4px 0;
-            text-align: center;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #737373; /* neutral-500 */
-            position: relative;
-            z-index: 10;
-            cursor: pointer;
-            transition: color 0.3s var(--ease-in-out-cubic);
-        }
-        .view-mode-toggle .toggle-option.active {
-            color: white;
-        }
-        .view-mode-toggle .toggle-slider {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            width: calc(50% - 4px);
-            height: calc(100% - 8px);
-            background-color: var(--primary-color);
-            border-radius: 99px;
-            box-shadow: var(--primary-glow-subtle);
-            transition: transform 0.3s var(--ease-in-out-cubic);
-            z-index: 5;
-        }
-        .view-mode-toggle[data-mode="flat"] .toggle-slider {
-            transform: translateX(calc(100% + 4px));
-        }
-
-        /* Inline Status Menu */
-        .inline-status-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s var(--ease-in-out-cubic), opacity 0.2s ease-out,
-                        transform 0.3s var(--ease-in-out-cubic), padding 0.3s ease;
-            opacity: 0;
-            transform: translateY(-10px);
-            padding-top: 0; padding-bottom: 0;
-            background-color: rgba(33, 33, 37, 0.7); /* --card-bg-light at 70% */
-            backdrop-filter: blur(8px);
-        }
-        .inline-status-menu.open {
-            max-height: 250px;
-            opacity: 1;
-            transform: translateY(0);
-            padding-top: 0.5rem; padding-bottom: 0.5rem; /* p-2 */
-        }
-        .inline-status-menu-btn {
-            transition: background-color 0.2s ease;
-        }
-        .inline-status-menu-btn.active {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-            font-weight: 600;
-        }
-        .inline-status-menu-btn:not(.active):hover {
-            background-color: var(--card-bg-light);
-        }
-
-        .status-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            display: inline-block; margin-right: 8px; flex-shrink: 0;
-        }
-
-        /* FAB (Floating Action Button) */
-        .fab-container .fab-menu {
-            visibility: hidden;
-            opacity: 0;
-            transform: translateY(10px) scale(0.95);
-            transition: all 0.25s var(--ease-out-cubic);
-            position: absolute;
-            bottom: 100%;
-            right: 0;
-            margin-bottom: 0.75rem; /* mb-3 */
-        }
-        .fab-container:hover .fab-menu {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        .fab-main-btn {
-            transition: all 0.3s var(--ease-in-out-cubic);
-            box-shadow: 0 4px 15px -2px rgba(0,0,0,0.4);
-        }
-        .fab-main-btn:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            box-shadow: 0 0 20px 0 rgba(99, 102, 241, 0.4);
-            transform: scale(1.05);
-        }
-        .fab-main-btn:hover svg {
-            transform: rotate(15deg);
-        }
-        .fab-main-btn svg {
-            transition: transform 0.3s var(--ease-in-out-cubic);
-        }
-        
-        /* Modal */
-        .modal-backdrop {
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-        
-        /* --- REFINED: Share Card Styles --- */
-        #share-card {
-            background-color: #1A1A1E; /* --card-bg */
-            background-image: radial-gradient(circle at 100% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 40%);
-            color: #a3a3a3; /* neutral-400 */
-            border: 1px solid #2a2a30; /* --border-color */
-            font-family: 'Inter', sans-serif;
-            width: 100%; /* MODIFIED: Was 450px, now responsive */
-            max-width: 450px; /* Capped at 450px */
-            padding: 24px;
-            border-radius: 12px;
-            box-sizing: border-box; /* Include padding in the width */
-            display: flex; /* Use flexbox for overall layout */
-            flex-direction: column;
-        }
-        #share-card .share-title {
-            font-size: 28px; /* Slightly larger title */
-            font-weight: 800;
-            color: white;
-            margin-bottom: 2px; /* Reduced margin */
-            line-height: 1.2;
-        }
-        #share-card .share-subtitle {
-            font-size: 13px; /* Slightly smaller subtitle */
-            font-weight: 500;
-            color: #a3a3a3; /* neutral-400 */
-            text-transform: uppercase;
-            letter-spacing: 0.08em; /* Increased letter spacing */
-            margin-bottom: 24px; /* Increased margin */
-        }
-        #share-card .share-overall-percent {
-            font-size: 72px;
-            font-weight: 800;
-            color: white;
-            line-height: 1;
-            display: block; /* Ensure it takes full width for centering */
-        }
-        #share-card .share-overall-coverage-label { /* NEW: Added class for the label */
-            font-size: 14px;
-            font-weight: 500;
-            color: #a3a3a3;
-            display: block;
-            margin-top: 8px; /* MODIFIED: Was 4px, increased spacing */
-            text-align: center; /* ADDED: Explicitly center */
-        }
-        #share-card .share-progress-bar {
-            height: 10px;
-            border-radius: 99px;
-            overflow: hidden;
-            background-color: #2a2a30; /* --border-color */
-            width: 100%;
-        }
-        #share-card .share-progress-bar-inner {
-            height: 100%;
-            border-radius: 99px;
-            transition: width 0.5s ease;
-        }
-
-        /* NEW: Layout for the main stats grid */
-        #share-card .main-stats-grid {
+        /* --- Accordion Transitions (CSS Grid Trick) --- */
+        .accordion-wrapper {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px; /* sm:gap-24px */
-            align-items: center; /* Vertically center columns */
-            margin-bottom: 24px;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden; /* CRITICAL FIX: Ensures ghost content is clipped */
+        }
+        .accordion-wrapper.open {
+            grid-template-rows: 1fr;
+        }
+        .accordion-inner {
+            min-height: 0;
         }
 
-        /* NEW: Styles for individual stat items in the grid */
-        #share-card .stat-item {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
+        /* --- Arrow Rotation --- */
+        .arrow-icon {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        #share-card .stat-item .status-dot { /* Reusing the existing status-dot */
-            margin-right: 10px; /* Increased spacing for dot */
-        }
-        #share-card .stat-item .stat-label {
-            font-weight: 500;
-            color: #a3a3a3; /* Back to neutral-400 */
-        }
-        #share-card .stat-item .stat-value {
-            margin-left: auto;
-            font-weight: 700; /* font-bold */
-            color: white;
+        .group-branch.expanded .arrow-icon,
+        .subject-card.expanded .arrow-icon {
+            transform: rotate(90deg);
         }
 
-        /* NEW: Subject progress bar section */
-        #share-card .subject-progress-section {
-            margin-top: 0; /* Removed margin, handled by grid */
-            padding-top: 24px; /* pt-6 */
-            border-top: 1px solid #2a2a30; /* border-t border-neutral-700 */
-            display: flex;
-            flex-direction: column;
-            gap: 16px; /* space-y-4 */
-        }
-
-        #share-card .subject-progress-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #share-card .subject-progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px; /* mb-1 */
-        }
-
-        #share-card .subject-progress-name {
-            font-size: 14px;
-            font-weight: 600; /* font-semibold */
-            color: white;
-        }
-
-        #share-card .subject-progress-percent {
-            font-size: 14px;
-            font-weight: 700; /* font-bold */
-            color: white;
-        }
-
-        /* NEW: Branded Footer */
-        #share-card .share-footer {
-            margin-top: 20px; /* mt-5 */
-            padding-top: 12px; /* pt-3 */
-            border-top: 1px solid #2a2a30; /* border-t border-neutral-700 */
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline; /* MODIFIED: Aligns text baselines */
-        }
-
-        #share-card .share-footer-logo {
-            font-size: 20px; /* text-xl */
-            font-weight: 800; /* font-extrabold */
-            display: inline-block; /* ADDED: Fix for html2canvas rendering */
-            background-clip: text;
-            -webkit-background-clip: text;
-            background-image: linear-gradient(to right, #a5b4fc, #6366f1); /* from-indigo-300 to-indigo-500 */
-            color: transparent;
-        }
-
-        #share-card .share-footer-date {
-            font-size: 12px; /* text-xs */
-            color: #737373; /* neutral-500 */
-        }
-
-        /* --- UPDATED: Zenith Promo Banner --- */
-        #zenith-banner {
+        /* --- Inline Status Menu Animation --- */
+        .status-menu-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.4s var(--ease-out-cubic), transform 0.4s var(--ease-out-cubic);
-            max-height: 0;
             overflow: hidden;
+        }
+        .status-menu-wrapper.open {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            margin-top: 0.25rem;
+        }
+
+        /* --- Toggle Switch --- */
+        .view-toggle {
+            position: relative;
+            background: #18181b;
+            border: 1px solid #27272a;
+        }
+        .view-toggle-slider {
+            position: absolute;
+            top: 4px; left: 4px; bottom: 4px;
+            width: calc(50% - 4px);
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 6px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 0;
+        }
+        .view-toggle[data-mode="flat"] .view-toggle-slider {
+            transform: translateX(100%);
+        }
+
+        /* --- Toast Notification --- */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            background: #18181b;
+            border: 1px solid #27272a;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 99px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* --- Banner Animations --- */
+        #zenith-banner {
+            transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease, margin 0.4s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transform: translateY(-10px);
         }
         #zenith-banner.show {
+            max-height: 200px;
             opacity: 1;
             transform: translateY(0);
-            max-height: 500px; /* Arbitrary large number */
+            margin-bottom: 2rem; /* Reduced margin */
         }
-        #zenith-banner.hide {
-            opacity: 0;
-            transform: translateY(-20px);
+
+        /* --- Highlighting --- */
+        .highlight {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        /* --- Velocity Transitions --- */
+        #velocity-content {
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.3s ease;
+        }
+        #velocity-content.collapsed {
             max-height: 0;
-            margin-bottom: 0 !important;
+            opacity: 0;
+            margin-top: 0;
         }
-        .hidden {
-            display: none;
+        #velocity-chevron {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
+        #velocity-chevron.collapsed {
+            transform: rotate(-90deg);
+        }
+        
+        /* --- Blob Animation Delay --- */
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
     </style>
-</head>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TCK0S6VC58"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TCK0S6VC58');
+    </script>
+</head>
+<body class="antialiased selection:bg-indigo-500/30 selection:text-indigo-200 relative">
 
-  gtag('config', 'G-TCK0S6VC58');
-</script>
-<body class="bg-bg-color text-neutral-400">
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <!-- Animated Background Blobs -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <!-- Center/Top Blob -->
+        <div class="absolute top-[-10%] left-1/2 transform -translate-x-1/2 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] animate-blob mix-blend-screen"></div>
+        <!-- Bottom Left Blob -->
+        <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] animate-blob animation-delay-2000 mix-blend-screen"></div>
+        <!-- Bottom Right Blob -->
+        <div class="absolute bottom-[20%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
+    </div>
 
-        <!-- --- REFINED: Header --- -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-extrabold bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-500 mb-3 relative">
-                <span class="relative z-10">JEE Syllabus Tracker</span>
-                <!-- NEW: Glow effect -->
-                <span class="absolute -inset-2 block bg-gradient-to-r from-indigo-500 to-indigo-600 opacity-20 blur-3xl -z-10"></span>
-            </h1>
-            <p class="text-small text-neutral-400 max-w-2xl mx-auto">
-                Powered by <span class="font-bold text-neutral-300">sval.tech</span>
+    <div class="container mx-auto max-w-[96%] 2xl:max-w-[1800px] px-3 sm:px-6 lg:px-8 py-4 sm:py-6"> <!-- WIDER LAYOUT -->
+
+        <!-- Header -->
+        <header class="text-center mb-6 sm:mb-8 relative animate-fade-in-up"> <!-- Reduced Margin -->
+            <div class="inline-block relative">
+                <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 relative z-10"> <!-- Compact Text -->
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 animate-pulse-slow">JEE Syllabus</span> Tracker
+                </h1>
+                <!-- Glow behind text -->
+                <div class="absolute -inset-x-10 -inset-y-4 bg-indigo-600/20 blur-[60px] rounded-[100%] z-0 pointer-events-none"></div>
+            </div>
+            <p class="text-xs sm:text-sm font-medium text-zinc-500 mt-1 tracking-wide">
+                Powered by <a href="https://sval.tech" class="text-zinc-300 hover:text-white transition-colors border-b border-dashed border-zinc-600 hover:border-white">sval.tech</a>
             </p>
         </header>
 
-        <!-- --- NEW: Zenith Promo Banner (MOVED TO TOP) --- -->
-        <div id="zenith-banner" class="hidden mb-10 glassmorphism rounded-xl shadow-lg relative overflow-hidden max-w-4xl mx-auto">
-            <div class="absolute -top-1/2 -left-1/4 w-full h-full bg-gradient-to-r from-indigo-500/30 to-transparent blur-3xl opacity-50 -z-10"></div>
-            <div class="p-5 sm:p-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div class="flex items-center gap-4">
-                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center border border-indigo-400/30">
-                            <!-- Mountain/Zenith Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-white">Experience Zenith</h3>
-                            <p class="text-sm text-neutral-300 max-w-md">The exam tracker for aspirants who want to visualize their victory. Track tasks, mocks, and progress in one beautiful space. </p>
+        <!-- Zenith Banner -->
+        <div id="zenith-banner" class="glass-panel rounded-xl border-indigo-500/20 relative group max-w-7xl mx-auto">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-transparent opacity-50 transition-opacity group-hover:opacity-70"></div>
+            <div class="p-3 sm:p-4 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3"> <!-- Compact Padding & Gap -->
+                <div class="flex items-center gap-3 text-center sm:text-left">
+                    <div class="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400 shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Discover Zenith</h3>
+                        <p class="text-xs text-zinc-400 max-w-lg">The ultimate exam workspace. Visualize victory with advanced tracking and mock analysis.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <a href="https://sval.tech/zenith/" target="_blank" class="flex-1 sm:flex-none text-center px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg shadow-lg shadow-indigo-500/20 transition-all transform hover:-translate-y-0.5">
+                        Launch App
+                    </a>
+                    <button id="close-banner-btn" class="p-2 text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="flex flex-col xl:flex-row gap-5 items-start relative"> <!-- Reduced Gap -->
+            
+            <!-- Sticky Sidebar (Control Center) -->
+            <aside id="overall-stats-container" class="w-full xl:w-80 xl:sticky xl:top-6 z-30 transition-all duration-300 flex-shrink-0">
+                <div class="glass-panel rounded-xl p-4 sm:p-5 shadow-2xl shadow-black/50"> <!-- Compact Padding -->
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-bold text-white">Overall Status</h2>
+                        <div class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)] animate-pulse"></div>
+                    </div>
+
+                    <div id="overall-progress-data" class="space-y-4">
+                        <!-- JS injected content -->
+                        <div class="animate-pulse space-y-4">
+                            <div class="h-8 bg-zinc-800 rounded w-1/3 mx-auto"></div>
+                            <div class="h-2 bg-zinc-800 rounded-full w-full"></div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 flex items-center gap-3 w-full sm:w-auto">
-                        <a href="https://sval.tech/zenith/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/30">
-                            Launch Zenith
-                        </a>
-                        <button id="close-banner-btn" class="p-2 text-neutral-500 hover:text-white transition-colors rounded-md" aria-label="Close banner">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+
+                    <!-- View Mode Toggle -->
+                    <div class="mt-6 pt-4 border-t border-zinc-800">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Group By</label>
+                        </div>
+                        <div class="view-toggle flex rounded-lg p-1 cursor-pointer" data-mode="priority">
+                            <div class="view-toggle-slider"></div>
+                            <div id="filter-priority" data-filter="priority" class="flex-1 text-center py-1.5 text-xs font-medium relative z-10 transition-colors text-white">Priority</div>
+                            <div id="filter-flat" data-filter="flat" class="flex-1 text-center py-1.5 text-xs font-medium relative z-10 transition-colors text-zinc-500">Unit</div>
+                        </div>
+                    </div>
+
+                    <!-- NEW: Velocity Tracker Card (Collapsible) -->
+                    <div id="velocity-container" class="mt-6 pt-4 border-t border-zinc-800 hidden">
+                        <!-- Header / Toggle -->
+                        <div id="velocity-toggle-btn" class="flex items-center justify-between cursor-pointer group select-none">
+                            <h3 class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2 group-hover:text-zinc-300 transition-colors">
+                                <svg class="w-3 h-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                Completion Estimator
+                            </h3>
+                            <svg id="velocity-chevron" class="w-3 h-3 text-zinc-600 group-hover:text-zinc-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div id="velocity-content" class="overflow-hidden max-h-40 opacity-100">
+                            <div class="bg-zinc-900/50 rounded-lg p-3 border border-zinc-800 mt-3">
+                                <div class="flex justify-between items-end mb-2">
+                                    <span class="text-xs text-zinc-400">Chapters Left</span>
+                                    <span class="text-sm font-bold text-white" id="vel-chapters-left">--</span>
+                                </div>
+                                <div class="flex justify-between items-end mb-2">
+                                    <span class="text-xs text-zinc-400">Current Pace</span>
+                                    <span class="text-xs font-mono text-indigo-300" id="vel-pace">-- ch/day</span>
+                                </div>
+                                <div class="h-px bg-zinc-800 my-2"></div>
+                                <div class="text-center">
+                                    <span class="text-[10px] text-zinc-500 uppercase tracking-wide">Est. Completion</span>
+                                    <div class="text-sm font-bold text-white mt-0.5" id="vel-end-date">Insufficient Data</div>
+                                    <div class="text-[10px] text-zinc-600 mt-1" id="vel-subtext">Keep updating to see data</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-4 space-y-2">
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-3.5 w-3.5 text-zinc-500 group-focus-within:text-indigo-400 transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <input type="text" id="syllabus-search" placeholder="Search chapters..." class="w-full pl-9 pr-3 py-3 bg-black/20 border border-zinc-700 rounded-lg text-sm text-zinc-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-zinc-600" />
+                        </div>
+
+                        <button id="share-progress-main-btn" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-lg transition-all flex items-center justify-center text-sm border border-zinc-700 hover:border-zinc-600 group">
+                            <svg class="w-4 h-4 mr-2 text-zinc-400 group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" x2="12" y1="2" y2="15"></line></svg>
+                            Share Progress
+                        </button>
+
+                        <button id="reset-data-btn" class="w-full py-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 font-medium rounded-lg transition-all flex items-center justify-center text-xs">
+                            Reset Data
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- --- End of Banner --- -->
+            </aside>
 
+            <!-- Syllabus Content -->
+            <main id="syllabus-container" class="flex-1 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 w-full pb-20"> <!-- Added 2xl:grid-cols-3 -->
+                <!-- Content injected via JS -->
+            </main>
 
-        <!-- Main Layout: Overall Stats (Sticky) and Content -->
-        <div class="flex flex-col xl:flex-row gap-8 items-start mb-20">
-            
-            <!-- --- REFINED: Overall Progress Dashboard --- -->
-            <div id="overall-stats-container" class="w-full xl:w-80 xl:sticky xl:top-8 p-6 rounded-2xl shadow-2xl glassmorphism transition-all duration-300">
-                <h2 class="text-xl font-bold text-white mb-5 border-b border-neutral-700 pb-3">Overall Progress</h2>
-                
-                <!-- Progress Display -->
-                <div id="overall-progress-data" class="space-y-5">
-                    <!-- Stats will be rendered here -->
-                    <div class="text-center">
-                        <span class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-500 relative">
-                            0%
-                            <span class="absolute -inset-4 opacity-30 bg-indigo-500 blur-3xl -z-10"></span>
-                        </span>
-                        <span class="text-base font-semibold text-neutral-400 block mt-1">Overall Coverage</span>
-                    </div>
-                    <div class="w-full h-2.5 rounded-full flex overflow-hidden bg-neutral-700">
-                        <!-- Progress segments here -->
-                    </div>
-                    <div class="grid grid-cols-2 gap-3 text-sm pt-4 border-t border-neutral-700">
-                        <!-- Status items here -->
-                    </div>
-                </div>
-
-                <!-- View Mode Toggle -->
-                <div class="mt-6 border-t border-neutral-700 pt-5">
-                    <label class="block text-neutral-300 font-semibold mb-2 text-sm">View Mode:</label>
-                    <div class="view-mode-toggle" data-mode="priority">
-                        <div class="toggle-slider"></div>
-                        <div id="filter-priority" data-filter="priority" class="toggle-option active">Priority</div>
-                        <div id="filter-flat" data-filter="flat" class="toggle-option">Unit</div>
-                    </div>
-                </div>
-                
-                <!-- --- UPDATED: Action Buttons --- -->
-                <div class="mt-5 space-y-3">
-                    <input type="text" id="syllabus-search" placeholder="Search chapter..." class="w-full p-2.5 rounded-lg bg-neutral-800/60 text-neutral-200 placeholder-neutral-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 border border-neutral-700 transition-shadow" />
-                    
-                    <!-- NEW: Share Button (More Apparent) -->
-                    <button id="share-progress-main-btn" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center text-sm shadow-lg hover:shadow-indigo-500/30">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" x2="12" y1="2" y2="15"></line></svg>
-                        Share Progress
-                    </button>
-                    
-                    <button id="reset-data-btn" class="w-full py-2.5 bg-red-600/90 hover:bg-red-600 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center text-sm shadow-lg hover:shadow-red-500/30">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                        Reset Progress
-                    </button>
-                </div>
-            </div>
-
-            <!-- Syllabus Cards (Main Content) -->
-            <div id="syllabus-container" class="flex-grow grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-                <!-- Syllabus cards will be dynamically inserted here -->
-            </div>
         </div>
 
-        <!-- Confirmation Modal -->
-        <div id="reset-modal" class="modal-backdrop fixed inset-0 hidden items-center justify-center z-50 transition-opacity duration-300 opacity-0">
-            <div class="glassmorphism p-6 rounded-lg shadow-xl w-96 max-w-[90%] border border-neutral-700">
-                <h3 class="text-lg font-bold text-red-400 mb-3">Confirm Reset</h3>
-                <p class="text-neutral-300 mb-6">Are you sure you want to delete ALL of your saved JEE syllabus progress? This action cannot be undone.</p>
-                <div class="flex justify-end space-x-3">
-                    <button id="cancel-reset-btn" class="px-4 py-2 text-sm font-medium rounded-lg text-neutral-300 bg-neutral-700 hover:bg-neutral-600 transition">Cancel</button>
-                    <button id="confirm-reset-btn" class="px-4 py-2 text-sm font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 transition shadow-lg hover:shadow-red-500/30">Yes, Clear All Data</button>
+        <!-- Footer -->
+        <footer class="mt-16 border-t border-zinc-800 pt-8 pb-6 text-center">
+            <div class="flex flex-wrap justify-center gap-4 mb-6">
+                <div class="px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400 uppercase tracking-wide">
+                    Source: <span class="text-indigo-400 font-bold">MathonGo (2026)</span>
                 </div>
+                <a href="https://cdnbbsr.s3waas.gov.in/s3f8e59f4b2fe7c5705bf878bbd494ccdf/uploads/2025/10/202510311323551056.pdf" target="_blank" class="px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400 uppercase tracking-wide hover:border-indigo-500/50 hover:text-indigo-400 transition-colors">
+                    Official Syllabus PDF
+                </a>
             </div>
-        </div>
-
-        <!-- Share Progress Modal -->
-        <div id="share-modal" class="modal-backdrop fixed inset-0 hidden items-center justify-center z-50 transition-opacity duration-300 opacity-0">
-            <!-- MODIFIED: Added w-full, max-w-lg, mx-4 and responsive padding -->
-            <div class="glassmorphism p-4 sm:p-6 rounded-lg shadow-xl w-full max-w-lg mx-4 border border-neutral-700">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-bold text-indigo-400">Share Your Progress</h3>
-                    <button id="close-share-modal-btn" class="text-neutral-400 hover:text-white text-3xl leading-none">&times;</button>
-                </div>
-                
-                <!-- --- UPDATED: Share Card Layout --- -->
-                <div id="share-card">
-                    <h2 class="share-title">My JEE Progress</h2>
-                    <p class="share-subtitle">JEE Syllabus Tracker</p>
-
-                    <div class="main-stats-grid">
-                        <!-- MODIFIED: Removed flex, using simple text-align -->
-                        <div class="text-center">
-                            <span id="share-card-overall-percent" class="share-overall-percent">0%</span>
-                            <span class="share-overall-coverage-label">Overall Coverage</span>
-                        </div>
-                        <div id="share-card-stats-list" class="flex flex-col justify-center space-y-2">
-                            <!-- Stats will be injected here by JS -->
-                        </div>
-                    </div>
-
-                    <div class="subject-progress-section">
-                        <div class="subject-progress-item" id="share-card-physics-container">
-                            <div class="subject-progress-header">
-                                <span class="subject-progress-name">Physics</span>
-                                <span id="share-card-physics-percent" class="subject-progress-percent">0%</span>
-                            </div>
-                            <div class="share-progress-bar">
-                                <div id="share-card-physics-bar" class="share-progress-bar-inner bg-indigo-500" style="width: 0%;"></div>
-                            </div>
-                        </div>
-                        <div class="subject-progress-item" id="share-card-chemistry-container">
-                            <div class="subject-progress-header">
-                                <span class="subject-progress-name">Chemistry</span>
-                                <span id="share-card-chemistry-percent" class="subject-progress-percent">0%</span>
-                            </div>
-                            <div class="share-progress-bar">
-                                <div id="share-card-chemistry-bar" class="share-progress-bar-inner bg-green-500" style="width: 0%;"></div>
-                            </div>
-                        </div>
-                        <div class="subject-progress-item" id="share-card-maths-container">
-                            <div class="subject-progress-header">
-                                <span class="subject-progress-name">Mathematics</span>
-                                <span id="share-card-maths-percent" class="subject-progress-percent">0%</span>
-                            </div>
-                            <div class="share-progress-bar">
-                                <div id="share-card-maths-bar" class="share-progress-bar-inner bg-yellow-500" style="width: 0%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="share-footer">
-                        <span class="share-footer-logo">sval.tech</span>
-                        <span class="share-footer-date">Generated: <span id="share-card-date"></span></span>
-                    </div>
-                </div>
-                
-                <!-- REMOVED: Download as PNG Button -->
-            </div>
-        </div>
-
-        <!-- Official Resources and Footer -->
-        <div class="max-w-4xl mx-auto text-center">
-            <h3 class="font-semibold text-neutral-300 mb-4">Resources</h3>
-            <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm bg-neutral-900/50 p-4 rounded-lg border border-neutral-800">
-                <div>
-                    <span class="text-neutral-500 text-xs">Priority Source: </span>
-                    <span class="text-indigo-400 font-semibold">MathonGo (2026)</span>
-                </div>
-                <div>
-                    <span class="text-neutral-500 text-xs">Official Syllabus: </span>
-                    <a href="https://cdnbbsr.s3waas.gov.in/s3f8e59f4b2fe7c5705bf878bbd494ccdf/uploads/2025/10/202510311323551056.pdf" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition hover:underline font-semibold">JEE Main 2026</a>
-                </div>
-            </div>
-        </div>
-        
-        <footer class="text-center mt-12 mb-6 text-neutral-600 text-sm">
-            <p>Created by <a href="https://github.com/svalordev" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition hover:underline">Shaurya Pratap Singh</a></p>
+            <p class="text-zinc-600 text-xs">
+                Designed & Built by <a href="https://github.com/svalordev" target="_blank" class="text-zinc-400 hover:text-white transition-colors underline decoration-dotted underline-offset-4">Shaurya Pratap Singh</a>
+            </p>
         </footer>
+
     </div>
-    
-    <!-- FAB (Floating Action Button) -->
-    <div class="fab-container fixed bottom-6 right-6 z-40">
-        <!-- Pop-up Menu -->
-        <div class="fab-menu w-56 p-2 space-y-1 rounded-xl shadow-xl glassmorphism">
-            <h3 class="text-lg font-bold px-2 py-1 bg-gradient-to-r from-indigo-400 to-indigo-500 bg-clip-text text-transparent">sval.tech</h3>
-            <!-- Link 1: Dashboard -->
-            <a href="https://sval.tech/studylocus/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-2 rounded-md hover:bg-neutral-800 text-neutral-200 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M7 3v18"></path><path d="M12 3v18"></path><path d="M17 3v18"></path><path d="M3 7.5h18"></path><path d="M3 12h18"></path><path d="M3 16.5h18"></path></svg>
-                <span>Dashboard</span>
+
+    <!-- Floating Action Button (FAB) -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Menu -->
+        <div id="fab-menu" class="absolute bottom-full right-0 mb-3 w-44 py-2 rounded-xl bg-zinc-900 border border-zinc-800 shadow-2xl transition-all duration-300 origin-bottom-right opacity-0 invisible scale-95">
+            <a href="https://sval.tech/studylocus/" target="_blank" class="flex items-center gap-3 px-4 py-3 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"/><path d="M3 9h18"/></svg>
+                StudyLocus
             </a>
-            <!-- Link 2: Syllabus Tracker (Current Page) -->
-            <a href="#" class="flex items-center gap-3 p-2 rounded-md bg-indigo-500/20 text-indigo-300 transition-colors" aria-current="page">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m10 14-2 2 2 2"></path><path d="m14 6-2 2 2 2"></path></svg>
-                <span>Syllabus Tracker</span>
-            </a>
-            <!-- Share Progress Button (in FAB) -->
-            <a href="https://sval.tech/zenith/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-2 rounded-md hover:bg-neutral-800 text-neutral-200 transition-colors">
-                <!-- Mountain Icon for Zenith -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
-                <span>Zenith</span>
+            <div class="h-px bg-zinc-800 my-1"></div>
+            <a href="https://sval.tech/zenith/" target="_blank" class="flex items-center gap-3 px-4 py-3 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
+                Zenith App
             </a>
         </div>
-        <!-- Main Button -->
-        <button class="fab-main-btn w-14 h-14 rounded-full border shadow-lg flex items-center justify-center text-white" style="background-color: var(--card-bg); border-color: var(--border-color);" aria-label="Toggle sval.tech products menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <!-- Button (Smaller) -->
+        <button id="fab-btn" class="w-12 h-12 bg-indigo-600 hover:bg-indigo-500 rounded-full shadow-lg shadow-indigo-600/30 flex items-center justify-center text-white transition-all transform active:scale-95">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
     </div>
 
+    <!-- Reset Modal -->
+    <div id="reset-modal" class="fixed inset-0 z-[60] hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
+            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl">
+                <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 mb-4 mx-auto">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-white text-center mb-2">Clear all progress?</h3>
+                <p class="text-zinc-400 text-center text-sm mb-6">This action is irreversible. All your tracked chapters and status updates will be permanently removed from this device.</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="cancel-reset-btn" class="px-4 py-3 rounded-lg bg-zinc-800 text-zinc-300 font-medium hover:bg-zinc-700 transition-colors">Cancel</button> <!-- Hitbox ++ -->
+                    <button id="confirm-reset-btn" class="px-4 py-3 rounded-lg bg-red-600 text-white font-medium hover:bg-red-500 transition-colors shadow-lg shadow-red-600/20">Yes, Clear All</button> <!-- Hitbox ++ -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" class="fixed inset-0 z-[60] hidden flex opacity-0 transition-opacity duration-300 items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="close-share-overlay"></div>
+        
+        <div class="relative w-full max-w-sm transform transition-all scale-95 opacity-0" id="share-modal-content">
+            <!-- Close Button with Larger Hitbox -->
+            <button id="close-share-modal-btn" class="absolute -top-12 right-0 p-4 text-zinc-400 hover:text-white transition-colors">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <!-- Share Card (Spotify Wrapped Style) -->
+            <div id="share-card" class="bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl relative">
+                <!-- Abstract Background -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 blur-[80px] rounded-full pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-purple-600/10 blur-[60px] rounded-full pointer-events-none"></div>
+                
+                <div class="p-8 relative z-10 flex flex-col items-center text-center">
+                    <div class="inline-block mb-2">
+                         <span class="text-[10px] font-bold tracking-[0.2em] text-indigo-400 uppercase">2026 JEE Tracker</span>
+                    </div>
+                    <h2 class="text-3xl font-black text-white mb-8 tracking-tight">MY PROGRESS</h2>
+
+                    <!-- Main Circle -->
+                    <div class="relative w-40 h-40 flex items-center justify-center mb-8">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <!-- Physics Track & Ring (Indigo) -->
+                            <circle cx="80" cy="80" r="70" stroke="#27272a" stroke-width="8" fill="none" />
+                            <circle id="share-ring-physics" cx="80" cy="80" r="70" class="text-indigo-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
+                            
+                            <!-- Chemistry Track & Ring (Emerald) -->
+                            <circle cx="80" cy="80" r="55" stroke="#27272a" stroke-width="8" fill="none" />
+                            <circle id="share-ring-chemistry" cx="80" cy="80" r="55" class="text-emerald-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
+                            
+                            <!-- Maths Track & Ring (Amber) -->
+                            <circle cx="80" cy="80" r="40" stroke="#27272a" stroke-width="8" fill="none" />
+                            <circle id="share-ring-maths" cx="80" cy="80" r="40" class="text-amber-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="share-card-overall-percent" class="text-4xl font-black text-white">0%</span>
+                            <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold mt-1">Done</span>
+                        </div>
+                    </div>
+
+                    <!-- Subject Breakdown -->
+                    <div class="w-full space-y-4 mb-8">
+                        <!-- Physics -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs font-semibold mb-1.5">
+                                <span class="text-zinc-400 group-hover:text-indigo-300 transition-colors">PHYSICS</span>
+                                <span id="share-card-physics-percent" class="text-white">0%</span>
+                            </div>
+                            <div class="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div id="share-card-physics-bar" class="h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] rounded-full w-0 transition-all duration-700"></div>
+                            </div>
+                        </div>
+                        <!-- Chemistry -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs font-semibold mb-1.5">
+                                <span class="text-zinc-400 group-hover:text-emerald-300 transition-colors">CHEMISTRY</span>
+                                <span id="share-card-chemistry-percent" class="text-white">0%</span>
+                            </div>
+                            <div class="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div id="share-card-chemistry-bar" class="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] rounded-full w-0 transition-all duration-700 delay-100"></div>
+                            </div>
+                        </div>
+                        <!-- Maths -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs font-semibold mb-1.5">
+                                <span class="text-zinc-400 group-hover:text-amber-300 transition-colors">MATHEMATICS</span>
+                                <span id="share-card-mathematics-percent" class="text-white">0%</span>
+                            </div>
+                            <div class="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                <div id="share-card-mathematics-bar" class="h-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)] rounded-full w-0 transition-all duration-700 delay-200"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full pt-6 border-t border-zinc-800/50 flex justify-between items-end">
+                        <div class="text-left">
+                            <div class="text-[10px] text-zinc-500 font-mono" id="share-card-date">OCT 24, 2025</div>
+                            <div class="text-xs text-zinc-400 font-medium mt-0.5">sval.tech</div>
+                        </div>
+                        <div class="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                            🎯
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-zinc-500 text-xs mt-4">Take a screenshot to share!</p>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Storage Keys ---
-            const CURRENT_STORAGE_KEY = 'jeeSyllabusProgress_v2_mathongo';
-            const OPEN_STATES_KEY = 'jeeSyllabusOpenStates_v2_mathongo';
-            const VIEW_MODE_KEY = 'jeeSyllabusViewMode_v2'; 
-            // UPDATED KEY: Changing this resets the dismissed state for all users
-            const BANNER_DISMISSED_KEY = 'zenithBannerDismissed_v1'; 
+            // --- CONSTANTS & CONFIG ---
+            const STORAGE_KEY = 'jeeSyllabusProgress_v3_premium';
+            const OLD_STORAGE_KEY = 'jeeSyllabusProgress_v2_mathongo'; // Key from previous app
+            const VIEW_KEY = 'jeeSyllabusView_v3';
+            const VIEW_STATE_KEY = 'jeeSyllabusViewState_v3'; // Key for saving expanded state
+            const BANNER_KEY = 'zenithBanner_v2';
+            const STATS_INIT_KEY = 'jeeSyllabusStatsInit_v1'; // Track when stats started
+            const VELOCITY_STATE_KEY = 'jeeSyllabusVelocityVisible_v1'; // Track tracker visibility
+            
+            // Defines the priority colors and weights
+            const STATUS_CONFIG = {
+                'not-started': { 
+                    label: 'Not Started', 
+                    weight: 0, 
+                    color: 'text-zinc-500', 
+                    bg: 'bg-zinc-800', 
+                    border: 'border-zinc-700',
+                    dot: 'bg-zinc-600'
+                },
+                'in-progress': { 
+                    label: 'In Progress', 
+                    weight: 0.5, 
+                    color: 'text-amber-400', 
+                    bg: 'bg-amber-500/10', 
+                    border: 'border-amber-500/20',
+                    dot: 'bg-amber-500'
+                },
+                'completed': { 
+                    label: 'Completed', 
+                    weight: 1, 
+                    color: 'text-emerald-400', 
+                    bg: 'bg-emerald-500/10', 
+                    border: 'border-emerald-500/20',
+                    dot: 'bg-emerald-500'
+                },
+                'mastered': { 
+                    label: 'Mastered', 
+                    weight: 1, 
+                    color: 'text-indigo-400', 
+                    bg: 'bg-indigo-500/10', 
+                    border: 'border-indigo-500/20',
+                    dot: 'bg-indigo-500'
+                }
+            };
 
-            const syllabus = [
+            // --- DATA (SYLLABUS) ---
+            // Using the same structure as provided, minimized for space in code block
+            const SYLLABUS_DATA = [
                 { 
                     subject: "Physics",
                     units: [
-                        { unitName: "Mechanics I", chapters: [
-                            { id: "PHY_B_11", name: "Motion In One Dimension", priority: 'B' },
-                            { id: "PHY_D_01", name: "Motion In Two Dimensions", priority: 'D' },
-                            { id: "PHY_B_10", name: "Laws of Motion", priority: 'B' },
-                            { id: "PHY_B_07", name: "Work Power Energy", priority: 'B' },
-                            { id: "PHY_D_05", name: "Center of Mass Momentum", priority: 'D' },
-                            { id: "PHY_B_03", name: "Rotational Motion", priority: 'B' }
-                        ]},
-                        { unitName: "Mechanics II & Waves", chapters: [
-                            { id: "PHY_B_04", name: "Gravitation", priority: 'B' },
-                            { id: "PHY_D_02", name: "Mechanical Properties of Solids", priority: 'D' },
-                            { id: "PHY_B_05", name: "Mechanical Properties of Fluids", priority: 'B' },
-                            { id: "PHY_C_06", name: "Oscillations", priority: 'C' },
-                            { id: "PHY_D_03", name: "Waves and Sound", priority: 'D' }
-                        ]},
-                        { unitName: "Thermodynamics & KTG", chapters: [
-                            { id: "PHY_D_06", name: "Thermal Properties of Matter", priority: 'D' },
-                            { id: "PHY_A_05", name: "Thermodynamics", priority: 'A' },
-                            { id: "PHY_C_05", name: "Kinetic Theory of Gases", priority: 'C' }
-                        ]},
-                        { unitName: "Electricity & Magnetism", chapters: [
-                            { id: "PHY_A_02", name: "Electrostatics", priority: 'A' },
-                            { id: "PHY_C_02", name: "Capacitance", priority: 'C' },
-                            { id: "PHY_A_01", name: "Current Electricity", priority: 'A' },
-                            { id: "PHY_A_04", name: "Magnetic Effects of Current", priority: 'A' },
-                            { id: "PHY_D_07", name: "Magnetic Properties of Matter", priority: 'D' },
-                            { id: "PHY_C_03", name: "Electromagnetic Induction", priority: 'C' },
-                            { id: "PHY_C_01", name: "Alternating Current", priority: 'C' },
-                            { id: "PHY_C_07", name: "Electromagnetic Waves", priority: 'C' }
-                        ]},
-                        { unitName: "Optics & Modern Physics", chapters: [
-                            { id: "PHY_A_03", name: "Ray Optics", priority: 'A' },
-                            { id: "PHY_B_09", name: "Wave Optics", priority: 'B' },
-                            { id: "PHY_A_06", name: "Dual Nature of Matter", priority: 'A' },
-                            { id: "PHY_A_07", name: "Atomic Physics", priority: 'A' },
-                            { id: "PHY_C_04", name: "Nuclear Physics", priority: 'C' },
-                            { id: "PHY_B_06", name: "Semiconductors", priority: 'B' }
-                        ]},
-                        { unitName: "Units & Experimental", chapters: [
-                            { id: "PHY_B_08", name: "Units and Dimensions", priority: 'B' },
-                            { id: "PHY_D_04", name: "Mathematics in Physics", priority: 'D' },
-                            { id: "PHY_D_08", name: "Experimental Physics", priority: 'D' }
-                        ]}
+                        { unitName: "Mechanics I", chapters: [ { id: "PHY_B_11", name: "Motion In One Dimension", priority: 'B' }, { id: "PHY_D_01", name: "Motion In Two Dimensions", priority: 'D' }, { id: "PHY_B_10", name: "Laws of Motion", priority: 'B' }, { id: "PHY_B_07", name: "Work Power Energy", priority: 'B' }, { id: "PHY_D_05", name: "Center of Mass Momentum", priority: 'D' }, { id: "PHY_B_03", name: "Rotational Motion", priority: 'B' } ]},
+                        { unitName: "Mechanics II & Waves", chapters: [ { id: "PHY_B_04", name: "Gravitation", priority: 'B' }, { id: "PHY_D_02", name: "Mechanical Properties of Solids", priority: 'D' }, { id: "PHY_B_05", name: "Mechanical Properties of Fluids", priority: 'B' }, { id: "PHY_C_06", name: "Oscillations", priority: 'C' }, { id: "PHY_D_03", name: "Waves and Sound", priority: 'D' } ]},
+                        { unitName: "Thermodynamics & KTG", chapters: [ { id: "PHY_D_06", name: "Thermal Properties of Matter", priority: 'D' }, { id: "PHY_A_05", name: "Thermodynamics", priority: 'A' }, { id: "PHY_C_05", name: "Kinetic Theory of Gases", priority: 'C' } ]},
+                        { unitName: "Electricity & Magnetism", chapters: [ { id: "PHY_A_02", name: "Electrostatics", priority: 'A' }, { id: "PHY_C_02", name: "Capacitance", priority: 'C' }, { id: "PHY_A_01", name: "Current Electricity", priority: 'A' }, { id: "PHY_A_04", name: "Magnetic Effects of Current", priority: 'A' }, { id: "PHY_D_07", name: "Magnetic Properties of Matter", priority: 'D' }, { id: "PHY_C_03", name: "Electromagnetic Induction", priority: 'C' }, { id: "PHY_C_01", name: "Alternating Current", priority: 'C' }, { id: "PHY_C_07", name: "Electromagnetic Waves", priority: 'C' } ]},
+                        { unitName: "Optics & Modern Physics", chapters: [ { id: "PHY_A_03", name: "Ray Optics", priority: 'A' }, { id: "PHY_B_09", name: "Wave Optics", priority: 'B' }, { id: "PHY_A_06", name: "Dual Nature of Matter", priority: 'A' }, { id: "PHY_A_07", name: "Atomic Physics", priority: 'A' }, { id: "PHY_C_04", name: "Nuclear Physics", priority: 'C' }, { id: "PHY_B_06", name: "Semiconductors", priority: 'B' } ]},
+                        { unitName: "Units & Experimental", chapters: [ { id: "PHY_B_08", name: "Units and Dimensions", priority: 'B' }, { id: "PHY_D_04", name: "Mathematics in Physics", priority: 'D' }, { id: "PHY_D_08", name: "Experimental Physics", priority: 'D' } ]}
                     ]
                 },
                 { 
                     subject: "Chemistry",
                     units: [
-                        { unitName: "Physical Chemistry I", chapters: [
-                            { id: "CHE_C_01", name: "Mole Concept", priority: 'C' },
-                            { id: "CHE_B_01", name: "Structure of Atom", priority: 'B' },
-                            { id: "CHE_A_03", name: "Chemical Bonding", priority: 'A' },
-                            { id: "CHE_A_05", name: "Thermodynamics (C)", priority: 'A' },
-                            { id: "CHE_D_05", name: "Chemical Equilibrium", priority: 'D' },
-                            { id: "CHE_D_03", name: "Ionic Equilibrium", priority: 'D' }
-                        ]},
-                        { unitName: "Physical Chemistry II", chapters: [
-                            { id: "CHE_B_02", name: "Solutions", priority: 'B' },
-                            { id: "CHE_D_04", name: "Redox Reactions", priority: 'D' },
-                            { id: "CHE_A_06", name: "Electrochemistry", priority: 'A' },
-                            { id: "CHE_B_06", name: "Chemical Kinetics", priority: 'B' }
-                        ]},
-                        { unitName: "Inorganic Chemistry", chapters: [
-                            { id: "CHE_C_03", name: "Periodic Table", priority: 'C' },
-                            { id: "CHE_B_05", name: "p Block Elements", priority: 'B' },
-                            { id: "CHE_A_04", name: "d and f Block Elements", priority: 'A' },
-                            { id: "CHE_A_02", name: "Coordination Compounds", priority: 'A' }
-                        ]},
-                        { unitName: "Organic Chemistry I", chapters: [
-                            { id: "CHE_A_01", name: "General Organic Chemistry", priority: 'A' },
-                            { id: "CHE_B_03", name: "Hydrocarbons", priority: 'B' },
-                            { id: "CHE_C_04", name: "Haloalkanes and Haloarenes", priority: 'C' }
-                        ]},
-                        { unitName: "Organic Chemistry II", chapters: [
-                            { id: "CHE_C_05", name: "Alcohols Phenols and Ethers", priority: 'C' },
-                            { id: "CHE_C_02", name: "Aldehydes and Ketones", priority: 'C' },
-                            { id: "CHE_D_02", name: "Carboxylic Acid Derivatives", priority: 'D' },
-                            { id: "CHE_B_04", name: "Amines", priority: 'B' }
-                        ]},
-                        { unitName: "Applied Chemistry", chapters: [
-                            { id: "CHE_B_07", name: "Biomolecules", priority: 'B' },
-                            { id: "CHE_D_01", name: "Practical Chemistry", priority: 'D' }
-                        ]}
+                        { unitName: "Physical Chemistry I", chapters: [ { id: "CHE_C_01", name: "Mole Concept", priority: 'C' }, { id: "CHE_B_01", name: "Structure of Atom", priority: 'B' }, { id: "CHE_A_03", name: "Chemical Bonding", priority: 'A' }, { id: "CHE_A_05", name: "Thermodynamics", priority: 'A' }, { id: "CHE_D_05", name: "Chemical Equilibrium", priority: 'D' }, { id: "CHE_D_03", name: "Ionic Equilibrium", priority: 'D' } ]},
+                        { unitName: "Physical Chemistry II", chapters: [ { id: "CHE_B_02", name: "Solutions", priority: 'B' }, { id: "CHE_D_04", name: "Redox Reactions", priority: 'D' }, { id: "CHE_A_06", name: "Electrochemistry", priority: 'A' }, { id: "CHE_B_06", name: "Chemical Kinetics", priority: 'B' } ]},
+                        { unitName: "Inorganic Chemistry", chapters: [ { id: "CHE_C_03", name: "Periodic Table", priority: 'C' }, { id: "CHE_B_05", name: "p Block Elements", priority: 'B' }, { id: "CHE_A_04", name: "d and f Block Elements", priority: 'A' }, { id: "CHE_A_02", name: "Coordination Compounds", priority: 'A' } ]},
+                        { unitName: "Organic Chemistry I", chapters: [ { id: "CHE_A_01", name: "General Organic Chemistry", priority: 'A' }, { id: "CHE_B_03", name: "Hydrocarbons", priority: 'B' }, { id: "CHE_C_04", name: "Haloalkanes and Haloarenes", priority: 'C' } ]},
+                        { unitName: "Organic Chemistry II", chapters: [ { id: "CHE_C_05", name: "Alcohols Phenols and Ethers", priority: 'C' }, { id: "CHE_C_02", name: "Aldehydes and Ketones", priority: 'C' }, { id: "CHE_D_02", name: "Carboxylic Acid Derivatives", priority: 'D' }, { id: "CHE_B_04", name: "Amines", priority: 'B' } ]},
+                        { unitName: "Applied Chemistry", chapters: [ { id: "CHE_B_07", name: "Biomolecules", priority: 'B' }, { id: "CHE_D_01", name: "Practical Chemistry", priority: 'D' } ]}
                     ]
                 },
                 { 
                     subject: "Mathematics",
                     units: [
-                        { unitName: "Algebra", chapters: [
-                            { id: "MAT_B_07", name: "Sets and Relations", priority: 'B' },
-                            { id: "MAT_B_08", name: "Quadratic Equation", priority: 'B' },
-                            { id: "MAT_B_05", name: "Complex Number", priority: 'B' },
-                            { id: "MAT_A_03", name: "Matrices Determinants", priority: 'A' },
-                            { id: "MAT_B_02", name: "Permutation Combination", priority: 'B' },
-                            { id: "MAT_A_07", name: "Binomial Theorem", priority: 'A' },
-                            { id: "MAT_A_02", name: "Sequences and Series", priority: 'A' }
-                        ]},
-                        { unitName: "Calculus", chapters: [
-                            { id: "MAT_D_06", name: "Basic of Mathematics", priority: 'D' },
-                            { id: "MAT_A_06", name: "Functions", priority: 'A' },
-                            { id: "MAT_C_03", name: "Limits", priority: 'C' },
-                            { id: "MAT_C_06", name: "Continuity and Differentiability", priority: 'C' },
-                            { id: "MAT_D_04", name: "Differentiation", priority: 'D' },
-                            { id: "MAT_B_06", name: "Application of Derivatives", priority: 'B' },
-                            { id: "MAT_D_02", name: "Indefinite Integration", priority: 'D' },
-                            { id: "MAT_A_05", name: "Definite Integration", priority: 'A' },
-                            { id: "MAT_B_04", name: "Area Under Curves", priority: 'B' },
-                            { id: "MAT_A_08", name: "Differential Equations", priority: 'A' }
-                        ]},
-                        { unitName: "Coordinate Geometry & Vectors", chapters: [
-                            { id: "MAT_B_03", name: "Straight Lines", priority: 'B' },
-                            { id: "MAT_C_01", name: "Circle", priority: 'C' },
-                            { id: "MAT_C_04", name: "Parabola", priority: 'C' },
-                            { id: "MAT_C_07", name: "Ellipse", priority: 'C' },
-                            { id: "MAT_C_05", name: "Hyperbola", priority: 'C' },
-                            { id: "MAT_A_01", name: "Three-Dimensional Geometry", priority: 'A' },
-                            { id: "MAT_A_04", name: "Vector Algebra", priority: 'A' }
-                        ]},
-                        { unitName: "Trigonometry", chapters: [
-                            { id: "MAT_D_05", name: "Trigonometric Ratios & Identities", priority: 'D' },
-                            { id: "MAT_D_03", name: "Trigonometric Equations", priority: 'D' },
-                            { id: "MAT_D_01", name: "Inverse Trigonometric Functions", priority: 'D' }
-                        ]},
-                        { unitName: "Statistics & Probability", chapters: [
-                            { id: "MAT_C_02", name: "Statistics", priority: 'C' },
-                            { id: "MAT_B_01", name: "Probability", priority: 'B' }
-                        ]}
+                        { unitName: "Algebra", chapters: [ { id: "MAT_B_07", name: "Sets and Relations", priority: 'B' }, { id: "MAT_B_08", name: "Quadratic Equation", priority: 'B' }, { id: "MAT_B_05", name: "Complex Number", priority: 'B' }, { id: "MAT_A_03", name: "Matrices Determinants", priority: 'A' }, { id: "MAT_B_02", name: "Permutation Combination", priority: 'B' }, { id: "MAT_A_07", name: "Binomial Theorem", priority: 'A' }, { id: "MAT_A_02", name: "Sequences and Series", priority: 'A' } ]},
+                        { unitName: "Calculus", chapters: [ { id: "MAT_D_06", name: "Basic of Mathematics", priority: 'D' }, { id: "MAT_A_06", name: "Functions", priority: 'A' }, { id: "MAT_C_03", name: "Limits", priority: 'C' }, { id: "MAT_C_06", name: "Continuity and Differentiability", priority: 'C' }, { id: "MAT_D_04", name: "Differentiation", priority: 'D' }, { id: "MAT_B_06", name: "Application of Derivatives", priority: 'B' }, { id: "MAT_D_02", name: "Indefinite Integration", priority: 'D' }, { id: "MAT_A_05", name: "Definite Integration", priority: 'A' }, { id: "MAT_B_04", name: "Area Under Curves", priority: 'B' }, { id: "MAT_A_08", name: "Differential Equations", priority: 'A' } ]},
+                        { unitName: "Coordinate Geometry & Vectors", chapters: [ { id: "MAT_B_03", name: "Straight Lines", priority: 'B' }, { id: "MAT_C_01", name: "Circle", priority: 'C' }, { id: "MAT_C_04", name: "Parabola", priority: 'C' }, { id: "MAT_C_07", name: "Ellipse", priority: 'C' }, { id: "MAT_C_05", name: "Hyperbola", priority: 'C' }, { id: "MAT_A_01", name: "Three-Dimensional Geometry", priority: 'A' }, { id: "MAT_A_04", name: "Vector Algebra", priority: 'A' } ]},
+                        { unitName: "Trigonometry", chapters: [ { id: "MAT_D_05", name: "Trigonometric Ratios & Identities", priority: 'D' }, { id: "MAT_D_03", name: "Trigonometric Equations", priority: 'D' }, { id: "MAT_D_01", name: "Inverse Trigonometric Functions", priority: 'D' } ]},
+                        { unitName: "Statistics & Probability", chapters: [ { id: "MAT_C_02", name: "Statistics", priority: 'C' }, { id: "MAT_B_01", name: "Probability", priority: 'B' } ]}
                     ]
                 }
             ];
 
-            // --- Configuration ---
-            const statusConfig = {
-                'not-started': { text: 'Not Started', color: 'text-neutral-500', selectColor: 'hover:bg-neutral-700/80', weight: 0, barColor: 'bg-neutral-700', dotColor: 'bg-neutral-500' },
-                'in-progress': { text: 'In Progress', color: 'text-yellow-500', selectColor: 'hover:bg-yellow-800/50', weight: 0.5, barColor: 'bg-yellow-500', dotColor: 'bg-yellow-500' },
-                'completed': { text: 'Completed', color: 'text-green-500', selectColor: 'hover:bg-green-800/50', weight: 1, barColor: 'bg-green-500', dotColor: 'bg-green-500' },
-                'mastered': { text: 'Mastered', color: 'text-indigo-400', selectColor: 'hover:bg-indigo-800/50', weight: 1, barColor: 'bg-indigo-500', dotColor: 'bg-indigo-400' }
+            // --- STATE MANAGEMENT ---
+            let appState = {
+                statuses: JSON.parse(localStorage.getItem(STORAGE_KEY)) || {},
+                groupByPriority: localStorage.getItem(VIEW_KEY) === 'flat' ? false : true,
+                searchTerm: '',
+                openChapters: null,
+                openGroups: null,
+                expandedSubjects: new Set(),
+                expandedGroups: new Set(),
+                statsInitTime: parseInt(localStorage.getItem(STATS_INIT_KEY) || Date.now()),
+                statsStartCount: 0,
+                isVelocityVisible: localStorage.getItem(VELOCITY_STATE_KEY) === 'true' // Default to false
             };
 
-            // --- State Variables ---
-            let chapterStatuses = {};
-            let openStates = {};
-            let searchTerm = '';
-            let groupByPriority = true; // View mode state
-            let activeChapterId = null; 
-            let activeGroupId = null; 
+            // Set init time if not present
+            if (!localStorage.getItem(STATS_INIT_KEY)) {
+                localStorage.setItem(STATS_INIT_KEY, appState.statsInitTime);
+            }
 
-            // --- NEW: Toast Notification Function ---
-            function showToast(message, isError = false) {
-                // Remove any existing toast
-                const existingToast = document.getElementById('toast-notification');
-                if (existingToast) {
-                    existingToast.remove();
+            // Load View State
+            const loadViewState = () => {
+                const saved = localStorage.getItem(VIEW_STATE_KEY);
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        appState.expandedSubjects = new Set(parsed.subjects || []);
+                        appState.expandedGroups = new Set(parsed.groups || []);
+                    } catch (e) {
+                        console.error('Failed to load view state', e);
+                    }
                 }
+            };
+            loadViewState();
 
-                // Create new toast
+            const saveViewState = () => {
+                localStorage.setItem(VIEW_STATE_KEY, JSON.stringify({
+                    subjects: Array.from(appState.expandedSubjects),
+                    groups: Array.from(appState.expandedGroups)
+                }));
+            };
+
+            // --- DATA MIGRATION ---
+            // If current storage is empty but old storage exists, migrate.
+            if (Object.keys(appState.statuses).length === 0) {
+                const oldData = localStorage.getItem(OLD_STORAGE_KEY);
+                if (oldData) {
+                    try {
+                        const parsedOldData = JSON.parse(oldData);
+                        if (parsedOldData && Object.keys(parsedOldData).length > 0) {
+                            appState.statuses = parsedOldData;
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(appState.statuses));
+                            console.log("Migrated data from v2 to v3");
+                        }
+                    } catch (e) {
+                        console.error("Migration failed", e);
+                    }
+                }
+            }
+
+            // --- DOM ELEMENTS ---
+            const els = {
+                syllabusContainer: document.getElementById('syllabus-container'),
+                overallStats: document.getElementById('overall-progress-data'),
+                search: document.getElementById('syllabus-search'),
+                filterPriority: document.getElementById('filter-priority'),
+                filterFlat: document.getElementById('filter-flat'),
+                toggleContainer: document.querySelector('.view-toggle'),
+                shareModal: document.getElementById('share-modal'),
+                shareModalContent: document.getElementById('share-modal-content'),
+                resetModal: document.getElementById('reset-modal'),
+                // FAB
+                fabBtn: document.getElementById('fab-btn'),
+                fabMenu: document.getElementById('fab-menu'),
+                // New Velocity Els
+                velocityContainer: document.getElementById('velocity-container'),
+                velocityToggleBtn: document.getElementById('velocity-toggle-btn'),
+                velocityContent: document.getElementById('velocity-content'),
+                velocityChevron: document.getElementById('velocity-chevron'),
+                velChaptersLeft: document.getElementById('vel-chapters-left'),
+                velPace: document.getElementById('vel-pace'),
+                velEndDate: document.getElementById('vel-end-date'),
+                velSubtext: document.getElementById('vel-subtext')
+            };
+
+            // --- UTILITIES ---
+            const saveState = () => {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState.statuses));
+            };
+
+            const calculateStats = (chapters) => {
+                if (!chapters.length) return { percent: 0, counts: { mastered: 0, completed: 0, inProgress: 0, notStarted: 0 } };
+                
+                let weightSum = 0;
+                let counts = { mastered: 0, completed: 0, inProgress: 0, notStarted: 0 };
+                
+                chapters.forEach(ch => {
+                    const status = appState.statuses[ch.id] || 'not-started';
+                    weightSum += STATUS_CONFIG[status].weight;
+                    
+                    if(status === 'mastered') counts.mastered++;
+                    else if(status === 'completed') counts.completed++;
+                    else if(status === 'in-progress') counts.inProgress++;
+                    else counts.notStarted++;
+                });
+
+                return {
+                    percent: Math.round((weightSum / chapters.length) * 100),
+                    counts
+                };
+            };
+
+            const showToast = (msg) => {
                 const toast = document.createElement('div');
-                toast.id = 'toast-notification';
-                toast.className = 'toast-notification';
-                if (isError) {
-                    toast.classList.add('error');
-                }
-                toast.textContent = message;
+                toast.className = 'toast glass-panel';
+                toast.innerHTML = `<span class="text-indigo-400">✓</span> ${msg}`;
                 document.body.appendChild(toast);
-
-                // Animate in
-                setTimeout(() => {
-                    toast.classList.add('show');
-                }, 10); // Show after a tick
-
-                // Animate out and remove
+                
+                requestAnimationFrame(() => toast.classList.add('show'));
                 setTimeout(() => {
                     toast.classList.remove('show');
-                    setTimeout(() => {
-                        if (toast) toast.remove();
-                    }, 500); // Remove from DOM after fade out
-                }, 3000); // Hide after 3 seconds
-            }
+                    setTimeout(() => toast.remove(), 500);
+                }, 3000);
+            };
 
-            // --- Persistence (Local Storage) ---
-
-            function loadViewMode() {
-                const savedMode = localStorage.getItem(VIEW_MODE_KEY);
-                groupByPriority = savedMode === 'flat' ? false : true;
-            }
-
-            function saveViewMode() {
-                localStorage.setItem(VIEW_MODE_KEY, groupByPriority ? 'priority' : 'flat');
-            }
-
-            function storeOpenStates() {
-                openStates = {};
-                document.querySelectorAll('.subject-card, .group-branch').forEach((el) => {
-                    const id = el.dataset.id;
-                    if (id && el.classList.contains('expanded')) {
-                        openStates[id] = true;
-                    }
-                });
-                localStorage.setItem(OPEN_STATES_KEY, JSON.stringify(openStates));
-            }
-
-            function restoreOpenStates() {
-                const savedStates = localStorage.getItem(OPEN_STATES_KEY);
-                openStates = savedStates ? JSON.parse(savedStates) : {};
-                
-                document.querySelectorAll('.subject-card, .group-branch').forEach((el) => {
-                    const id = el.dataset.id;
-                    if (id && openStates[id]) {
-                        el.classList.add('expanded');
-                        el.classList.remove('collapsed');
-                    } else {
-                        el.classList.add('collapsed');
-                        el.classList.remove('expanded');
-                    }
-                });
-            }
-
-            function loadProgress() {
-                const savedProgress = localStorage.getItem(CURRENT_STORAGE_KEY);
-                chapterStatuses = savedProgress ? JSON.parse(savedProgress) : {};
-            }
-
-            function saveProgress() {
-                localStorage.setItem(CURRENT_STORAGE_KEY, JSON.stringify(chapterStatuses));
-            }
-
-            // --- Calculation Logic ---
-            function calculateStats(chapters) {
-                const total = chapters.length;
-                if (total === 0) return { total: 0, mastered: 0, completed: 0, inProgress: 0, notStarted: 0, percentage: 0, masteredPercent: 0, completedPercent: 0, inProgressPercent: 0, chapters: chapters };
-                
-                let mastered = 0, completed = 0, inProgress = 0, weightedSum = 0;
-
-                chapters.forEach(chapter => {
-                    const status = chapterStatuses[chapter.id] || 'not-started';
-                    const weight = statusConfig[status].weight;
-                    
-                    if (status === 'mastered') mastered++;
-                    else if (status === 'completed') completed++;
-                    else if (status === 'in-progress') inProgress++;
-                    
-                    weightedSum += weight;
-                });
-                
-                const percentage = (weightedSum / total) * 100;
-                const notStarted = total - (mastered + completed + inProgress);
-
-                return { 
-                    total, mastered, completed, inProgress, notStarted, 
-                    percentage: Math.round(percentage), 
-                    masteredPercent: (mastered / total) * 100, 
-                    completedPercent: (completed / total) * 100, 
-                    inProgressPercent: (inProgress / total) * 100,
-                    chapters: chapters
-                };
-            }
-
-            function calculateOverallStats() {
-                const allChapters = syllabus.flatMap(s => s.units.flatMap(u => u.chapters));
-                return calculateStats(allChapters);
-            }
-
-            // --- Status Update Logic ---
-
-            function updateChapterStatus(chapterId, newStatus) {
-                chapterStatuses[chapterId] = newStatus;
-                saveProgress();
-                storeOpenStates(); 
-                activeChapterId = null; 
-                activeGroupId = null;
-                renderSyllabus(); 
-                renderOverallStats(); 
-            }
-
-            function updateGroupStatus(subjectName, groupName, newStatus) {
-                let chaptersToUpdate = [];
-                const subjectData = syllabus.find(s => s.subject === subjectName);
-
-                if (groupByPriority) {
-                    const priority = groupName.split(' ')[1]; // "A"
-                    chaptersToUpdate = subjectData.units.flatMap(u => u.chapters).filter(c => c.priority === priority);
-                } else {
-                    chaptersToUpdate = subjectData.units.find(u => u.unitName === groupName).chapters;
-                }
-                
-                chaptersToUpdate.forEach(chapter => {
-                    chapterStatuses[chapter.id] = newStatus;
-                });
-
-                saveProgress();
-                storeOpenStates();
-                activeChapterId = null;
-                activeGroupId = null; 
-                renderSyllabus(); 
-                renderOverallStats(); 
-            }
-
-            // --- Rendering Functions ---
-            function highlightText(text, term) {
-                if (!term) return text;
-                const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-                return text.replace(regex, '<span class="highlight">$1</span>');
-            }
-
-            function updateViewModeUI() {
-                const toggle = document.querySelector('.view-mode-toggle');
-                const priorityBtn = document.getElementById('filter-priority');
-                const flatBtn = document.getElementById('filter-flat');
-
-                if (groupByPriority) {
-                    toggle.dataset.mode = 'priority';
-                    priorityBtn.classList.add('active');
-                    flatBtn.classList.remove('active');
-                } else {
-                    toggle.dataset.mode = 'flat';
-                    priorityBtn.classList.remove('active');
-                    flatBtn.classList.add('active');
-                }
-            }
-            
-            function renderOverallStats() {
-                const stats = calculateOverallStats();
-                const container = document.getElementById('overall-progress-data');
-
-                container.innerHTML = `
-                    <div class="text-center">
-                        <span class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-300 to-indigo-500 relative">
-                            ${stats.percentage}%
-                            <span class="absolute -inset-4 opacity-30 bg-indigo-500 blur-3xl -z-10"></span>
-                        </span>
-                        <span class="text-base font-semibold text-neutral-400 block mt-1">Overall Coverage</span>
-                    </div>
-                    <div class="w-full h-2.5 rounded-full flex overflow-hidden bg-neutral-700">
-                        <div class="progress-bar-segment ${statusConfig['mastered'].barColor}" style="width: ${stats.masteredPercent}%"></div>
-                        <div class="progress-bar-segment ${statusConfig['completed'].barColor}" style="width: ${stats.completedPercent}%"></div>
-                        <div class="progress-bar-segment ${statusConfig['in-progress'].barColor}" style="width: ${stats.inProgressPercent}%"></div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm pt-4 border-t border-neutral-700">
-                        <div class="flex items-center">
-                            <span class="status-dot ${statusConfig['mastered'].dotColor}"></span>
-                            <span class="font-medium text-neutral-300">Mastered: ${stats.mastered}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="status-dot ${statusConfig['completed'].dotColor}"></span>
-                            <span class="font-medium text-neutral-300">Completed: ${stats.completed}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="status-dot ${statusConfig['in-progress'].dotColor}"></span>
-                            <span class="font-medium text-neutral-300">In Progress: ${stats.inProgress}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="status-dot ${statusConfig['not-started'].dotColor}"></span>
-                            <span class="font-medium text-neutral-400">Not Started: ${stats.notStarted}</span>
-                        </div>
+            // --- RENDERING ---
+            const getStatusBadge = (status, isButton = false) => {
+                const conf = STATUS_CONFIG[status];
+                return `
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold tracking-wide transition-all border ${conf.bg} ${conf.color} ${conf.border} ${isButton ? 'hover:brightness-110 cursor-pointer' : ''}">
+                        <div class="w-1.5 h-1.5 rounded-full ${conf.dot}"></div>
+                        ${conf.label}
                     </div>
                 `;
-                updateViewModeUI(); 
-            }
-            
-            function createStatusMenuItems(targetId, isGroupMenu = false) {
-                const currentStatus = isGroupMenu ? 'group-menu' : chapterStatuses[targetId] || 'not-started';
-                const dataAttribute = isGroupMenu ? 'data-group-menu' : 'data-menu-status';
+            };
 
-                return Object.keys(statusConfig).map(key => {
-                    const config = statusConfig[key];
-                    const isActive = !isGroupMenu && key === currentStatus;
-                    const activeClass = isActive ? 'active' : '';
-                    const checkmark = isActive ? `<span class="ml-auto text-white">✓</span>` : '';
-
-                    return `<button ${dataAttribute}="${key}" data-target-id="${targetId}" class="inline-status-menu-btn w-full text-left px-3 py-2 rounded-md font-medium text-sm flex items-center ${config.color} ${config.selectColor} ${activeClass}">
-                                <span class="status-dot ${config.dotColor}"></span>
-                                ${config.text}
-                                ${checkmark}
-                            </button>`;
-                }).join('');
-            }
-            
-            function renderChapterStatusMenu(chapterId) {
-                return `<div class="inline-status-menu mt-2 rounded-lg shadow-xl space-y-1" data-menu-id="${chapterId}">${createStatusMenuItems(chapterId, false)}</div>`;
-            }
-            
-            function renderGroupStatusMenu(uniqueGroupId, groupName) {
-                return `<div class="inline-status-menu group-menu mt-2 rounded-lg shadow-xl space-y-1" data-menu-id="${uniqueGroupId}">
-                            <p class="text-neutral-400 text-xs font-semibold px-3 pt-2 pb-1 border-b border-neutral-700 mb-1">Apply to all in group:</p>
-                            <div class="p-2 space-y-1">
-                                ${createStatusMenuItems(groupName, true)}
-                            </div>
-                        </div>`;
-            }
-
-            // --- Main Render Function ---
-            function renderSyllabus() {
-                const container = document.getElementById('syllabus-container');
-                container.innerHTML = '';
+            const renderInlineMenu = (targetId, isGroup) => {
+                const currentStatus = isGroup ? null : (appState.statuses[targetId] || 'not-started');
                 
-                const currentSearchTerm = searchTerm.toLowerCase();
+                let html = `<div class="status-menu-wrapper" id="menu-${targetId}">
+                    <div class="overflow-hidden">
+                        <div class="bg-zinc-900/90 border border-zinc-800 rounded-lg p-1.5 shadow-xl grid grid-cols-1 gap-1">`;
+                
+                if (isGroup) {
+                    html += `<div class="px-2 py-1 text-[10px] uppercase font-bold text-zinc-500 tracking-wider">Set all to:</div>`;
+                }
 
-                syllabus.forEach((subject, index) => {
-                    const allSubjectChapters = subject.units.flatMap(u => u.chapters);
-                    const subjectStats = calculateStats(allSubjectChapters);
-
-                    const subjectMatch = subject.subject.toLowerCase().includes(currentSearchTerm);
-                    
-                    const subjectDiv = document.createElement('div');
-                    subjectDiv.className = 'subject-card rounded-2xl collapsed shadow-xl';
-                    subjectDiv.dataset.id = subject.subject; 
-                    subjectDiv.style.animationDelay = `${index * 50}ms`;
-                    
-                    const groupContainerDiv = document.createElement('div');
-                    groupContainerDiv.className = 'content-container px-4 sm:px-5 pb-5';
-                    groupContainerDiv.innerHTML = `<div class="space-y-3 mt-4 border-t border-neutral-800 pt-4"></div>`;
-                    const groupList = groupContainerDiv.querySelector('div');
-
-                    let visibleChapterCount = 0;
-                    let groupsToRender = [];
-
-                    if (groupByPriority) {
-                        const chaptersByPriority = { A: [], B: [], C: [], D: [] };
-                        allSubjectChapters.forEach(chapter => {
-                            chaptersByPriority[chapter.priority].push(chapter);
-                        });
-                        groupsToRender = [
-                            { groupName: "Priority A", chapters: chaptersByPriority.A },
-                            { groupName: "Priority B", chapters: chaptersByPriority.B },
-                            { groupName: "Priority C", chapters: chaptersByPriority.C },
-                            { groupName: "Priority D", chapters: chaptersByPriority.D },
-                        ];
-                    } else {
-                        groupsToRender = subject.units.map(u => ({ groupName: u.unitName, chapters: u.chapters }));
-                    }
-
-                    // --- COMMON RENDER LOGIC ---
-                    groupsToRender.forEach(group => {
-                        const groupStats = calculateStats(group.chapters);
-                        const groupMatch = group.groupName.toLowerCase().includes(currentSearchTerm);
-                        const chapterMatches = group.chapters.filter(c => c.name.toLowerCase().includes(currentSearchTerm));
-                        
-                        const isVisible = (subjectMatch || groupMatch || chapterMatches.length > 0) && group.chapters.length > 0;
-                        if (isVisible) visibleChapterCount++;
-
-                        const uniqueGroupId = `${subject.subject}-${group.groupName}`;
-                        const isGroupMenuOpen = activeGroupId === uniqueGroupId;
-
-                        const groupDiv = document.createElement('div');
-                        groupDiv.className = `group-branch rounded-lg overflow-hidden border border-neutral-800 ${isVisible ? '' : 'hidden'}`;
-                        groupDiv.dataset.id = `${subject.subject}-${group.groupName}`;
-                        
-                        groupDiv.innerHTML = `
-                            <div class="group-header p-3.5 transition-colors ${groupStats.percentage === 100 ? 'bg-green-900/10' : 'bg-neutral-800/30'} ${isGroupMenuOpen ? 'ring-2 ring-indigo-500' : ''}">
-                                <div class="flex items-center justify-between">
-                                    <div data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-header-toggle flex items-center flex-grow py-1 min-w-0 pr-3">
-                                        <svg class="w-4 h-4 text-neutral-500 arrow mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                                        <h3 class="text-md font-semibold ${groupStats.percentage === 100 ? 'text-green-300' : 'text-neutral-200'} truncate">${highlightText(group.groupName, searchTerm)}</h3>
-                                    </div>
-                                    <button data-group-name="${group.groupName}" data-subject-name="${subject.subject}" class="group-status-btn text-sm font-bold text-white px-3 py-1 rounded-full transition bg-indigo-700/40 hover:bg-indigo-700/80 ml-2 flex-shrink-0">${groupStats.percentage}%</button>
-                                </div>
-                                ${isGroupMenuOpen ? renderGroupStatusMenu(uniqueGroupId, group.groupName) : ''}
-                            </div>
-                            <div class="content-container chapter-leaf-list p-2 bg-black/20 space-y-1"></div>`;
-                        
-                        const chapterListEl = groupDiv.querySelector('.chapter-leaf-list');
-                        
-                        group.chapters.forEach(chapter => {
-                            const status = chapterStatuses[chapter.id] || 'not-started';
-                            const config = statusConfig[status];
-                            const chapterMatch = chapter.name.toLowerCase().includes(currentSearchTerm);
-                            const isOpen = activeChapterId === chapter.id;
-
-                            const chapterContainer = document.createElement('div');
-                            chapterContainer.dataset.chapterId = chapter.id;
-                            if (!chapterMatch && !groupMatch && !subjectMatch) {
-                                chapterContainer.className = 'hidden';
-                            }
-                            
-                            const chapterDiv = document.createElement('div');
-                            chapterDiv.className = `chapter-leaf p-3 rounded-lg flex justify-between items-center ${isOpen ? 'is-open' : ''}`;
-                            chapterDiv.innerHTML = `
-                                <span class="text-sm flex-grow pr-3 flex items-center ${config.color} font-medium">
-                                    ${highlightText(chapter.name, searchTerm)}
-                                </span>
-                                <button data-chapter-id="${chapter.id}" class="status-btn px-2.5 py-1 rounded-md font-medium text-xs ${config.color} bg-neutral-800/50 border border-neutral-700 flex items-center flex-shrink-0">
-                                    <span class="status-dot ${config.dotColor} mr-1.5"></span>
-                                    ${config.text}
-                                </button>`;
-                            
-                            chapterContainer.appendChild(chapterDiv);
-                            if (isOpen) {
-                                chapterContainer.innerHTML += renderChapterStatusMenu(chapter.id);
-                            }
-                            chapterListEl.appendChild(chapterContainer);
-                        });
-                        groupList.appendChild(groupDiv);
-                    });
-
-                    const subjectVisible = subjectMatch || visibleChapterCount > 0;
-                    subjectDiv.style.display = subjectVisible ? 'block' : 'none';
-
-                    subjectDiv.innerHTML = `
-                        <div class="subject-header p-5">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-indigo-400">
-                                    ${highlightText(subject.subject, searchTerm)}
-                                </h2>
-                                <div class="flex items-center space-x-4">
-                                    <span class="text-2xl font-extrabold ${subjectStats.percentage === 100 ? 'text-green-300' : 'text-white'}">${subjectStats.percentage}%</span>
-                                    <svg class="w-6 h-6 text-neutral-400 arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                                </div>
-                            </div>
-                            <div class="w-full h-2.5 rounded-full flex overflow-hidden bg-neutral-700">
-                                <div class="progress-bar-segment ${statusConfig['mastered'].barColor}" style="width: ${subjectStats.masteredPercent}%"></div>
-                                <div class="progress-bar-segment ${statusConfig['completed'].barColor}" style="width: ${subjectStats.completedPercent}%"></div>
-                                <div class="progress-bar-segment ${statusConfig['in-progress'].barColor}" style="width: ${subjectStats.inProgressPercent}%"></div>
-                            </div>
-                            <div class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-medium">
-                                <span class="flex items-center text-indigo-400">Mastered: ${subjectStats.mastered} / ${subjectStats.total}</span>
-                                <span class="flex items-center text-green-400">Completed: ${subjectStats.completed}</span>
-                                <span class="flex items-center text-yellow-400">In Progress: ${subjectStats.inProgress}</span>
-                                <span class="flex items-center text-neutral-400">Not Started: ${subjectStats.notStarted}</span>
-                            </div>
-                        </div>
+                Object.keys(STATUS_CONFIG).forEach(key => {
+                    const conf = STATUS_CONFIG[key];
+                    const isActive = key === currentStatus;
+                    html += `
+                        <button class="menu-option w-full text-left px-3 py-2.5 rounded-md flex items-center gap-3 transition-colors ${isActive ? 'bg-zinc-800' : 'hover:bg-zinc-800'}" 
+                                data-status="${key}" data-target="${targetId}" data-is-group="${isGroup}">
+                            <div class="w-2 h-2 rounded-full ${conf.dot}"></div>
+                            <span class="text-sm font-medium ${isActive ? 'text-white' : 'text-zinc-400'}">${conf.label}</span>
+                            ${isActive ? '<svg class="ml-auto w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+                        </button>
                     `;
-                    subjectDiv.appendChild(groupContainerDiv);
-                    container.appendChild(subjectDiv);
                 });
 
-                // Apply open class to the inline menus
-                if (activeChapterId) {
-                    const menuEl = document.querySelector(`[data-menu-id="${activeChapterId}"]`);
-                    if (menuEl) menuEl.classList.add('open');
-                }
-                if (activeGroupId) {
-                    const menuEl = document.querySelector(`[data-menu-id="${activeGroupId}"]`);
-                    if (menuEl) menuEl.classList.add('open');
-                }
+                html += `</div></div></div>`;
+                return html;
+            };
 
-                restoreOpenStates();
-            }
+            const renderChapter = (chapter, highlightRegex) => {
+                const status = appState.statuses[chapter.id] || 'not-started';
+                const nameHtml = highlightRegex ? chapter.name.replace(highlightRegex, match => `<span class="highlight">${match}</span>`) : chapter.name;
 
+                return `
+                    <div class="chapter-item group" data-id="${chapter.id}">
+                        <div class="flex items-center justify-between py-3 px-3 rounded-lg hover:bg-zinc-800/50 transition-colors cursor-pointer border border-transparent hover:border-zinc-800 chapter-trigger active:scale-[0.99]">
+                            <span class="text-[0.9rem] font-medium text-zinc-300 group-hover:text-zinc-100 transition-colors mr-4">${nameHtml}</span>
+                            ${getStatusBadge(status, true)}
+                        </div>
+                        ${renderInlineMenu(chapter.id, false)}
+                    </div>
+                `;
+            };
 
-            // --- Event Handlers ---
-
-            // 1. Accordion/Menu Clicks (Main Container)
-            document.getElementById('syllabus-container').addEventListener('click', (e) => {
-                const groupToggle = e.target.closest('.group-header-toggle');
-                const subjectHeader = e.target.closest('.subject-header');
-                const groupStatusBtn = e.target.closest('.group-status-btn');
-
-                if (subjectHeader) {
-                    // This is an accordion toggle.
-                    closeAllInlineMenus(); // Close any open menus
-                    activeChapterId = null; activeGroupId = null;
-                    const parentNode = subjectHeader.closest('.subject-card');
-                    parentNode.classList.toggle('expanded');
-                    parentNode.classList.toggle('collapsed');
-                    storeOpenStates(); 
-                } else if (groupToggle) {
-                    // This is also an accordion toggle.
-                    closeAllInlineMenus(); // Close any open menus
-                    activeChapterId = null; activeGroupId = null; 
-                    const parentNode = groupToggle.closest('.group-branch');
-                    parentNode.classList.toggle('expanded');
-                    parentNode.classList.toggle('collapsed');
-                    storeOpenStates(); 
-
-                } else if (groupStatusBtn) {
-                    // --- Group Menu Toggle ---
-                    e.stopPropagation(); 
-                    const groupName = groupStatusBtn.dataset.groupName;
-                    const subjectName = groupStatusBtn.dataset.subjectName;
-                    const uniqueGroupId = `${subjectName}-${groupName}`;
-                    const groupHeader = groupStatusBtn.closest('.group-header');
-                    
-                    const existingMenu = groupHeader.querySelector('.inline-status-menu');
-                    
-                    closeAllInlineMenus(uniqueGroupId); // Close all *except* this one if it's already open
-                    
-                    if (existingMenu) {
-                        // Just close it
-                        activeGroupId = null;
-                        existingMenu.classList.remove('open');
-                        groupHeader.classList.remove('ring-2', 'ring-indigo-500');
-                        setTimeout(() => existingMenu.remove(), 300);
-                    } else {
-                        // Open a new one
-                        activeGroupId = uniqueGroupId; // Set state
-                        groupHeader.classList.add('ring-2', 'ring-indigo-500');
-                        const menuHtml = renderGroupStatusMenu(uniqueGroupId, groupName);
-                        groupHeader.insertAdjacentHTML('beforeend', menuHtml);
-                        setTimeout(() => {
-                            const newMenu = groupHeader.querySelector('.inline-status-menu');
-                            if (newMenu) newMenu.classList.add('open');
-                        }, 10);
+            const renderGroup = (group, subject) => {
+                const stats = calculateStats(group.chapters);
+                const uniqueId = `${subject}-${group.groupName.replace(/\s+/g, '-')}`;
+                const highlightRegex = appState.searchTerm ? new RegExp(`(${appState.searchTerm})`, 'gi') : null;
+                
+                // Filter logic
+                let visibleChapters = group.chapters;
+                if (highlightRegex) {
+                    // Show if group name matches OR any chapter matches
+                    const groupMatch = highlightRegex.test(group.groupName);
+                    if (!groupMatch) {
+                        visibleChapters = group.chapters.filter(ch => highlightRegex.test(ch.name));
                     }
+                }
+                
+                if (visibleChapters.length === 0 && appState.searchTerm) return '';
 
-                } else {
-                    const chapterContainer = e.target.closest('[data-chapter-id]');
-                    const menuOption = e.target.closest('[data-menu-status]');
-                    const groupMenuOption = e.target.closest('[data-group-menu]');
+                const groupNameHtml = highlightRegex ? group.groupName.replace(highlightRegex, match => `<span class="highlight">${match}</span>`) : group.groupName;
+                const isExpanded = appState.expandedGroups.has(uniqueId) || !!appState.searchTerm;
 
-                    if (menuOption) {
-                        // This is a DATA change.
-                        const chapterId = menuOption.dataset.targetId;
-                        const newStatus = menuOption.dataset.menuStatus;
-                        updateChapterStatus(chapterId, newStatus); 
-                        e.stopPropagation();
-                    } else if (groupMenuOption) {
-                        // This is a DATA change.
-                        const groupName = groupMenuOption.dataset.targetId;
-                        const newStatus = groupMenuOption.dataset.groupMenu;
-                        const subjectName = groupMenuOption.closest('.group-branch').querySelector('.group-header-toggle').dataset.subjectName;
-                        updateGroupStatus(subjectName, groupName, newStatus); 
-                        e.stopPropagation();
-                    } else if (chapterContainer) {
-                        // --- Chapter Menu Toggle ---
-                        e.stopPropagation(); 
-                        const chapterId = chapterContainer.dataset.chapterId;
-                        const chapterLeaf = chapterContainer.querySelector('.chapter-leaf');
+                return `
+                    <div class="group-branch border border-zinc-800 rounded-xl overflow-hidden mb-3 bg-zinc-900/30 ${isExpanded ? 'expanded' : ''}" data-unique-id="${uniqueId}">
+                        <div class="p-3.5 flex items-center justify-between bg-zinc-900/50 hover:bg-zinc-900 transition-colors group cursor-pointer group-toggle">
+                            <button class="flex items-center gap-3 flex-1 text-left focus:outline-none w-full h-full">
+                                <svg class="w-4 h-4 text-zinc-500 arrow-icon transform transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                <span class="text-sm font-bold text-zinc-200">${groupNameHtml}</span>
+                            </button>
+                            <div class="relative">
+                                <button class="text-xs font-bold px-2 py-1 rounded bg-zinc-800 text-zinc-400 hover:text-white hover:bg-indigo-600 hover:shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all group-menu-trigger" data-id="${uniqueId}">
+                                    ${stats.percent}%
+                                </button>
+                            </div>
+                        </div>
                         
-                        const existingMenu = chapterContainer.querySelector('.inline-status-menu');
+                        <!-- Inline Group Menu Placeholder -->
+                        <div id="group-menu-container-${uniqueId}">
+                            ${renderInlineMenu(uniqueId, true)}
+                        </div>
 
-                        closeAllInlineMenus(chapterId); // Close all *except* this one if it's already open
-
-                        if (existingMenu) {
-                            // Just close it
-                            activeChapterId = null;
-                            chapterLeaf.classList.remove('is-open');
-                            existingMenu.classList.remove('open');
-                            setTimeout(() => existingMenu.remove(), 300);
-                        } else {
-                            // Open a new one
-                            activeChapterId = chapterId; // Set state
-                            chapterLeaf.classList.add('is-open');
-                            const menuHtml = renderChapterStatusMenu(chapterId);
-                            chapterContainer.insertAdjacentHTML('beforeend', menuHtml);
-                            setTimeout(() => {
-                                const newMenu = chapterContainer.querySelector('.inline-status-menu');
-                                if (newMenu) newMenu.classList.add('open');
-                            }, 10);
-                        }
-                    }
-                }
-            });
-
-            // 2. View Mode Toggle Handler (Dashboard)
-            document.getElementById('overall-stats-container').addEventListener('click', (e) => {
-                const button = e.target.closest('.toggle-option[data-filter]');
-                if (button) {
-                    const mode = button.dataset.filter;
-                    if ((mode === 'priority' && !groupByPriority) || (mode === 'flat' && groupByPriority)) {
-                        activeChapterId = null; 
-                        activeGroupId = null;
-                        groupByPriority = (mode === 'priority');
-                        saveViewMode(); 
-                        updateViewModeUI();
-                        renderSyllabus(); 
-                    }
-                }
-            });
-
-            // 3. Search Filter 
-            document.getElementById('syllabus-search').addEventListener('input', (e) => {
-                activeChapterId = null; 
-                activeGroupId = null;
-                searchTerm = e.target.value.trim();
-                renderSyllabus(); 
-            });
-
-            // 4. Global click to close menu
-            document.body.addEventListener('click', (e) => {
-                if ((activeChapterId || activeGroupId) && !e.target.closest('#syllabus-container')) {
-                    closeAllInlineMenus(); // Use new helper
-                    activeChapterId = null;
-                    activeGroupId = null;
-                }
-            });
-
-            // 5. Reset Modal and Functionality
-            const resetModal = document.getElementById('reset-modal');
-            document.getElementById('reset-data-btn').addEventListener('click', () => {
-                resetModal.style.display = 'flex';
-                setTimeout(() => resetModal.classList.add('opacity-100'), 10);
-            });
-
-            function hideResetModal() {
-                resetModal.classList.remove('opacity-100');
-                setTimeout(() => resetModal.style.display = 'none', 300);
-            }
-
-            document.getElementById('cancel-reset-btn').addEventListener('click', hideResetModal);
-
-            document.getElementById('confirm-reset-btn').addEventListener('click', () => {
-                localStorage.removeItem(CURRENT_STORAGE_KEY);
-                localStorage.removeItem(OPEN_STATES_KEY);
-                localStorage.removeItem(VIEW_MODE_KEY); 
-                localStorage.removeItem(BANNER_DISMISSED_KEY); // NEW: Reset banner
-
-                chapterStatuses = {};
-                openStates = {};
-                groupByPriority = true; 
-                activeChapterId = null;
-                activeGroupId = null;
-
-                renderSyllabus();
-                renderOverallStats();
-                
-                hideResetModal();
-                
-                // NEW: Use Toast Notification
-                showToast('Progress successfully reset!');
-                // NEW: Show banner again
-                initBanner();
-            });
-
-            // --- Share Modal Functionality ---
-            const shareModal = document.getElementById('share-modal');
-            const shareProgressMainBtn = document.getElementById('share-progress-main-btn'); // New dashboard button
-            const closeShareModalBtn = document.getElementById('close-share-modal-btn');
-            // REMOVED: Download button variables
-
-            function renderShareCard() {
-                const overallStats = calculateOverallStats();
-                
-                // Calculate stats for each subject
-                const physicsChapters = syllabus.find(s => s.subject === 'Physics').units.flatMap(u => u.chapters);
-                const physicsStats = calculateStats(physicsChapters);
-                
-                const chemistryChapters = syllabus.find(s => s.subject === 'Chemistry').units.flatMap(u => u.chapters);
-                const chemistryStats = calculateStats(chemistryChapters);
-
-                const mathsChapters = syllabus.find(s => s.subject === 'Mathematics').units.flatMap(u => u.chapters);
-                const mathsStats = calculateStats(mathsChapters);
-
-                // Update Overall Percent
-                document.getElementById('share-card-overall-percent').textContent = `${overallStats.percentage}%`;
-
-                // Update Stats List
-                const statsListEl = document.getElementById('share-card-stats-list');
-                statsListEl.innerHTML = `
-                    <div class="stat-item">
-                        <span class="status-dot ${statusConfig['mastered'].dotColor}"></span>
-                        <span class="stat-label">Mastered:</span>
-                        <span class="stat-value">${overallStats.mastered}</span>
+                        <div class="accordion-wrapper ${isExpanded ? 'open' : ''}">
+                            <div class="accordion-inner p-3 space-y-1">
+                                ${visibleChapters.map(ch => renderChapter(ch, highlightRegex)).join('')}
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="status-dot ${statusConfig['completed'].dotColor}"></span>
-                        <span class="stat-label">Completed:</span>
-                        <span class="stat-value">${overallStats.completed}</span>
+                `;
+            };
+
+            const renderSubject = (subjectData) => {
+                const allChapters = subjectData.units.flatMap(u => u.chapters);
+                const stats = calculateStats(allChapters);
+                const highlightRegex = appState.searchTerm ? new RegExp(`(${appState.searchTerm})`, 'gi') : null;
+                
+                let groups = [];
+                if (appState.groupByPriority) {
+                    const map = { A: [], B: [], C: [], D: [] };
+                    allChapters.forEach(ch => map[ch.priority].push(ch));
+                    ['A', 'B', 'C', 'D'].forEach(p => {
+                        if(map[p].length) groups.push({ groupName: `Priority ${p}`, chapters: map[p] });
+                    });
+                } else {
+                    groups = subjectData.units.map(u => ({ groupName: u.unitName, chapters: u.chapters }));
+                }
+
+                // Render groups strings
+                const groupsHtml = groups.map(g => renderGroup(g, subjectData.subject)).join('');
+                
+                // If search active and no groups visible, hide subject
+                if (groupsHtml === '' && appState.searchTerm && !highlightRegex.test(subjectData.subject)) return '';
+
+                const isExpanded = appState.expandedSubjects.has(subjectData.subject) || !!appState.searchTerm;
+
+                // Color calculation for segments
+                const total = allChapters.length;
+                const masteredVal = stats.counts.mastered;
+                const completedVal = stats.counts.completed;
+                const inProgressVal = stats.counts.inProgress;
+                
+                const c = 126; // Circumference (2 * PI * 20 ≈ 125.66)
+
+                // 1. Bottom Ring (Amber) - Represents InProgress + Completed + Mastered
+                const p1 = total > 0 ? ((masteredVal + completedVal + inProgressVal) / total) : 0;
+                const offset1 = c - (c * p1);
+
+                // 2. Middle Ring (Emerald) - Represents Completed + Mastered
+                const p2 = total > 0 ? ((masteredVal + completedVal) / total) : 0;
+                const offset2 = c - (c * p2);
+
+                // 3. Top Ring (Indigo) - Represents Mastered
+                const p3 = total > 0 ? (masteredVal / total) : 0;
+                const offset3 = c - (c * p3);
+
+                return `
+                    <div class="subject-card glass-card rounded-2xl overflow-hidden mb-4 h-fit ${isExpanded ? 'expanded' : ''}" data-subject="${subjectData.subject}">
+                        <div class="p-5 flex items-center justify-between cursor-pointer subject-header hover:bg-white/5 transition-colors">
+                            <div>
+                                <h2 class="text-xl font-bold text-white tracking-tight">${subjectData.subject}</h2>
+                                <div class="flex gap-3 text-xs font-medium text-zinc-500 mt-1">
+                                    <span class="text-indigo-400">${stats.counts.mastered} Mastered</span>
+                                    <span>•</span>
+                                    <span>${stats.percent}% Done</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="relative w-12 h-12">
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <!-- Base Track -->
+                                        <circle cx="24" cy="24" r="20" stroke="#27272a" stroke-width="4" fill="none" />
+                                        
+                                        <!-- Ring 1: In Progress + Completed + Mastered (Amber) -->
+                                        <circle cx="24" cy="24" r="20" class="text-amber-500" stroke="currentColor" stroke-width="4" fill="none" 
+                                            stroke-dasharray="126" stroke-dashoffset="${offset1}" 
+                                            stroke-linecap="round" />
+                                            
+                                        <!-- Ring 2: Completed + Mastered (Emerald) -->
+                                        <circle cx="24" cy="24" r="20" class="text-emerald-500" stroke="currentColor" stroke-width="4" fill="none" 
+                                            stroke-dasharray="126" stroke-dashoffset="${offset2}" 
+                                            stroke-linecap="round" />
+                                            
+                                        <!-- Ring 3: Mastered (Indigo) -->
+                                        <circle cx="24" cy="24" r="20" class="text-indigo-500" stroke="currentColor" stroke-width="4" fill="none" 
+                                            stroke-dasharray="126" stroke-dashoffset="${offset3}" 
+                                            stroke-linecap="round" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">
+                                        ${stats.percent}%
+                                    </div>
+                                </div>
+                                <svg class="w-5 h-5 text-zinc-600 arrow-icon transform transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="accordion-wrapper ${isExpanded ? 'open' : ''}">
+                            <div class="accordion-inner p-4 pt-0">
+                                <div class="h-px bg-zinc-800 mb-4"></div>
+                                ${groupsHtml}
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="status-dot ${statusConfig['in-progress'].dotColor}"></span>
-                        <span class="stat-label">In Progress:</span>
-                        <span class="stat-value">${overallStats.inProgress}</span>
+                `;
+            };
+
+            const renderAll = () => {
+                const html = SYLLABUS_DATA.map(renderSubject).join('');
+                els.syllabusContainer.innerHTML = html || `<div class="col-span-2 text-center py-12 text-zinc-500">No chapters found for "${appState.searchTerm}"</div>`;
+                
+                // --- Re-attach Events for new DOM elements ---
+                attachDynamicEvents();
+                updateOverallStats();
+            };
+
+            const updateOverallStats = () => {
+                const allChapters = SYLLABUS_DATA.flatMap(s => s.units.flatMap(u => u.chapters));
+                const stats = calculateStats(allChapters);
+                
+                els.overallStats.innerHTML = `
+                    <div class="text-center mb-6">
+                        <div class="text-5xl font-black text-white tracking-tighter mb-1">${stats.percent}%</div>
+                        <div class="text-xs font-medium text-zinc-500 uppercase tracking-widest">Syllabus Covered</div>
+                    </div>
+                    
+                    <div class="flex h-3 w-full rounded-full overflow-hidden bg-zinc-800">
+                        <div class="bg-indigo-500 h-full transition-all duration-500 relative group" style="width: ${(stats.counts.mastered/allChapters.length)*100}%">
+                             <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                        <div class="bg-emerald-500 h-full transition-all duration-500" style="width: ${(stats.counts.completed/allChapters.length)*100}%"></div>
+                        <div class="bg-amber-500 h-full transition-all duration-500" style="width: ${(stats.counts.inProgress/allChapters.length)*100}%"></div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <div class="p-3 rounded-lg bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-xs text-zinc-400"><div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>Mastered</div>
+                            <span class="font-bold text-white text-sm">${stats.counts.mastered}</span>
+                        </div>
+                        <div class="p-3 rounded-lg bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-xs text-zinc-400"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>Completed</div>
+                            <span class="font-bold text-white text-sm">${stats.counts.completed}</span>
+                        </div>
+                        <div class="p-3 rounded-lg bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-xs text-zinc-400"><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>In Progress</div>
+                            <span class="font-bold text-white text-sm">${stats.counts.inProgress}</span>
+                        </div>
+                        <div class="p-3 rounded-lg bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-xs text-zinc-400"><div class="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>Left</div>
+                            <span class="font-bold text-white text-sm">${stats.counts.notStarted}</span>
+                        </div>
                     </div>
                 `;
 
-                // Update Physics Bar
-                document.getElementById('share-card-physics-percent').textContent = `${physicsStats.percentage}%`;
-                document.getElementById('share-card-physics-bar').style.width = `${physicsStats.percentage}%`;
+                // Update Velocity Tracker Logic
+                updateVelocityTracker(stats.counts);
+            };
 
-                // Update Chemistry Bar
-                document.getElementById('share-card-chemistry-percent').textContent = `${chemistryStats.percentage}%`;
-                document.getElementById('share-card-chemistry-bar').style.width = `${chemistryStats.percentage}%`;
+            // --- VELOCITY TRACKER LOGIC ---
+            const toggleVelocityTracker = () => {
+                appState.isVelocityVisible = !appState.isVelocityVisible;
+                localStorage.setItem(VELOCITY_STATE_KEY, appState.isVelocityVisible);
+                applyVelocityVisibility();
+            };
+
+            const applyVelocityVisibility = () => {
+                if (appState.isVelocityVisible) {
+                    els.velocityContent.classList.remove('collapsed');
+                    els.velocityChevron.classList.remove('collapsed');
+                } else {
+                    els.velocityContent.classList.add('collapsed');
+                    els.velocityChevron.classList.add('collapsed');
+                }
+            };
+
+            const updateVelocityTracker = (currentCounts) => {
+                const totalChapters = SYLLABUS_DATA.flatMap(s => s.units.flatMap(u => u.chapters)).length;
+                // Consider Mastered and Completed as "Done"
+                const doneCount = currentCounts.mastered + currentCounts.completed;
+                const remaining = totalChapters - doneCount;
                 
-                // Update Maths Bar
-                document.getElementById('share-card-maths-percent').textContent = `${mathsStats.percentage}%`;
-                document.getElementById('share-card-maths-bar').style.width = `${mathsStats.percentage}%`;
+                // Show Velocity Card
+                els.velocityContainer.classList.remove('hidden');
+                els.velChaptersLeft.textContent = remaining;
 
-                // Update Date
-                document.getElementById('share-card-date').textContent = new Date().toLocaleDateString('en-US', {
-                    month: 'long', day: 'numeric', year: 'numeric'
-                });
-            }
+                // Apply current visibility preference
+                applyVelocityVisibility();
 
-            function showShareModal() {
-                renderShareCard(); // Populate with latest data
-                shareModal.style.display = 'flex';
-                setTimeout(() => shareModal.classList.add('opacity-100'), 10);
-            }
-
-            function hideShareModal() {
-                shareModal.classList.remove('opacity-100');
-                setTimeout(() => shareModal.style.display = 'none', 300);
-            }
-
-            // Listen on both share buttons
-            shareProgressMainBtn.addEventListener('click', showShareModal);
-            
-            closeShareModalBtn.addEventListener('click', hideShareModal);
-
-            // REMOVED: Download button event listener and logic
-
-            // --- Helper Function to close menus ---
-            function closeAllInlineMenus(excludeId = null) {
-                document.querySelectorAll('.inline-status-menu.open[data-menu-id]').forEach(menu => {
-                    const menuId = menu.dataset.menuId;
-                    if (menuId !== excludeId) {
-                        // Check if it's a chapter menu
-                        const chapterContainer = menu.closest('[data-chapter-id]');
-                        if (chapterContainer) {
-                            chapterContainer.querySelector('.chapter-leaf').classList.remove('is-open');
-                        }
-                        
-                        // Check if it's a group menu
-                        const groupHeader = menu.closest('.group-header');
-                        if (groupHeader) {
-                            groupHeader.classList.remove('ring-2', 'ring-indigo-500');
-                        }
-
-                        menu.classList.remove('open');
-                        setTimeout(() => menu.remove(), 300);
-                    }
-                });
+                // Calculate Days Elapsed since first tracking or reset
+                const now = Date.now();
+                const msPerDay = 1000 * 60 * 60 * 24;
+                const daysElapsed = (now - appState.statsInitTime) / msPerDay;
                 
-                if (activeChapterId && activeChapterId !== excludeId) activeChapterId = null;
-                if (activeGroupId && activeGroupId !== excludeId) activeGroupId = null;
-            }
-
-            // --- NEW: Banner Logic ---
-            function initBanner() {
-                const banner = document.getElementById('zenith-banner'); // UPDATED ID
-                const closeBannerBtn = document.getElementById('close-banner-btn');
-                const isDismissed = localStorage.getItem(BANNER_DISMISSED_KEY);
-
-                if (!isDismissed) {
-                    banner.classList.remove('hidden');
-                    setTimeout(() => {
-                        banner.classList.add('show');
-                    }, 50); // Small delay to ensure transition works
+                // Let's lazy-init 'initialDoneCount' if it doesn't exist in LS
+                let startDone = parseInt(localStorage.getItem('jeeSyllabusStartCount_v3'));
+                if (isNaN(startDone)) {
+                    startDone = doneCount;
+                    localStorage.setItem('jeeSyllabusStartCount_v3', startDone);
                 }
 
-                closeBannerBtn.addEventListener('click', () => {
-                    localStorage.setItem(BANNER_DISMISSED_KEY, 'true');
-                    banner.classList.remove('show');
-                    banner.classList.add('hide');
-                    setTimeout(() => {
-                        banner.classList.add('hidden');
-                    }, 400); // Match transition duration
+                // If daysElapsed is too small (< 1 day), data is insufficient
+                if (daysElapsed < 1) {
+                    els.velPace.textContent = "-- ch/day";
+                    els.velEndDate.textContent = "Insufficient Data";
+                    els.velSubtext.textContent = "Check back in 24h";
+                    return;
+                }
+
+                const chaptersCompletedSinceStart = doneCount - startDone;
+                
+                // If negative (user unchecked items), reset start count
+                if (chaptersCompletedSinceStart < 0) {
+                    localStorage.setItem('jeeSyllabusStartCount_v3', doneCount);
+                    localStorage.setItem(STATS_INIT_KEY, Date.now());
+                    return; // Reset state
+                }
+
+                const velocityPerDay = chaptersCompletedSinceStart / daysElapsed;
+
+                if (velocityPerDay <= 0) {
+                    els.velPace.textContent = "0 ch/day";
+                    els.velEndDate.textContent = "Stalled";
+                    els.velSubtext.textContent = "Complete chapters to see est.";
+                } else {
+                    const daysRemaining = remaining / velocityPerDay;
+                    const endDate = new Date(now + (daysRemaining * msPerDay));
+                    
+                    els.velPace.textContent = `${velocityPerDay.toFixed(2)} ch/day`;
+                    els.velEndDate.textContent = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    els.velSubtext.textContent = `Based on last ${Math.round(daysElapsed)} days`;
+                }
+            };
+
+            // --- INTERACTION LOGIC ---
+
+            const closeAllMenus = () => {
+                document.querySelectorAll('.status-menu-wrapper.open').forEach(el => el.classList.remove('open'));
+            };
+
+            const toggleFabMenu = (e) => {
+                e.stopPropagation();
+                if (els.fabMenu.classList.contains('invisible')) {
+                    els.fabMenu.classList.remove('invisible', 'opacity-0', 'scale-95');
+                } else {
+                    closeFabMenu();
+                }
+            };
+
+            const closeFabMenu = () => {
+                els.fabMenu.classList.add('invisible', 'opacity-0', 'scale-95');
+            };
+
+            const attachDynamicEvents = () => {
+                // Accordion Toggles
+                document.querySelectorAll('.subject-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const card = header.parentElement;
+                        const subjectName = card.dataset.subject;
+                        const wrapper = card.querySelector('.accordion-wrapper');
+                        
+                        card.classList.toggle('expanded');
+                        wrapper.classList.toggle('open');
+
+                        // Save View State
+                        if (card.classList.contains('expanded')) {
+                            appState.expandedSubjects.add(subjectName);
+                        } else {
+                            appState.expandedSubjects.delete(subjectName);
+                        }
+                        saveViewState();
+                    });
                 });
+
+                document.querySelectorAll('.group-toggle').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const groupEl = btn.closest('.group-branch');
+                        const uniqueId = groupEl.dataset.uniqueId;
+                        const wrapper = groupEl.querySelector('.accordion-wrapper');
+                        
+                        groupEl.classList.toggle('expanded');
+                        wrapper.classList.toggle('open');
+
+                        // Save View State
+                        if (groupEl.classList.contains('expanded')) {
+                            appState.expandedGroups.add(uniqueId);
+                        } else {
+                            appState.expandedGroups.delete(uniqueId);
+                        }
+                        saveViewState();
+                    });
+                });
+
+                // Status Menus (Chapter)
+                document.querySelectorAll('.chapter-trigger').forEach(trigger => {
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const chapterItem = trigger.closest('.chapter-item');
+                        const menu = chapterItem.querySelector('.status-menu-wrapper');
+                        
+                        // Close others
+                        if (!menu.classList.contains('open')) {
+                            closeAllMenus();
+                            menu.classList.add('open');
+                        } else {
+                            menu.classList.remove('open');
+                        }
+                    });
+                });
+
+                // Status Menus (Group)
+                document.querySelectorAll('.group-menu-trigger').forEach(trigger => {
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = trigger.dataset.id;
+                        const menu = document.querySelector(`#group-menu-container-${id} .status-menu-wrapper`);
+                        
+                        if (!menu.classList.contains('open')) {
+                            closeAllMenus();
+                            menu.classList.add('open');
+                        } else {
+                            menu.classList.remove('open');
+                        }
+                    });
+                });
+
+                // Status Selection
+                document.querySelectorAll('.menu-option').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const status = btn.dataset.status;
+                        const target = btn.dataset.target;
+                        const isGroup = btn.dataset.isGroup === 'true';
+
+                        if (isGroup) {
+                            // Find chapters in this group and update all
+                            // NOTE: Since uniqueId reconstruction is fuzzy, let's use DOM context
+                            const groupEl = btn.closest('.group-branch');
+                            const chapterIds = Array.from(groupEl.querySelectorAll('.chapter-item')).map(el => el.dataset.id);
+                            
+                            chapterIds.forEach(id => appState.statuses[id] = status);
+                            showToast(`Updated ${chapterIds.length} chapters`);
+
+                        } else {
+                            appState.statuses[target] = status;
+                        }
+
+                        saveState();
+                        renderAll(); // Full re-render to update stats/colors
+                    });
+                });
+            };
+
+            // --- EVENT LISTENERS (STATIC) ---
+            
+            // View Mode Toggle
+            els.toggleContainer.addEventListener('click', (e) => {
+                const clicked = e.target.closest('[data-filter]');
+                if (!clicked) return;
+                
+                const mode = clicked.dataset.filter;
+                els.toggleContainer.dataset.mode = mode;
+                appState.groupByPriority = (mode === 'priority');
+                localStorage.setItem(VIEW_KEY, mode);
+                
+                if(appState.groupByPriority) {
+                    els.filterPriority.classList.replace('text-zinc-500', 'text-white');
+                    els.filterFlat.classList.replace('text-white', 'text-zinc-500');
+                } else {
+                    els.filterFlat.classList.replace('text-zinc-500', 'text-white');
+                    els.filterPriority.classList.replace('text-white', 'text-zinc-500');
+                }
+                
+                renderAll();
+            });
+
+            // Velocity Toggle
+            if (els.velocityToggleBtn) {
+                els.velocityToggleBtn.addEventListener('click', toggleVelocityTracker);
             }
 
+            // Search
+            els.search.addEventListener('input', (e) => {
+                appState.searchTerm = e.target.value.trim();
+                renderAll();
+                
+                // If searching, auto-expand everything
+                if (appState.searchTerm) {
+                    document.querySelectorAll('.accordion-wrapper').forEach(el => el.classList.add('open'));
+                    document.querySelectorAll('.subject-card').forEach(el => el.classList.add('expanded'));
+                }
+            });
 
-            // --- Initialization ---
-            loadViewMode(); 
-            loadProgress(); 
-            initBanner(); // Initialize the banner
-            renderOverallStats();
-            renderSyllabus();
+            // FAB Toggle
+            els.fabBtn.addEventListener('click', toggleFabMenu);
+
+            // Click outside to close menus
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.status-menu-wrapper') && !e.target.closest('.chapter-trigger') && !e.target.closest('.group-menu-trigger')) {
+                    closeAllMenus();
+                }
+                if (!e.target.closest('#fab-menu') && !e.target.closest('#fab-btn')) {
+                    closeFabMenu();
+                }
+            });
+
+            // Banner Logic
+            const banner = document.getElementById('zenith-banner');
+            if (!localStorage.getItem(BANNER_KEY)) {
+                setTimeout(() => banner.classList.add('show'), 500);
+            }
+            document.getElementById('close-banner-btn').addEventListener('click', () => {
+                banner.classList.remove('show');
+                localStorage.setItem(BANNER_KEY, 'true');
+            });
+
+            // Reset Logic
+            document.getElementById('reset-data-btn').addEventListener('click', () => {
+                els.resetModal.classList.remove('hidden');
+                requestAnimationFrame(() => els.resetModal.classList.remove('opacity-0'));
+            });
+            document.getElementById('cancel-reset-btn').addEventListener('click', () => {
+                els.resetModal.classList.add('opacity-0');
+                setTimeout(() => els.resetModal.classList.add('hidden'), 300);
+            });
+            document.getElementById('confirm-reset-btn').addEventListener('click', () => {
+                localStorage.removeItem(STORAGE_KEY);
+                // Also reset stats
+                localStorage.removeItem(STATS_INIT_KEY);
+                localStorage.removeItem('jeeSyllabusStartCount_v3');
+                
+                appState.statuses = {};
+                saveState();
+                renderAll();
+                
+                // Close modal
+                els.resetModal.classList.add('opacity-0');
+                setTimeout(() => els.resetModal.classList.add('hidden'), 300);
+                showToast('All progress reset.');
+                
+                // Re-init stats time
+                localStorage.setItem(STATS_INIT_KEY, Date.now());
+                appState.statsInitTime = Date.now();
+            });
+
+            // Share Modal Logic
+            const updateShareCard = () => {
+                const allChapters = SYLLABUS_DATA.flatMap(s => s.units.flatMap(u => u.chapters));
+                const overallStats = calculateStats(allChapters);
+                
+                document.getElementById('share-card-overall-percent').textContent = `${overallStats.percent}%`;
+                
+                // Radii and Circumferences
+                const rPhys = 70; const cPhys = 2 * Math.PI * rPhys;
+                const rChem = 55; const cChem = 2 * Math.PI * rChem;
+                const rMath = 40; const cMath = 2 * Math.PI * rMath;
+
+                // Get specific subject stats
+                const physData = SYLLABUS_DATA.find(s => s.subject === 'Physics');
+                const physStats = calculateStats(physData.units.flatMap(u => u.chapters));
+                
+                const chemData = SYLLABUS_DATA.find(s => s.subject === 'Chemistry');
+                const chemStats = calculateStats(chemData.units.flatMap(u => u.chapters));
+                
+                const mathData = SYLLABUS_DATA.find(s => s.subject === 'Mathematics');
+                const mathStats = calculateStats(mathData.units.flatMap(u => u.chapters));
+
+                // Set Dash Arrays
+                const physRing = document.getElementById('share-ring-physics');
+                physRing.style.strokeDasharray = cPhys;
+                // Wait for layout/transition
+                setTimeout(() => {
+                    physRing.style.strokeDashoffset = cPhys - (cPhys * physStats.percent / 100);
+                }, 100);
+
+                const chemRing = document.getElementById('share-ring-chemistry');
+                chemRing.style.strokeDasharray = cChem;
+                setTimeout(() => {
+                    chemRing.style.strokeDashoffset = cChem - (cChem * chemStats.percent / 100);
+                }, 200);
+
+                const mathRing = document.getElementById('share-ring-maths');
+                mathRing.style.strokeDasharray = cMath;
+                setTimeout(() => {
+                    mathRing.style.strokeDashoffset = cMath - (cMath * mathStats.percent / 100);
+                }, 300);
+
+                // Subjects Bars (Text updates remain same)
+                ['Physics', 'Chemistry', 'Mathematics'].forEach(sub => {
+                    const subData = SYLLABUS_DATA.find(s => s.subject === sub);
+                    const subChapters = subData.units.flatMap(u => u.chapters);
+                    const subStats = calculateStats(subChapters);
+                    
+                    document.getElementById(`share-card-${sub.toLowerCase()}-percent`).textContent = `${subStats.percent}%`;
+                    document.getElementById(`share-card-${sub.toLowerCase()}-bar`).style.width = `${subStats.percent}%`;
+                });
+
+                document.getElementById('share-card-date').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
+            };
+
+            document.getElementById('share-progress-main-btn').addEventListener('click', () => {
+                updateShareCard();
+                els.shareModal.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    els.shareModal.classList.remove('opacity-0');
+                    els.shareModalContent.classList.remove('scale-95', 'opacity-0');
+                });
+            });
+
+            const closeShare = () => {
+                els.shareModal.classList.add('opacity-0');
+                els.shareModalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => els.shareModal.classList.add('hidden'), 300);
+            };
+
+            document.getElementById('close-share-modal-btn').addEventListener('click', closeShare);
+            document.getElementById('close-share-overlay').addEventListener('click', closeShare);
+
+
+            // --- INIT ---
+            if(!appState.groupByPriority) {
+                els.toggleContainer.dataset.mode = 'flat';
+                els.filterFlat.classList.replace('text-zinc-500', 'text-white');
+                els.filterPriority.classList.replace('text-white', 'text-zinc-500');
+            }
+            // Ensure Velocity State Applied on Load
+            applyVelocityVisibility();
+            
+            renderAll();
         });
     </script>
 </body>
