@@ -5,25 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JEE Syllabus Tracker | SvalTech</title>
 
-    <!-- SEO & Social Meta Tags -->
     <meta name="description" content="A modern, interactive dashboard to track your complete JEE 2026 syllabus progress. Master your prep with SvalTech.">
     <meta name="keywords" content="JEE, JEE 2026, JEE Syllabus, JEE Tracker, Syllabus Tracker, IIT JEE, JEE Main, SvalTech, JEE 2027, JEE 2028">
     <link rel="canonical" href="https://sval.tech/syllabustracker/">
     
-    <!-- Open Graph -->
     <meta property="og:title" content="JEE Syllabus Tracker | SvalTech">
     <meta property="og:description" content="Track your JEE 2026 syllabus progress with a modern, interactive dashboard.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://placehold.co/1200x630/6366f1/white?text=JEE+Mastery">
     <meta property="og:site_name" content="SvalTech">
 
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -77,7 +72,6 @@
             background-color: #09090b;
             color: #a1a1aa;
             -webkit-font-smoothing: antialiased;
-            /* Gradient Fallback */
             background-image: radial-gradient(circle at 50% 0%, #18181b 0%, #09090b 70%);
         }
 
@@ -107,7 +101,7 @@
             display: grid;
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden; /* CRITICAL FIX: Ensures ghost content is clipped */
+            overflow: hidden;
         }
         .accordion-wrapper.open {
             grid-template-rows: 1fr;
@@ -196,7 +190,7 @@
             max-height: 200px;
             opacity: 1;
             transform: translateY(0);
-            margin-bottom: 2rem; /* Reduced margin */
+            margin-bottom: 2rem;
         }
 
         /* --- Highlighting --- */
@@ -228,7 +222,6 @@
         .animation-delay-4000 { animation-delay: 4s; }
     </style>
     
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TCK0S6VC58"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -239,25 +232,19 @@
 </head>
 <body class="antialiased selection:bg-indigo-500/30 selection:text-indigo-200 relative">
 
-    <!-- Animated Background Blobs -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <!-- Center/Top Blob -->
         <div class="absolute top-[-10%] left-1/2 transform -translate-x-1/2 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] animate-blob mix-blend-screen"></div>
-        <!-- Bottom Left Blob -->
         <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] animate-blob animation-delay-2000 mix-blend-screen"></div>
-        <!-- Bottom Right Blob -->
         <div class="absolute bottom-[20%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
     </div>
 
-    <div class="container mx-auto max-w-[96%] 2xl:max-w-[1800px] px-3 sm:px-6 lg:px-8 py-4 sm:py-6"> <!-- WIDER LAYOUT -->
+    <div class="container mx-auto max-w-[96%] 2xl:max-w-[1800px] px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
 
-        <!-- Header -->
-        <header class="text-center mb-6 sm:mb-8 relative animate-fade-in-up"> <!-- Reduced Margin -->
+        <header class="text-center mb-6 sm:mb-8 relative animate-fade-in-up">
             <div class="inline-block relative">
-                <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 relative z-10"> <!-- Compact Text -->
+                <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 relative z-10">
                     <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 animate-pulse-slow">JEE Syllabus</span> Tracker
                 </h1>
-                <!-- Glow behind text -->
                 <div class="absolute -inset-x-10 -inset-y-4 bg-indigo-600/20 blur-[60px] rounded-[100%] z-0 pointer-events-none"></div>
             </div>
             <p class="text-xs sm:text-sm font-medium text-zinc-500 mt-1 tracking-wide">
@@ -265,10 +252,9 @@
             </p>
         </header>
 
-        <!-- Zenith Banner -->
         <div id="zenith-banner" class="glass-panel rounded-xl border-indigo-500/20 relative group max-w-7xl mx-auto">
             <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-transparent opacity-50 transition-opacity group-hover:opacity-70"></div>
-            <div class="p-3 sm:p-4 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3"> <!-- Compact Padding & Gap -->
+            <div class="p-3 sm:p-4 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div class="flex items-center gap-3 text-center sm:text-left">
                     <div class="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400 shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
@@ -289,26 +275,22 @@
             </div>
         </div>
 
-        <!-- Main Content Grid -->
-        <div class="flex flex-col xl:flex-row gap-5 items-start relative"> <!-- Reduced Gap -->
+        <div class="flex flex-col xl:flex-row gap-5 items-start relative">
             
-            <!-- Sticky Sidebar (Control Center) -->
             <aside id="overall-stats-container" class="w-full xl:w-80 xl:sticky xl:top-6 z-30 transition-all duration-300 flex-shrink-0">
-                <div class="glass-panel rounded-xl p-4 sm:p-5 shadow-2xl shadow-black/50"> <!-- Compact Padding -->
+                <div class="glass-panel rounded-xl p-4 sm:p-5 shadow-2xl shadow-black/50">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-base font-bold text-white">Overall Status</h2>
                         <div class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)] animate-pulse"></div>
                     </div>
 
                     <div id="overall-progress-data" class="space-y-4">
-                        <!-- JS injected content -->
                         <div class="animate-pulse space-y-4">
                             <div class="h-8 bg-zinc-800 rounded w-1/3 mx-auto"></div>
                             <div class="h-2 bg-zinc-800 rounded-full w-full"></div>
                         </div>
                     </div>
 
-                    <!-- View Mode Toggle -->
                     <div class="mt-6 pt-4 border-t border-zinc-800">
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Group By</label>
@@ -320,9 +302,7 @@
                         </div>
                     </div>
 
-                    <!-- NEW: Velocity Tracker Card (Collapsible) -->
                     <div id="velocity-container" class="mt-6 pt-4 border-t border-zinc-800 hidden">
-                        <!-- Header / Toggle -->
                         <div id="velocity-toggle-btn" class="flex items-center justify-between cursor-pointer group select-none">
                             <h3 class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2 group-hover:text-zinc-300 transition-colors">
                                 <svg class="w-3 h-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -331,7 +311,6 @@
                             <svg id="velocity-chevron" class="w-3 h-3 text-zinc-600 group-hover:text-zinc-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
                         
-                        <!-- Content -->
                         <div id="velocity-content" class="overflow-hidden max-h-40 opacity-100">
                             <div class="bg-zinc-900/50 rounded-lg p-3 border border-zinc-800 mt-3">
                                 <div class="flex justify-between items-end mb-2">
@@ -352,7 +331,6 @@
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="mt-4 space-y-2">
                         <div class="relative group">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -375,14 +353,11 @@
                 </div>
             </aside>
 
-            <!-- Syllabus Content -->
-            <main id="syllabus-container" class="flex-1 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 w-full pb-20"> <!-- Added 2xl:grid-cols-3 -->
-                <!-- Content injected via JS -->
-            </main>
+            <main id="syllabus-container" class="flex-1 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 w-full pb-20">
+                </main>
 
         </div>
 
-        <!-- Footer -->
         <footer class="mt-16 border-t border-zinc-800 pt-8 pb-6 text-center">
             <div class="flex flex-wrap justify-center gap-4 mb-6">
                 <div class="px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400 uppercase tracking-wide">
@@ -399,9 +374,7 @@
 
     </div>
 
-    <!-- Floating Action Button (FAB) -->
     <div class="fixed bottom-6 right-6 z-50">
-        <!-- Menu -->
         <div id="fab-menu" class="absolute bottom-full right-0 mb-3 w-44 py-2 rounded-xl bg-zinc-900 border border-zinc-800 shadow-2xl transition-all duration-300 origin-bottom-right opacity-0 invisible scale-95">
             <a href="https://sval.tech/studylocus/" target="_blank" class="flex items-center gap-3 px-4 py-3 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"/><path d="M3 9h18"/></svg>
@@ -413,13 +386,11 @@
                 Zenith App
             </a>
         </div>
-        <!-- Button (Smaller) -->
         <button id="fab-btn" class="w-12 h-12 bg-indigo-600 hover:bg-indigo-500 rounded-full shadow-lg shadow-indigo-600/30 flex items-center justify-center text-white transition-all transform active:scale-95">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
     </div>
 
-    <!-- Reset Modal -->
     <div id="reset-modal" class="fixed inset-0 z-[60] hidden opacity-0 transition-opacity duration-300">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
@@ -430,26 +401,22 @@
                 <h3 class="text-xl font-bold text-white text-center mb-2">Clear all progress?</h3>
                 <p class="text-zinc-400 text-center text-sm mb-6">This action is irreversible. All your tracked chapters and status updates will be permanently removed from this device.</p>
                 <div class="grid grid-cols-2 gap-3">
-                    <button id="cancel-reset-btn" class="px-4 py-3 rounded-lg bg-zinc-800 text-zinc-300 font-medium hover:bg-zinc-700 transition-colors">Cancel</button> <!-- Hitbox ++ -->
-                    <button id="confirm-reset-btn" class="px-4 py-3 rounded-lg bg-red-600 text-white font-medium hover:bg-red-500 transition-colors shadow-lg shadow-red-600/20">Yes, Clear All</button> <!-- Hitbox ++ -->
+                    <button id="cancel-reset-btn" class="px-4 py-3 rounded-lg bg-zinc-800 text-zinc-300 font-medium hover:bg-zinc-700 transition-colors">Cancel</button>
+                    <button id="confirm-reset-btn" class="px-4 py-3 rounded-lg bg-red-600 text-white font-medium hover:bg-red-500 transition-colors shadow-lg shadow-red-600/20">Yes, Clear All</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Share Modal -->
     <div id="share-modal" class="fixed inset-0 z-[60] hidden flex opacity-0 transition-opacity duration-300 items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="close-share-overlay"></div>
         
         <div class="relative w-full max-w-sm transform transition-all scale-95 opacity-0" id="share-modal-content">
-            <!-- Close Button with Larger Hitbox -->
             <button id="close-share-modal-btn" class="absolute -top-12 right-0 p-4 text-zinc-400 hover:text-white transition-colors">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
 
-            <!-- Share Card (Spotify Wrapped Style) -->
             <div id="share-card" class="bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl relative">
-                <!-- Abstract Background -->
                 <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 blur-[80px] rounded-full pointer-events-none"></div>
                 <div class="absolute bottom-0 left-0 w-48 h-48 bg-purple-600/10 blur-[60px] rounded-full pointer-events-none"></div>
                 
@@ -459,30 +426,24 @@
                     </div>
                     <h2 class="text-3xl font-black text-white mb-8 tracking-tight">MY PROGRESS</h2>
 
-                    <!-- Main Circle -->
                     <div class="relative w-40 h-40 flex items-center justify-center mb-8">
                         <svg class="w-full h-full transform -rotate-90">
-                            <!-- Physics Track & Ring (Indigo) -->
-                            <circle cx="80" cy="80" r="70" stroke="#27272a" stroke-width="8" fill="none" />
-                            <circle id="share-ring-physics" cx="80" cy="80" r="70" class="text-indigo-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
+                            <circle cx="80" cy="80" r="75" stroke="#27272a" stroke-width="8" fill="none" />
+                            <circle id="share-ring-physics" cx="80" cy="80" r="75" class="text-indigo-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
                             
-                            <!-- Chemistry Track & Ring (Emerald) -->
-                            <circle cx="80" cy="80" r="55" stroke="#27272a" stroke-width="8" fill="none" />
-                            <circle id="share-ring-chemistry" cx="80" cy="80" r="55" class="text-emerald-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
+                            <circle cx="80" cy="80" r="60" stroke="#27272a" stroke-width="8" fill="none" />
+                            <circle id="share-ring-chemistry" cx="80" cy="80" r="60" class="text-emerald-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
                             
-                            <!-- Maths Track & Ring (Amber) -->
-                            <circle cx="80" cy="80" r="40" stroke="#27272a" stroke-width="8" fill="none" />
-                            <circle id="share-ring-maths" cx="80" cy="80" r="40" class="text-amber-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
+                            <circle cx="80" cy="80" r="45" stroke="#27272a" stroke-width="8" fill="none" />
+                            <circle id="share-ring-maths" cx="80" cy="80" r="45" class="text-amber-500" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" />
                         </svg>
                         <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <span id="share-card-overall-percent" class="text-4xl font-black text-white">0%</span>
+                            <span id="share-card-overall-percent" class="text-3xl font-black text-white">0%</span>
                             <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold mt-1">Done</span>
                         </div>
                     </div>
 
-                    <!-- Subject Breakdown -->
                     <div class="w-full space-y-4 mb-8">
-                        <!-- Physics -->
                         <div class="group">
                             <div class="flex justify-between text-xs font-semibold mb-1.5">
                                 <span class="text-zinc-400 group-hover:text-indigo-300 transition-colors">PHYSICS</span>
@@ -492,7 +453,6 @@
                                 <div id="share-card-physics-bar" class="h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] rounded-full w-0 transition-all duration-700"></div>
                             </div>
                         </div>
-                        <!-- Chemistry -->
                         <div class="group">
                             <div class="flex justify-between text-xs font-semibold mb-1.5">
                                 <span class="text-zinc-400 group-hover:text-emerald-300 transition-colors">CHEMISTRY</span>
@@ -502,7 +462,6 @@
                                 <div id="share-card-chemistry-bar" class="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] rounded-full w-0 transition-all duration-700 delay-100"></div>
                             </div>
                         </div>
-                        <!-- Maths -->
                         <div class="group">
                             <div class="flex justify-between text-xs font-semibold mb-1.5">
                                 <span class="text-zinc-400 group-hover:text-amber-300 transition-colors">MATHEMATICS</span>
@@ -516,8 +475,8 @@
 
                     <div class="w-full pt-6 border-t border-zinc-800/50 flex justify-between items-end">
                         <div class="text-left">
-                            <div class="text-[10px] text-zinc-500 font-mono" id="share-card-date">OCT 24, 2025</div>
-                            <div class="text-xs text-zinc-400 font-medium mt-0.5">sval.tech</div>
+                            <div class="text-[15px] text-zinc-500 font-mono" id="share-card-date">OCT 24, 2025</div>
+                            <div class="text-m text-zinc-400 font-bold mt-0.5">sval.tech/syllabustracker</div>
                         </div>
                         <div class="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold shadow-lg">
                             🎯
@@ -531,19 +490,17 @@
     </div>
 
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- CONSTANTS & CONFIG ---
             const STORAGE_KEY = 'jeeSyllabusProgress_v3_premium';
-            const OLD_STORAGE_KEY = 'jeeSyllabusProgress_v2_mathongo'; // Key from previous app
+            const OLD_STORAGE_KEY = 'jeeSyllabusProgress_v2_mathongo'; 
             const VIEW_KEY = 'jeeSyllabusView_v3';
-            const VIEW_STATE_KEY = 'jeeSyllabusViewState_v3'; // Key for saving expanded state
+            const VIEW_STATE_KEY = 'jeeSyllabusViewState_v3'; 
             const BANNER_KEY = 'zenithBanner_v2';
-            const STATS_INIT_KEY = 'jeeSyllabusStatsInit_v1'; // Track when stats started
-            const VELOCITY_STATE_KEY = 'jeeSyllabusVelocityVisible_v1'; // Track tracker visibility
+            const STATS_INIT_KEY = 'jeeSyllabusStatsInit_v1'; 
+            const VELOCITY_STATE_KEY = 'jeeSyllabusVelocityVisible_v1'; 
             
-            // Defines the priority colors and weights
             const STATUS_CONFIG = {
                 'not-started': { 
                     label: 'Not Started', 
@@ -580,7 +537,6 @@
             };
 
             // --- DATA (SYLLABUS) ---
-            // Using the same structure as provided, minimized for space in code block
             const SYLLABUS_DATA = [
                 { 
                     subject: "Physics",
@@ -627,7 +583,7 @@
                 expandedGroups: new Set(),
                 statsInitTime: parseInt(localStorage.getItem(STATS_INIT_KEY) || Date.now()),
                 statsStartCount: 0,
-                isVelocityVisible: localStorage.getItem(VELOCITY_STATE_KEY) === 'true' // Default to false
+                isVelocityVisible: localStorage.getItem(VELOCITY_STATE_KEY) === 'true'
             };
 
             // Set init time if not present
@@ -658,7 +614,6 @@
             };
 
             // --- DATA MIGRATION ---
-            // If current storage is empty but old storage exists, migrate.
             if (Object.keys(appState.statuses).length === 0) {
                 const oldData = localStorage.getItem(OLD_STORAGE_KEY);
                 if (oldData) {
@@ -689,7 +644,7 @@
                 // FAB
                 fabBtn: document.getElementById('fab-btn'),
                 fabMenu: document.getElementById('fab-menu'),
-                // New Velocity Els
+                // Velocity
                 velocityContainer: document.getElementById('velocity-container'),
                 velocityToggleBtn: document.getElementById('velocity-toggle-btn'),
                 velocityContent: document.getElementById('velocity-content'),
@@ -702,7 +657,16 @@
 
             // --- UTILITIES ---
             const saveState = () => {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState.statuses));
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(appState.statuses));
+                } catch(e) {
+                    console.error("Storage full or unavailable");
+                }
+            };
+
+            // Helper to escape regex characters to prevent crashes
+            const escapeRegExp = (string) => {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             };
 
             const calculateStats = (chapters) => {
@@ -797,12 +761,12 @@
             const renderGroup = (group, subject) => {
                 const stats = calculateStats(group.chapters);
                 const uniqueId = `${subject}-${group.groupName.replace(/\s+/g, '-')}`;
-                const highlightRegex = appState.searchTerm ? new RegExp(`(${appState.searchTerm})`, 'gi') : null;
+                // Create regex safely
+                const highlightRegex = appState.searchTerm ? new RegExp(`(${escapeRegExp(appState.searchTerm)})`, 'gi') : null;
                 
                 // Filter logic
                 let visibleChapters = group.chapters;
                 if (highlightRegex) {
-                    // Show if group name matches OR any chapter matches
                     const groupMatch = highlightRegex.test(group.groupName);
                     if (!groupMatch) {
                         visibleChapters = group.chapters.filter(ch => highlightRegex.test(ch.name));
@@ -814,8 +778,12 @@
                 const groupNameHtml = highlightRegex ? group.groupName.replace(highlightRegex, match => `<span class="highlight">${match}</span>`) : group.groupName;
                 const isExpanded = appState.expandedGroups.has(uniqueId) || !!appState.searchTerm;
 
+                // BUG FIX: Store all chapter IDs in data attribute for "Set All" functionality
+                // This ensures "Set All" works even if chapters are filtered out visually
+                const allChapterIds = group.chapters.map(c => c.id).join(',');
+
                 return `
-                    <div class="group-branch border border-zinc-800 rounded-xl overflow-hidden mb-3 bg-zinc-900/30 ${isExpanded ? 'expanded' : ''}" data-unique-id="${uniqueId}">
+                    <div class="group-branch border border-zinc-800 rounded-xl overflow-hidden mb-3 bg-zinc-900/30 ${isExpanded ? 'expanded' : ''}" data-unique-id="${uniqueId}" data-all-chapters="${allChapterIds}">
                         <div class="p-3.5 flex items-center justify-between bg-zinc-900/50 hover:bg-zinc-900 transition-colors group cursor-pointer group-toggle">
                             <button class="flex items-center gap-3 flex-1 text-left focus:outline-none w-full h-full">
                                 <svg class="w-4 h-4 text-zinc-500 arrow-icon transform transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -828,7 +796,6 @@
                             </div>
                         </div>
                         
-                        <!-- Inline Group Menu Placeholder -->
                         <div id="group-menu-container-${uniqueId}">
                             ${renderInlineMenu(uniqueId, true)}
                         </div>
@@ -845,7 +812,7 @@
             const renderSubject = (subjectData) => {
                 const allChapters = subjectData.units.flatMap(u => u.chapters);
                 const stats = calculateStats(allChapters);
-                const highlightRegex = appState.searchTerm ? new RegExp(`(${appState.searchTerm})`, 'gi') : null;
+                const highlightRegex = appState.searchTerm ? new RegExp(`(${escapeRegExp(appState.searchTerm)})`, 'gi') : null;
                 
                 let groups = [];
                 if (appState.groupByPriority) {
@@ -900,20 +867,16 @@
                             <div class="flex items-center gap-4">
                                 <div class="relative w-12 h-12">
                                     <svg class="w-full h-full transform -rotate-90">
-                                        <!-- Base Track -->
                                         <circle cx="24" cy="24" r="20" stroke="#27272a" stroke-width="4" fill="none" />
                                         
-                                        <!-- Ring 1: In Progress + Completed + Mastered (Amber) -->
                                         <circle cx="24" cy="24" r="20" class="text-amber-500" stroke="currentColor" stroke-width="4" fill="none" 
                                             stroke-dasharray="126" stroke-dashoffset="${offset1}" 
                                             stroke-linecap="round" />
                                             
-                                        <!-- Ring 2: Completed + Mastered (Emerald) -->
                                         <circle cx="24" cy="24" r="20" class="text-emerald-500" stroke="currentColor" stroke-width="4" fill="none" 
                                             stroke-dasharray="126" stroke-dashoffset="${offset2}" 
                                             stroke-linecap="round" />
                                             
-                                        <!-- Ring 3: Mastered (Indigo) -->
                                         <circle cx="24" cy="24" r="20" class="text-indigo-500" stroke="currentColor" stroke-width="4" fill="none" 
                                             stroke-dasharray="126" stroke-dashoffset="${offset3}" 
                                             stroke-linecap="round" />
@@ -939,7 +902,6 @@
                 const html = SYLLABUS_DATA.map(renderSubject).join('');
                 els.syllabusContainer.innerHTML = html || `<div class="col-span-2 text-center py-12 text-zinc-500">No chapters found for "${appState.searchTerm}"</div>`;
                 
-                // --- Re-attach Events for new DOM elements ---
                 attachDynamicEvents();
                 updateOverallStats();
             };
@@ -982,7 +944,6 @@
                     </div>
                 `;
 
-                // Update Velocity Tracker Logic
                 updateVelocityTracker(stats.counts);
             };
 
@@ -1005,30 +966,24 @@
 
             const updateVelocityTracker = (currentCounts) => {
                 const totalChapters = SYLLABUS_DATA.flatMap(s => s.units.flatMap(u => u.chapters)).length;
-                // Consider Mastered and Completed as "Done"
                 const doneCount = currentCounts.mastered + currentCounts.completed;
                 const remaining = totalChapters - doneCount;
                 
-                // Show Velocity Card
                 els.velocityContainer.classList.remove('hidden');
                 els.velChaptersLeft.textContent = remaining;
 
-                // Apply current visibility preference
                 applyVelocityVisibility();
 
-                // Calculate Days Elapsed since first tracking or reset
                 const now = Date.now();
                 const msPerDay = 1000 * 60 * 60 * 24;
                 const daysElapsed = (now - appState.statsInitTime) / msPerDay;
                 
-                // Let's lazy-init 'initialDoneCount' if it doesn't exist in LS
                 let startDone = parseInt(localStorage.getItem('jeeSyllabusStartCount_v3'));
                 if (isNaN(startDone)) {
                     startDone = doneCount;
                     localStorage.setItem('jeeSyllabusStartCount_v3', startDone);
                 }
 
-                // If daysElapsed is too small (< 1 day), data is insufficient
                 if (daysElapsed < 1) {
                     els.velPace.textContent = "-- ch/day";
                     els.velEndDate.textContent = "Insufficient Data";
@@ -1038,21 +993,26 @@
 
                 const chaptersCompletedSinceStart = doneCount - startDone;
                 
-                // If negative (user unchecked items), reset start count
                 if (chaptersCompletedSinceStart < 0) {
                     localStorage.setItem('jeeSyllabusStartCount_v3', doneCount);
                     localStorage.setItem(STATS_INIT_KEY, Date.now());
-                    return; // Reset state
+                    return;
                 }
 
                 const velocityPerDay = chaptersCompletedSinceStart / daysElapsed;
 
-                if (velocityPerDay <= 0) {
+                // BUG FIX: Handle stalled or 0 velocity to prevent infinity dates
+                if (velocityPerDay <= 0.001) {
                     els.velPace.textContent = "0 ch/day";
                     els.velEndDate.textContent = "Stalled";
                     els.velSubtext.textContent = "Complete chapters to see est.";
                 } else {
                     const daysRemaining = remaining / velocityPerDay;
+                    // Check if daysRemaining is finite
+                    if (!isFinite(daysRemaining)) {
+                         els.velEndDate.textContent = "N/A";
+                         return;
+                    }
                     const endDate = new Date(now + (daysRemaining * msPerDay));
                     
                     els.velPace.textContent = `${velocityPerDay.toFixed(2)} ch/day`;
@@ -1081,7 +1041,6 @@
             };
 
             const attachDynamicEvents = () => {
-                // Accordion Toggles
                 document.querySelectorAll('.subject-header').forEach(header => {
                     header.addEventListener('click', () => {
                         const card = header.parentElement;
@@ -1091,7 +1050,6 @@
                         card.classList.toggle('expanded');
                         wrapper.classList.toggle('open');
 
-                        // Save View State
                         if (card.classList.contains('expanded')) {
                             appState.expandedSubjects.add(subjectName);
                         } else {
@@ -1111,7 +1069,6 @@
                         groupEl.classList.toggle('expanded');
                         wrapper.classList.toggle('open');
 
-                        // Save View State
                         if (groupEl.classList.contains('expanded')) {
                             appState.expandedGroups.add(uniqueId);
                         } else {
@@ -1121,14 +1078,12 @@
                     });
                 });
 
-                // Status Menus (Chapter)
                 document.querySelectorAll('.chapter-trigger').forEach(trigger => {
                     trigger.addEventListener('click', (e) => {
                         e.stopPropagation();
                         const chapterItem = trigger.closest('.chapter-item');
                         const menu = chapterItem.querySelector('.status-menu-wrapper');
                         
-                        // Close others
                         if (!menu.classList.contains('open')) {
                             closeAllMenus();
                             menu.classList.add('open');
@@ -1138,7 +1093,6 @@
                     });
                 });
 
-                // Status Menus (Group)
                 document.querySelectorAll('.group-menu-trigger').forEach(trigger => {
                     trigger.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -1154,7 +1108,6 @@
                     });
                 });
 
-                // Status Selection
                 document.querySelectorAll('.menu-option').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -1163,27 +1116,28 @@
                         const isGroup = btn.dataset.isGroup === 'true';
 
                         if (isGroup) {
-                            // Find chapters in this group and update all
-                            // NOTE: Since uniqueId reconstruction is fuzzy, let's use DOM context
+                            // BUG FIX: Use data attribute to get ALL IDs in this group, not just visible ones
                             const groupEl = btn.closest('.group-branch');
-                            const chapterIds = Array.from(groupEl.querySelectorAll('.chapter-item')).map(el => el.dataset.id);
+                            const idsStr = groupEl.dataset.allChapters;
                             
-                            chapterIds.forEach(id => appState.statuses[id] = status);
-                            showToast(`Updated ${chapterIds.length} chapters`);
-
+                            if (idsStr) {
+                                const ids = idsStr.split(',');
+                                ids.forEach(id => appState.statuses[id] = status);
+                                showToast(`Updated ${ids.length} chapters`);
+                            }
                         } else {
                             appState.statuses[target] = status;
                         }
 
                         saveState();
-                        renderAll(); // Full re-render to update stats/colors
+                        renderAll();
+                        closeAllMenus(); // Close menus after selection
                     });
                 });
             };
 
             // --- EVENT LISTENERS (STATIC) ---
             
-            // View Mode Toggle
             els.toggleContainer.addEventListener('click', (e) => {
                 const clicked = e.target.closest('[data-filter]');
                 if (!clicked) return;
@@ -1204,27 +1158,22 @@
                 renderAll();
             });
 
-            // Velocity Toggle
             if (els.velocityToggleBtn) {
                 els.velocityToggleBtn.addEventListener('click', toggleVelocityTracker);
             }
 
-            // Search
             els.search.addEventListener('input', (e) => {
                 appState.searchTerm = e.target.value.trim();
                 renderAll();
                 
-                // If searching, auto-expand everything
                 if (appState.searchTerm) {
                     document.querySelectorAll('.accordion-wrapper').forEach(el => el.classList.add('open'));
                     document.querySelectorAll('.subject-card').forEach(el => el.classList.add('expanded'));
                 }
             });
 
-            // FAB Toggle
             els.fabBtn.addEventListener('click', toggleFabMenu);
 
-            // Click outside to close menus
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('.status-menu-wrapper') && !e.target.closest('.chapter-trigger') && !e.target.closest('.group-menu-trigger')) {
                     closeAllMenus();
@@ -1234,7 +1183,6 @@
                 }
             });
 
-            // Banner Logic
             const banner = document.getElementById('zenith-banner');
             if (!localStorage.getItem(BANNER_KEY)) {
                 setTimeout(() => banner.classList.add('show'), 500);
@@ -1244,7 +1192,6 @@
                 localStorage.setItem(BANNER_KEY, 'true');
             });
 
-            // Reset Logic
             document.getElementById('reset-data-btn').addEventListener('click', () => {
                 els.resetModal.classList.remove('hidden');
                 requestAnimationFrame(() => els.resetModal.classList.remove('opacity-0'));
@@ -1255,7 +1202,6 @@
             });
             document.getElementById('confirm-reset-btn').addEventListener('click', () => {
                 localStorage.removeItem(STORAGE_KEY);
-                // Also reset stats
                 localStorage.removeItem(STATS_INIT_KEY);
                 localStorage.removeItem('jeeSyllabusStartCount_v3');
                 
@@ -1263,29 +1209,24 @@
                 saveState();
                 renderAll();
                 
-                // Close modal
                 els.resetModal.classList.add('opacity-0');
                 setTimeout(() => els.resetModal.classList.add('hidden'), 300);
                 showToast('All progress reset.');
                 
-                // Re-init stats time
                 localStorage.setItem(STATS_INIT_KEY, Date.now());
                 appState.statsInitTime = Date.now();
             });
 
-            // Share Modal Logic
             const updateShareCard = () => {
                 const allChapters = SYLLABUS_DATA.flatMap(s => s.units.flatMap(u => u.chapters));
                 const overallStats = calculateStats(allChapters);
                 
                 document.getElementById('share-card-overall-percent').textContent = `${overallStats.percent}%`;
                 
-                // Radii and Circumferences
-                const rPhys = 70; const cPhys = 2 * Math.PI * rPhys;
-                const rChem = 55; const cChem = 2 * Math.PI * rChem;
-                const rMath = 40; const cMath = 2 * Math.PI * rMath;
+                const rPhys = 75; const cPhys = 2 * Math.PI * rPhys;
+                const rChem = 60; const cChem = 2 * Math.PI * rChem;
+                const rMath = 45; const cMath = 2 * Math.PI * rMath;
 
-                // Get specific subject stats
                 const physData = SYLLABUS_DATA.find(s => s.subject === 'Physics');
                 const physStats = calculateStats(physData.units.flatMap(u => u.chapters));
                 
@@ -1295,10 +1236,8 @@
                 const mathData = SYLLABUS_DATA.find(s => s.subject === 'Mathematics');
                 const mathStats = calculateStats(mathData.units.flatMap(u => u.chapters));
 
-                // Set Dash Arrays
                 const physRing = document.getElementById('share-ring-physics');
                 physRing.style.strokeDasharray = cPhys;
-                // Wait for layout/transition
                 setTimeout(() => {
                     physRing.style.strokeDashoffset = cPhys - (cPhys * physStats.percent / 100);
                 }, 100);
@@ -1315,7 +1254,6 @@
                     mathRing.style.strokeDashoffset = cMath - (cMath * mathStats.percent / 100);
                 }, 300);
 
-                // Subjects Bars (Text updates remain same)
                 ['Physics', 'Chemistry', 'Mathematics'].forEach(sub => {
                     const subData = SYLLABUS_DATA.find(s => s.subject === sub);
                     const subChapters = subData.units.flatMap(u => u.chapters);
@@ -1346,14 +1284,11 @@
             document.getElementById('close-share-modal-btn').addEventListener('click', closeShare);
             document.getElementById('close-share-overlay').addEventListener('click', closeShare);
 
-
-            // --- INIT ---
             if(!appState.groupByPriority) {
                 els.toggleContainer.dataset.mode = 'flat';
                 els.filterFlat.classList.replace('text-zinc-500', 'text-white');
                 els.filterPriority.classList.replace('text-white', 'text-zinc-500');
             }
-            // Ensure Velocity State Applied on Load
             applyVelocityVisibility();
             
             renderAll();
