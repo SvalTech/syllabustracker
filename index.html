@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Restored accessibility scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JEE Syllabus Tracker | SvalTech</title>
 
     <!-- --- SEO & Social Meta Tags --- -->
     <meta name="description" content="A modern, interactive dashboard to track your complete JEE 2026 syllabus progress, revisions, and PYQs.">
-    <meta name="keywords" content="JEE, JEE 2026, JEE Syllabus, JEE Tracker, Syllabus Tracker, IIT JEE, SvalTech">
+    <meta name="keywords" content="JEE, JEE 2026, JEE 2027, JEE 2028, JEE Syllabus, JEE Tracker, Syllabus Tracker, IIT JEE, SvalTech, JEE App">
     <link rel="canonical" href="https://sval.tech/syllabustracker/">
     
     <meta property="og:title" content="JEE Syllabus Tracker | SvalTech">
@@ -84,7 +84,6 @@
             opacity: 1;
             visibility: visible;
             will-change: max-height, opacity; 
-            /* Optimization: Isolate layout to prevent full page reflows */
             contain: content; 
         }
         .collapsed .content-container {
@@ -103,7 +102,6 @@
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
             animation: fadeInUp 0.5s var(--ease-out-cubic) backwards;
             will-change: transform, opacity;
-            /* Optimization: Isolate paint/layout */
             contain: layout style;
         }
         .subject-card:hover {
@@ -137,7 +135,7 @@
         }
 
         /* Toggle Switch */
-        .view-mode-toggle {
+        .mode-toggle {
             position: relative;
             background-color: var(--card-bg);
             border-radius: 99px;
@@ -145,11 +143,11 @@
             display: flex;
             border: 1px solid var(--border-color);
         }
-        .view-mode-toggle .toggle-option {
+        .mode-toggle .toggle-option {
             flex: 1;
             padding: 6px 0;
             text-align: center;
-            font-size: 0.875rem;
+            font-size: 0.75rem; /* Smaller font for class toggle */
             font-weight: 500;
             color: #737373;
             position: relative;
@@ -157,19 +155,28 @@
             cursor: pointer;
             transition: color 0.3s var(--ease-in-out-cubic);
         }
-        .view-mode-toggle .toggle-option.active { color: white; }
-        .view-mode-toggle .toggle-slider {
+        .mode-toggle .toggle-option.active { color: white; }
+        .mode-toggle .toggle-slider {
             position: absolute;
             top: 4px;
             left: 4px;
-            width: calc(50% - 4px);
             height: calc(100% - 8px);
             background-color: var(--primary-color);
             border-radius: 99px;
             transition: transform 0.3s var(--ease-in-out-cubic);
             z-index: 5;
         }
+        
+        /* View Mode Specifics (2 options) */
+        .view-mode-toggle .toggle-slider { width: calc(50% - 4px); }
         .view-mode-toggle[data-mode="flat"] .toggle-slider { transform: translateX(calc(100% + 4px)); }
+        
+        /* Class Mode Specifics (3 options) */
+        .class-mode-toggle .toggle-slider { width: calc(33.333% - 2.6px); }
+        .class-mode-toggle[data-mode="11"] .toggle-slider { transform: translateX(0); }
+        .class-mode-toggle[data-mode="12"] .toggle-slider { transform: translateX(calc(100% + 4px)); }
+        .class-mode-toggle[data-mode="both"] .toggle-slider { transform: translateX(calc(200% + 8px)); }
+
 
         /* Action Panel */
         .action-panel {
@@ -202,7 +209,8 @@
         }
         .badge-pyq { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
         .badge-rev { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.2); }
-        .badge-star { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
+        .badge-11 { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .badge-12 { background: rgba(244, 114, 182, 0.1); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.2); }
 
         /* Zenith Banner Animation */
         #zenith-banner {
@@ -306,14 +314,33 @@
                         <!-- Stats Injected Here -->
                     </div>
 
-                    <!-- Filter Toggle -->
-                    <div class="mt-6 border-t border-neutral-700 pt-5">
-                        <label class="block text-neutral-300 font-semibold mb-2 text-sm">View Mode:</label>
-                        <div class="view-mode-toggle" data-mode="priority">
-                            <div class="toggle-slider"></div>
-                            <div id="filter-priority" data-filter="priority" class="toggle-option active" role="button" tabindex="0">Priority</div>
-                            <div id="filter-flat" data-filter="flat" class="toggle-option" role="button" tabindex="0">Unit</div>
+                    <!-- Filters Section -->
+                    <div class="mt-6 border-t border-neutral-700 pt-5 space-y-4">
+                        
+                        <!-- Class Filter -->
+                        <div>
+                            <label class="block text-neutral-300 font-semibold mb-2 text-sm flex justify-between">
+                                <span>Class Filter</span>
+                                <span id="class-filter-label" class="text-xs text-indigo-400">All</span>
+                            </label>
+                            <div class="mode-toggle class-mode-toggle" data-mode="both">
+                                <div class="toggle-slider"></div>
+                                <div id="filter-11" data-filter="11" class="toggle-option" role="button" tabindex="0">11th</div>
+                                <div id="filter-12" data-filter="12" class="toggle-option" role="button" tabindex="0">12th</div>
+                                <div id="filter-both" data-filter="both" class="toggle-option active" role="button" tabindex="0">Both</div>
+                            </div>
                         </div>
+
+                        <!-- View Mode -->
+                        <div>
+                            <label class="block text-neutral-300 font-semibold mb-2 text-sm">View Mode</label>
+                            <div class="mode-toggle view-mode-toggle" data-mode="priority">
+                                <div class="toggle-slider"></div>
+                                <div id="filter-priority" data-filter="priority" class="toggle-option active" role="button" tabindex="0">Priority</div>
+                                <div id="filter-flat" data-filter="flat" class="toggle-option" role="button" tabindex="0">Unit</div>
+                            </div>
+                        </div>
+
                     </div>
                     
                     <!-- Search & Actions -->
@@ -409,7 +436,7 @@
     </div>
 
     <!-- Confirm Reset Modal -->
-    <div id="reset-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity opacity-0">
+    <div id="reset-modal" class="fixed inset-0 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity opacity-0">
         <div class="glassmorphism p-6 rounded-lg shadow-xl w-80 border border-neutral-700">
             <h3 class="text-lg font-bold text-white mb-2">Reset Progress?</h3>
             <p class="text-sm text-neutral-400 mb-6">This will delete all progress, notes, and revision data.</p>
@@ -430,11 +457,8 @@
             const domCache = {
                 syllabusContainer: document.getElementById('syllabus-container'),
                 overallStatsContainer: document.getElementById('overall-progress-data'),
-                countdownTimer: document.getElementById('countdown-timer'),
-                cdDays: document.getElementById('cd-days'),
-                cdHours: document.getElementById('cd-hours'),
-                cdMins: document.getElementById('cd-mins'),
                 shareCanvas: document.getElementById('share-canvas'),
+                classFilterLabel: document.getElementById('class-filter-label'),
             };
 
             // --- Utils: Debounce ---
@@ -453,6 +477,7 @@
                 TIMESTAMPS: 'jee_v3_time',
                 OPEN_STATES: 'jee_v3_ui_state',
                 VIEW_MODE: 'jee_v3_view_mode',
+                CLASS_FILTER: 'jee_v3_class_filter' // New key
             };
             const BANNER_DISMISSED_KEY = 'zenithBannerDismissed_v1';
             
@@ -464,52 +489,52 @@
                 VIEW_MODE: 'jeeSyllabusViewMode_v2'
             };
 
-            // --- Syllabus Data ---
+            // --- Syllabus Data (Updated with 'cls' property) ---
             const syllabus = [
                 { 
                     subject: "Physics",
                     units: [
                         { unitName: "Mechanics I", chapters: [
-                            { id: "PHY_B_11", name: "Motion In One Dimension", priority: 'B' },
-                            { id: "PHY_D_01", name: "Motion In Two Dimensions", priority: 'D' },
-                            { id: "PHY_B_10", name: "Laws of Motion", priority: 'B' },
-                            { id: "PHY_B_07", name: "Work Power Energy", priority: 'B' },
-                            { id: "PHY_D_05", name: "Center of Mass Momentum", priority: 'D' },
-                            { id: "PHY_B_03", name: "Rotational Motion", priority: 'B' }
+                            { id: "PHY_B_11", name: "Motion In One Dimension", priority: 'B', cls: '11' },
+                            { id: "PHY_D_01", name: "Motion In Two Dimensions", priority: 'D', cls: '11' },
+                            { id: "PHY_B_10", name: "Laws of Motion", priority: 'B', cls: '11' },
+                            { id: "PHY_B_07", name: "Work Power Energy", priority: 'B', cls: '11' },
+                            { id: "PHY_D_05", name: "Center of Mass Momentum", priority: 'D', cls: '11' },
+                            { id: "PHY_B_03", name: "Rotational Motion", priority: 'B', cls: '11' }
                         ]},
                         { unitName: "Mechanics II & Waves", chapters: [
-                            { id: "PHY_B_04", name: "Gravitation", priority: 'B' },
-                            { id: "PHY_D_02", name: "Mechanical Properties of Solids", priority: 'D' },
-                            { id: "PHY_B_05", name: "Mechanical Properties of Fluids", priority: 'B' },
-                            { id: "PHY_C_06", name: "Oscillations", priority: 'C' },
-                            { id: "PHY_D_03", name: "Waves and Sound", priority: 'D' }
+                            { id: "PHY_B_04", name: "Gravitation", priority: 'B', cls: '11' },
+                            { id: "PHY_D_02", name: "Mechanical Properties of Solids", priority: 'D', cls: '11' },
+                            { id: "PHY_B_05", name: "Mechanical Properties of Fluids", priority: 'B', cls: '11' },
+                            { id: "PHY_C_06", name: "Oscillations", priority: 'C', cls: '11' },
+                            { id: "PHY_D_03", name: "Waves and Sound", priority: 'D', cls: '11' }
                         ]},
                         { unitName: "Thermodynamics", chapters: [
-                            { id: "PHY_D_06", name: "Thermal Properties", priority: 'D' },
-                            { id: "PHY_A_05", name: "Thermodynamics", priority: 'A' },
-                            { id: "PHY_C_05", name: "Kinetic Theory of Gases", priority: 'C' }
+                            { id: "PHY_D_06", name: "Thermal Properties", priority: 'D', cls: '11' },
+                            { id: "PHY_A_05", name: "Thermodynamics", priority: 'A', cls: '11' },
+                            { id: "PHY_C_05", name: "Kinetic Theory of Gases", priority: 'C', cls: '11' }
                         ]},
                         { unitName: "Electromagnetism", chapters: [
-                            { id: "PHY_A_02", name: "Electrostatics", priority: 'A' },
-                            { id: "PHY_C_02", name: "Capacitance", priority: 'C' },
-                            { id: "PHY_A_01", name: "Current Electricity", priority: 'A' },
-                            { id: "PHY_A_04", name: "Magnetic Effects of Current", priority: 'A' },
-                            { id: "PHY_D_07", name: "Magnetism & Matter", priority: 'D' },
-                            { id: "PHY_C_03", name: "EMI", priority: 'C' },
-                            { id: "PHY_C_01", name: "Alternating Current", priority: 'C' },
-                            { id: "PHY_C_07", name: "EM Waves", priority: 'C' }
+                            { id: "PHY_A_02", name: "Electrostatics", priority: 'A', cls: '12' },
+                            { id: "PHY_C_02", name: "Capacitance", priority: 'C', cls: '12' },
+                            { id: "PHY_A_01", name: "Current Electricity", priority: 'A', cls: '12' },
+                            { id: "PHY_A_04", name: "Magnetic Effects of Current", priority: 'A', cls: '12' },
+                            { id: "PHY_D_07", name: "Magnetism & Matter", priority: 'D', cls: '12' },
+                            { id: "PHY_C_03", name: "EMI", priority: 'C', cls: '12' },
+                            { id: "PHY_C_01", name: "Alternating Current", priority: 'C', cls: '12' },
+                            { id: "PHY_C_07", name: "EM Waves", priority: 'C', cls: '12' }
                         ]},
                         { unitName: "Optics & Modern", chapters: [
-                            { id: "PHY_A_03", name: "Ray Optics", priority: 'A' },
-                            { id: "PHY_B_09", name: "Wave Optics", priority: 'B' },
-                            { id: "PHY_A_06", name: "Dual Nature of Matter", priority: 'A' },
-                            { id: "PHY_A_07", name: "Atoms", priority: 'A' },
-                            { id: "PHY_C_04", name: "Nuclei", priority: 'C' },
-                            { id: "PHY_B_06", name: "Semiconductors", priority: 'B' }
+                            { id: "PHY_A_03", name: "Ray Optics", priority: 'A', cls: '12' },
+                            { id: "PHY_B_09", name: "Wave Optics", priority: 'B', cls: '12' },
+                            { id: "PHY_A_06", name: "Dual Nature of Matter", priority: 'A', cls: '12' },
+                            { id: "PHY_A_07", name: "Atoms", priority: 'A', cls: '12' },
+                            { id: "PHY_C_04", name: "Nuclei", priority: 'C', cls: '12' },
+                            { id: "PHY_B_06", name: "Semiconductors", priority: 'B', cls: '12' }
                         ]},
                         { unitName: "Experimental", chapters: [
-                            { id: "PHY_B_08", name: "Units and Dimensions", priority: 'B' },
-                            { id: "PHY_D_08", name: "Experimental Physics", priority: 'D' }
+                            { id: "PHY_B_08", name: "Units and Dimensions", priority: 'B', cls: '11' },
+                            { id: "PHY_D_08", name: "Experimental Physics", priority: 'D', cls: '11' }
                         ]}
                     ]
                 },
@@ -517,34 +542,34 @@
                     subject: "Chemistry",
                     units: [
                         { unitName: "Physical Chem", chapters: [
-                            { id: "CHE_C_01", name: "Mole Concept", priority: 'C' },
-                            { id: "CHE_B_01", name: "Structure of Atom", priority: 'B' },
+                            { id: "CHE_C_01", name: "Mole Concept", priority: 'C', cls: '11' },
+                            { id: "CHE_B_01", name: "Structure of Atom", priority: 'B', cls: '11' },
                             
-                            { id: "CHE_A_05", name: "Thermodynamics", priority: 'A' },
-                            { id: "CHE_D_05", name: "Chemical Equilibrium", priority: 'D' },
-                            { id: "CHE_D_03", name: "Ionic Equilibrium", priority: 'D' },
-                            { id: "CHE_B_02", name: "Solutions", priority: 'B' },
-                            { id: "CHE_D_04", name: "Redox Reactions", priority: 'D' },
-                            { id: "CHE_A_06", name: "Electrochemistry", priority: 'A' },
-                            { id: "CHE_B_06", name: "Chemical Kinetics", priority: 'B' }
+                            { id: "CHE_A_05", name: "Thermodynamics", priority: 'A', cls: '11' },
+                            { id: "CHE_D_05", name: "Chemical Equilibrium", priority: 'D', cls: '11' },
+                            { id: "CHE_D_03", name: "Ionic Equilibrium", priority: 'D', cls: '11' },
+                            { id: "CHE_B_02", name: "Solutions", priority: 'B', cls: '12' },
+                            { id: "CHE_D_04", name: "Redox Reactions", priority: 'D', cls: '11' },
+                            { id: "CHE_A_06", name: "Electrochemistry", priority: 'A', cls: '12' },
+                            { id: "CHE_B_06", name: "Chemical Kinetics", priority: 'B', cls: '12' }
                         ]},
                         { unitName: "Inorganic Chem", chapters: [
-                            { id: "CHE_C_03", name: "Periodic Table", priority: 'C' },
-                            { id: "CHE_A_03", name: "Chemical Bonding", priority: 'A' },
-                            { id: "CHE_B_05", name: "p-Block Elements", priority: 'B' },
-                            { id: "CHE_A_04", name: "d and f Block", priority: 'A' },
-                            { id: "CHE_A_02", name: "Coordination Compounds", priority: 'A' },
-                            { id: "CHE_C_06", name: "Salt Analysis", priority: 'C' }
+                            { id: "CHE_C_03", name: "Periodic Table", priority: 'C', cls: '11' },
+                            { id: "CHE_A_03", name: "Chemical Bonding", priority: 'A', cls: '11' },
+                            { id: "CHE_B_05", name: "p-Block Elements", priority: 'B', cls: '11' }, /* Treated as 11 base for syllabus list */
+                            { id: "CHE_A_04", name: "d and f Block", priority: 'A', cls: '12' },
+                            { id: "CHE_A_02", name: "Coordination Compounds", priority: 'A', cls: '12' },
+                            { id: "CHE_C_06", name: "Salt Analysis", priority: 'C', cls: '12' }
                         ]},
                         { unitName: "Organic Chem", chapters: [
-                            { id: "CHE_A_01", name: "GOC", priority: 'A' },
-                            { id: "CHE_B_03", name: "Hydrocarbons", priority: 'B' },
-                            { id: "CHE_C_04", name: "Haloalkanes/Haloarenes", priority: 'C' },
-                            { id: "CHE_C_05", name: "Alcohols, Phenols, Ethers", priority: 'C' },
-                            { id: "CHE_C_02", name: "Aldehydes & Ketones", priority: 'C' },
-                            { id: "CHE_D_02", name: "Carboxylic Acids", priority: 'D' },
-                            { id: "CHE_B_04", name: "Amines", priority: 'B' },
-                            { id: "CHE_B_07", name: "Biomolecules", priority: 'B' }
+                            { id: "CHE_A_01", name: "GOC", priority: 'A', cls: '11' },
+                            { id: "CHE_B_03", name: "Hydrocarbons", priority: 'B', cls: '11' },
+                            { id: "CHE_C_04", name: "Haloalkanes/Haloarenes", priority: 'C', cls: '12' },
+                            { id: "CHE_C_05", name: "Alcohols, Phenols, Ethers", priority: 'C', cls: '12' },
+                            { id: "CHE_C_02", name: "Aldehydes & Ketones", priority: 'C', cls: '12' },
+                            { id: "CHE_D_02", name: "Carboxylic Acids", priority: 'D', cls: '12' },
+                            { id: "CHE_B_04", name: "Amines", priority: 'B', cls: '12' },
+                            { id: "CHE_B_07", name: "Biomolecules", priority: 'B', cls: '12' }
                         ]}
                     ]
                 },
@@ -552,40 +577,40 @@
                     subject: "Mathematics",
                     units: [
                         { unitName: "Algebra", chapters: [
-                            { id: "MAT_B_07", name: "Sets and Relations", priority: 'B' },
-                            { id: "MAT_B_08", name: "Quadratic Equation", priority: 'B' },
-                            { id: "MAT_B_05", name: "Complex Number", priority: 'B' },
-                            { id: "MAT_A_03", name: "Matrices Determinants", priority: 'A' },
-                            { id: "MAT_B_02", name: "Permutation Combination", priority: 'B' },
-                            { id: "MAT_A_07", name: "Binomial Theorem", priority: 'A' },
-                            { id: "MAT_A_02", name: "Sequence and Series", priority: 'A' },
-                            { id: "MAT_B_01", name: "Probability", priority: 'B' }
+                            { id: "MAT_B_07", name: "Sets and Relations", priority: 'B', cls: '11' },
+                            { id: "MAT_B_08", name: "Quadratic Equation", priority: 'B', cls: '11' },
+                            { id: "MAT_B_05", name: "Complex Number", priority: 'B', cls: '11' },
+                            { id: "MAT_A_03", name: "Matrices Determinants", priority: 'A', cls: '12' },
+                            { id: "MAT_B_02", name: "Permutation Combination", priority: 'B', cls: '11' },
+                            { id: "MAT_A_07", name: "Binomial Theorem", priority: 'A', cls: '11' },
+                            { id: "MAT_A_02", name: "Sequence and Series", priority: 'A', cls: '11' },
+                            { id: "MAT_B_01", name: "Probability", priority: 'B', cls: '12' }
                         ]},
                         { unitName: "Calculus", chapters: [
-                            { id: "MAT_A_06", name: "Functions", priority: 'A' },
-                            { id: "MAT_C_03", name: "Limits", priority: 'C' },
-                            { id: "MAT_C_06", name: "Continuity & Diff.", priority: 'C' },
-                            { id: "MAT_D_04", name: "Differentiation", priority: 'D' },
-                            { id: "MAT_B_06", name: "AOD", priority: 'B' },
-                            { id: "MAT_D_02", name: "Indefinite Integration", priority: 'D' },
-                            { id: "MAT_A_05", name: "Definite Integration", priority: 'A' },
-                            { id: "MAT_B_04", name: "Area Under Curves", priority: 'B' },
-                            { id: "MAT_A_08", name: "Differential Equations", priority: 'A' }
+                            { id: "MAT_A_06", name: "Functions", priority: 'A', cls: '12' },
+                            { id: "MAT_C_03", name: "Limits", priority: 'C', cls: '11' },
+                            { id: "MAT_C_06", name: "Continuity & Diff.", priority: 'C', cls: '12' },
+                            { id: "MAT_D_04", name: "Differentiation", priority: 'D', cls: '12' },
+                            { id: "MAT_B_06", name: "AOD", priority: 'B', cls: '12' },
+                            { id: "MAT_D_02", name: "Indefinite Integration", priority: 'D', cls: '12' },
+                            { id: "MAT_A_05", name: "Definite Integration", priority: 'A', cls: '12' },
+                            { id: "MAT_B_04", name: "Area Under Curves", priority: 'B', cls: '12' },
+                            { id: "MAT_A_08", name: "Differential Equations", priority: 'A', cls: '12' }
                         ]},
                         { unitName: "Coordinate & Vectors", chapters: [
-                            { id: "MAT_B_03", name: "Straight Lines", priority: 'B' },
-                            { id: "MAT_C_01", name: "Circle", priority: 'C' },
-                            { id: "MAT_C_04", name: "Parabola", priority: 'C' },
-                            { id: "MAT_C_07", name: "Ellipse", priority: 'C' },
-                            { id: "MAT_C_05", name: "Hyperbola", priority: 'C' },
-                            { id: "MAT_A_01", name: "3D Geometry", priority: 'A' },
-                            { id: "MAT_A_04", name: "Vector Algebra", priority: 'A' }
+                            { id: "MAT_B_03", name: "Straight Lines", priority: 'B', cls: '11' },
+                            { id: "MAT_C_01", name: "Circle", priority: 'C', cls: '11' },
+                            { id: "MAT_C_04", name: "Parabola", priority: 'C', cls: '11' },
+                            { id: "MAT_C_07", name: "Ellipse", priority: 'C', cls: '11' },
+                            { id: "MAT_C_05", name: "Hyperbola", priority: 'C', cls: '11' },
+                            { id: "MAT_A_01", name: "3D Geometry", priority: 'A', cls: '12' },
+                            { id: "MAT_A_04", name: "Vector Algebra", priority: 'A', cls: '12' }
                         ]},
                         { unitName: "Trigonometry & Stats", chapters: [
-                            { id: "MAT_D_05", name: "Trig Ratios & Identities", priority: 'D' },
-                            { id: "MAT_D_03", name: "Trig Equations", priority: 'D' },
-                            { id: "MAT_D_01", name: "ITF", priority: 'D' },
-                            { id: "MAT_C_02", name: "Statistics", priority: 'C' }
+                            { id: "MAT_D_05", name: "Trig Ratios & Identities", priority: 'D', cls: '11' },
+                            { id: "MAT_D_03", name: "Trig Equations", priority: 'D', cls: '11' },
+                            { id: "MAT_D_01", name: "ITF", priority: 'D', cls: '12' },
+                            { id: "MAT_C_02", name: "Statistics", priority: 'C', cls: '11' }
                         ]}
                     ]
                 }
@@ -604,7 +629,8 @@
                 meta: {}, // { id: { rev: 0, pyq: false } }
                 timestamps: {},
                 openStates: {},
-                groupByPriority: true
+                groupByPriority: true,
+                classFilter: 'both' // '11', '12', 'both'
             };
 
             let searchTerm = '';
@@ -622,6 +648,7 @@
                     appData.timestamps = JSON.parse(localStorage.getItem(KEYS.TIMESTAMPS) || '{}');
                     appData.openStates = JSON.parse(localStorage.getItem(KEYS.OPEN_STATES) || '{}');
                     appData.groupByPriority = localStorage.getItem(KEYS.VIEW_MODE) === 'flat' ? false : true;
+                    appData.classFilter = localStorage.getItem(KEYS.CLASS_FILTER) || 'both';
                 } else {
                     // Check for Legacy (v2) data
                     const statusV2 = localStorage.getItem(LEGACY_KEYS.STATUS);
@@ -648,6 +675,7 @@
                 localStorage.setItem(KEYS.TIMESTAMPS, JSON.stringify(appData.timestamps));
                 localStorage.setItem(KEYS.OPEN_STATES, JSON.stringify(appData.openStates));
                 localStorage.setItem(KEYS.VIEW_MODE, appData.groupByPriority ? 'priority' : 'flat');
+                localStorage.setItem(KEYS.CLASS_FILTER, appData.classFilter);
             }
 
             function getMeta(id) {
@@ -672,7 +700,14 @@
             function updateSubjectStats(subjName) {
                 const subjData = syllabus.find(s => s.subject === subjName);
                 if (!subjData) return;
-                const allCh = subjData.units.flatMap(u => u.chapters);
+                
+                let allCh = subjData.units.flatMap(u => u.chapters);
+                
+                // Filter chapters for stats based on current class filter
+                if (appData.classFilter !== 'both') {
+                    allCh = allCh.filter(c => c.cls === appData.classFilter);
+                }
+
                 const stats = calculateStats(allCh);
                 
                 const percentEl = document.getElementById(`stat-subj-${subjName}`);
@@ -683,10 +718,13 @@
 
                 const barContainer = document.getElementById(`bar-subj-${subjName}`);
                 if (barContainer) {
+                    // If no chapters in this filter (e.g. subject is 11th only but filter 12th), handle 0/0
+                    const total = stats.total || 1; 
+                    
                     barContainer.innerHTML = `
-                        <div class="bg-indigo-500" style="width: ${(stats.mastered/stats.total)*100}%"></div>
-                        <div class="bg-green-500" style="width: ${(stats.completed/stats.total)*100}%"></div>
-                        <div class="bg-yellow-500" style="width: ${(stats.inProgress/stats.total)*100}%"></div>
+                        <div class="bg-indigo-500" style="width: ${(stats.mastered/total)*100}%"></div>
+                        <div class="bg-green-500" style="width: ${(stats.completed/total)*100}%"></div>
+                        <div class="bg-yellow-500" style="width: ${(stats.inProgress/total)*100}%"></div>
                     `;
                 }
             }
@@ -706,6 +744,12 @@
                     if (unit) chapters = unit.chapters;
                 }
                 
+                // Filter chapters
+                if (appData.classFilter !== 'both') {
+                    chapters = chapters.filter(c => c.cls === appData.classFilter);
+                }
+                
+                // If filter makes group empty, percent is 0
                 const stats = calculateStats(chapters);
                 percentEl.innerText = `${stats.percent}%`;
                 percentEl.className = `text-xs font-bold ${stats.percent===100?'text-green-400':'text-neutral-500'}`;
@@ -784,40 +828,10 @@
                 });
             }
 
-            // --- Countdown Timer Logic ---
-            function startCountdown() {
-                // Fixed Cross-Browser Date (Year, MonthIndex, Day, Hour, Min, Sec)
-                // Jan is 0
-                const targetDate = new Date(2026, 0, 24, 9, 0, 0).getTime();
-
-                function update() {
-                    if(!domCache.countdownTimer) return;
-                    
-                    const now = new Date().getTime();
-                    const distance = targetDate - now;
-
-                    if (distance < 0) {
-                        domCache.countdownTimer.innerHTML = "EXAM STARTED";
-                        return;
-                    }
-
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                    domCache.cdDays.innerText = days;
-                    domCache.cdHours.innerText = hours;
-                    domCache.cdMins.innerText = minutes;
-                }
-                
-                update();
-                setInterval(update, 60000);
-            }
-
             // --- Statistics Calculation ---
             function calculateStats(chapters) {
                 let total = chapters.length;
-                if (total === 0) return { percent: 0, mastered: 0, completed: 0, inProgress: 0, notStarted: 0 };
+                if (total === 0) return { percent: 0, mastered: 0, completed: 0, inProgress: 0, notStarted: 0, total: 0 };
 
                 let weightedSum = 0, mastered = 0, completed = 0, inProgress = 0;
 
@@ -846,8 +860,15 @@
             }
 
             function renderOverallStats() {
-                const allChapters = syllabus.flatMap(s => s.units.flatMap(u => u.chapters));
+                // Filter chapters globally based on Class Filter
+                let allChapters = syllabus.flatMap(s => s.units.flatMap(u => u.chapters));
+                
+                if (appData.classFilter !== 'both') {
+                    allChapters = allChapters.filter(c => c.cls === appData.classFilter);
+                }
+
                 const stats = calculateStats(allChapters);
+                const total = stats.total || 1; // Avoid divide by zero
 
                 const html = `
                     <div class="flex items-end justify-between mb-2">
@@ -858,9 +879,9 @@
                     </div>
                     
                     <div class="w-full h-2 rounded-full flex overflow-hidden bg-neutral-800">
-                        <div class="bg-indigo-500" style="width: ${(stats.mastered/stats.total)*100}%"></div>
-                        <div class="bg-green-500" style="width: ${(stats.completed/stats.total)*100}%"></div>
-                        <div class="bg-yellow-500" style="width: ${(stats.inProgress/stats.total)*100}%"></div>
+                        <div class="bg-indigo-500" style="width: ${(stats.mastered/total)*100}%"></div>
+                        <div class="bg-green-500" style="width: ${(stats.completed/total)*100}%"></div>
+                        <div class="bg-yellow-500" style="width: ${(stats.inProgress/total)*100}%"></div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-y-1 gap-x-2 text-xs mt-3">
@@ -872,12 +893,26 @@
                 `;
                 domCache.overallStatsContainer.innerHTML = html;
                 
-                const toggle = document.querySelector('.view-mode-toggle');
+                // Update Filters UI state
+                const viewToggle = document.querySelector('.view-mode-toggle');
                 const pBtn = document.getElementById('filter-priority');
                 const fBtn = document.getElementById('filter-flat');
-                toggle.dataset.mode = appData.groupByPriority ? 'priority' : 'flat';
+                viewToggle.dataset.mode = appData.groupByPriority ? 'priority' : 'flat';
                 if(appData.groupByPriority) { pBtn.classList.add('active'); fBtn.classList.remove('active'); }
                 else { pBtn.classList.remove('active'); fBtn.classList.add('active'); }
+
+                // Update Class Filter UI state
+                const classToggle = document.querySelector('.class-mode-toggle');
+                const c11 = document.getElementById('filter-11');
+                const c12 = document.getElementById('filter-12');
+                const cBoth = document.getElementById('filter-both');
+                
+                classToggle.dataset.mode = appData.classFilter;
+                [c11, c12, cBoth].forEach(b => b.classList.remove('active'));
+                
+                if (appData.classFilter === '11') { c11.classList.add('active'); domCache.classFilterLabel.innerText = "11th Only"; }
+                else if (appData.classFilter === '12') { c12.classList.add('active'); domCache.classFilterLabel.innerText = "12th Only"; }
+                else { cBoth.classList.add('active'); domCache.classFilterLabel.innerText = "All"; }
             }
 
             function renderActionPanel(chapterId) {
@@ -944,6 +979,7 @@
                     </div>
                     
                     <div class="flex items-center gap-3 pointer-events-none">
+                            <span class="text-[10px] text-neutral-600 font-mono">${ch.cls}th</span>
                             <div class="status-dot ${cfg.dot}"></div>
                             <svg class="w-4 h-4 text-neutral-600 arrow-icon transform transition-transform ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
@@ -956,14 +992,27 @@
 
                 syllabus.forEach((subject, idx) => {
                     let groups = [];
-                    const allCh = subject.units.flatMap(u => u.chapters);
+                    let allCh = subject.units.flatMap(u => u.chapters);
                     
+                    // --- FILTER LOGIC ---
+                    if (appData.classFilter !== 'both') {
+                        allCh = allCh.filter(c => c.cls === appData.classFilter);
+                    }
+                    if (allCh.length === 0) return; // Skip subject if empty after filter
+
                     if (appData.groupByPriority) {
                         const prioMap = { A:[], B:[], C:[], D:[] };
                         allCh.forEach(c => prioMap[c.priority].push(c));
                         groups = Object.keys(prioMap).map(p => ({ name: `Priority ${p}`, chapters: prioMap[p] }));
                     } else {
-                        groups = subject.units.map(u => ({ name: u.unitName, chapters: u.chapters }));
+                        // For unit view, we iterate original units but filter their chapters
+                        groups = subject.units.map(u => {
+                            let chs = u.chapters;
+                            if (appData.classFilter !== 'both') {
+                                chs = chs.filter(c => c.cls === appData.classFilter);
+                            }
+                            return { name: u.unitName, chapters: chs };
+                        }).filter(g => g.chapters.length > 0); // Remove empty units
                     }
 
                     const groupsHtml = groups.map(grp => {
@@ -975,7 +1024,6 @@
 
                             const isOpen = activeChapterId === ch.id;
 
-                            // Replaced onclick with data attributes
                             return `
                                 <div class="mb-1" id="ch-container-${ch.id}" data-subject="${subject.subject}" data-group="${grp.name}">
                                     <div data-action="toggle-chapter" data-id="${ch.id}" 
@@ -1015,11 +1063,11 @@
                     if (!groupsHtml) return;
                     
                     const subjStats = calculateStats(allCh);
+                    const total = subjStats.total || 1;
                     const subjId = subject.subject;
                     const isSubjExpanded = appData.openStates[subjId];
 
                     const card = document.createElement('div');
-                    // MODIFIED: Added break-inside-avoid and mb-6 for CSS Columns
                     card.className = `subject-card rounded-2xl break-inside-avoid mb-6 ${isSubjExpanded ? 'expanded' : 'collapsed'}`;
                     card.style.animationDelay = `${idx * 100}ms`;
                     
@@ -1034,9 +1082,9 @@
                             </div>
                             <!-- Mini Progress Bar -->
                             <div id="bar-subj-${subjId}" class="w-full h-1.5 rounded-full flex overflow-hidden bg-neutral-700 pointer-events-none">
-                                <div class="bg-indigo-500" style="width: ${(subjStats.mastered/subjStats.total)*100}%"></div>
-                                <div class="bg-green-500" style="width: ${(subjStats.completed/subjStats.total)*100}%"></div>
-                                <div class="bg-yellow-500" style="width: ${(subjStats.inProgress/subjStats.total)*100}%"></div>
+                                <div class="bg-indigo-500" style="width: ${(subjStats.mastered/total)*100}%"></div>
+                                <div class="bg-green-500" style="width: ${(subjStats.completed/total)*100}%"></div>
+                                <div class="bg-yellow-500" style="width: ${(subjStats.inProgress/total)*100}%"></div>
                             </div>
 
                             <!-- Restored Text Stats -->
@@ -1163,6 +1211,15 @@
                 }
             });
 
+            document.querySelector('.class-mode-toggle').addEventListener('click', (e) => {
+                const btn = e.target.closest('.toggle-option');
+                if(btn) {
+                    appData.classFilter = btn.dataset.filter;
+                    saveData();
+                    renderAll(); 
+                }
+            });
+
             document.getElementById('syllabus-search').addEventListener('input', debounce((e) => {
                 searchTerm = e.target.value.trim();
                 renderSyllabus(); 
@@ -1269,8 +1326,10 @@
                 ctx.fillStyle = '#a3a3a3';
                 ctx.fillText(dateStr, 60, 140);
 
-                // --- Overall Stats ---
-                const allCh = syllabus.flatMap(s => s.units.flatMap(u => u.chapters));
+                // --- Overall Stats (Respects Filter) ---
+                let allCh = syllabus.flatMap(s => s.units.flatMap(u => u.chapters));
+                if (appData.classFilter !== 'both') allCh = allCh.filter(c => c.cls === appData.classFilter);
+                
                 const stats = calculateStats(allCh);
 
                 // Big Percentage
@@ -1280,7 +1339,12 @@
                 
                 ctx.font = '30px Inter, sans-serif';
                 ctx.fillStyle = '#a3a3a3';
-                ctx.fillText('Total Coverage', 65, 390);
+                
+                let label = "Total Coverage";
+                if(appData.classFilter === '11') label = "Class 11 Coverage";
+                if(appData.classFilter === '12') label = "Class 12 Coverage";
+                
+                ctx.fillText(label, 65, 390);
 
                 // --- Breakdown ---
                 let yStart = 480;
@@ -1302,7 +1366,11 @@
                 let subY = 180;
                 
                 syllabus.forEach(s => {
-                    const sCh = s.units.flatMap(u => u.chapters);
+                    let sCh = s.units.flatMap(u => u.chapters);
+                    if (appData.classFilter !== 'both') sCh = sCh.filter(c => c.cls === appData.classFilter);
+                    
+                    if (sCh.length === 0) return;
+
                     const sStats = calculateStats(sCh);
                     
                     // Label
@@ -1354,7 +1422,6 @@
             loadData();
             initBanner();
             renderAll();
-            startCountdown();
         });
     </script>
 </body>
