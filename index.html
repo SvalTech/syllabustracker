@@ -747,26 +747,38 @@
                 if (appData.classFilter !== 'both') {
                     allCh = allCh.filter(c => c.cls === appData.classFilter);
                 }
-
+                
+                // Calculate new stats
                 const stats = calculateStats(allCh);
                 
+                // 1. Update Percentage
                 const percentEl = document.getElementById(`stat-subj-${subjName}`);
                 if (percentEl) {
                     percentEl.innerText = `${stats.percent}%`;
                     percentEl.className = `text-xl font-bold ${stats.percent===100?'text-green-400':'text-indigo-500'} text-glow`;
                 }
-
+            
+                // 2. Update Progress Bar
                 const barContainer = document.getElementById(`bar-subj-${subjName}`);
                 if (barContainer) {
-                    // If no chapters in this filter (e.g. subject is 11th only but filter 12th), handle 0/0
                     const total = stats.total || 1; 
-                    
                     barContainer.innerHTML = `
                         <div class="bg-indigo-500" style="width: ${(stats.mastered/total)*100}%"></div>
                         <div class="bg-green-500" style="width: ${(stats.completed/total)*100}%"></div>
                         <div class="bg-yellow-500" style="width: ${(stats.inProgress/total)*100}%"></div>
                     `;
                 }
+            
+                // 3. UPDATED: Update Text Counts
+                const totalEl = document.getElementById(`txt-subj-${subjName}-total`);
+                const mstEl = document.getElementById(`txt-subj-${subjName}-mst`);
+                const doneEl = document.getElementById(`txt-subj-${subjName}-done`);
+                const wipEl = document.getElementById(`txt-subj-${subjName}-wip`);
+            
+                if (totalEl) totalEl.innerText = `${stats.total} Chapters`;
+                if (mstEl) mstEl.innerText = `${stats.mastered} MST`;
+                if (doneEl) doneEl.innerText = `${stats.completed} DONE`;
+                if (wipEl) wipEl.innerText = `${stats.inProgress} WIP`;
             }
 
             function updateGroupStats(subjName, groupName) {
@@ -1150,20 +1162,18 @@
                                     <svg class="w-5 h-5 text-neutral-500 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                 </div>
                             </div>
-                            <!-- Mini Progress Bar -->
                             <div id="bar-subj-${subjId}" class="w-full h-1.5 rounded-full flex overflow-hidden bg-neutral-700 pointer-events-none">
                                 <div class="bg-indigo-500" style="width: ${(subjStats.mastered/total)*100}%"></div>
                                 <div class="bg-green-500" style="width: ${(subjStats.completed/total)*100}%"></div>
                                 <div class="bg-yellow-500" style="width: ${(subjStats.inProgress/total)*100}%"></div>
                             </div>
-
-                            <!-- Restored Text Stats -->
+                    
                             <div class="flex justify-between text-[11px] font-semibold text-neutral-500 mt-3 uppercase tracking-wide pointer-events-none">
-                                <span>${subjStats.total} Chapters</span>
+                                <span id="txt-subj-${subjId}-total">${subjStats.total} Chapters</span>
                                 <div class="flex gap-3">
-                                    <span class="text-indigo-400">${subjStats.mastered} MST</span>
-                                    <span class="text-green-500">${subjStats.completed} DONE</span>
-                                    <span class="text-yellow-500">${subjStats.inProgress} WIP</span>
+                                    <span id="txt-subj-${subjId}-mst" class="text-indigo-400">${subjStats.mastered} MST</span>
+                                    <span id="txt-subj-${subjId}-done" class="text-green-500">${subjStats.completed} DONE</span>
+                                    <span id="txt-subj-${subjId}-wip" class="text-yellow-500">${subjStats.inProgress} WIP</span>
                                 </div>
                             </div>
                         </div>
