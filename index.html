@@ -134,6 +134,17 @@
             font-weight: 600;
         }
 
+        .text-glow {
+            /* Reduced from 15px to 6px for a tight, subtle shine */
+            text-shadow: 0 0 4px currentColor;
+            opacity: 0.9; /* Slight transparency helps it look less "blown out" */
+        }
+
+        .text-glow-strong {
+            /* Reduced from double shadows to a single, tighter shadow */
+            text-shadow: 0 0 8px currentColor; 
+        }
+
         /* Toggle Switch */
         .mode-toggle {
             position: relative;
@@ -177,7 +188,10 @@
         .class-mode-toggle[data-mode="12"] .toggle-slider { transform: translateX(calc(100%)); }
         .class-mode-toggle[data-mode="both"] .toggle-slider { transform: translateX(calc(200% + 0px)); }
 
-
+        /* Target Mode Specifics (2 options) */
+        .target-mode-toggle .toggle-slider { width: calc(50% - 4px); }
+        /* When data-mode is 'adv', slide it to the right */
+        .target-mode-toggle[data-mode="adv"] .toggle-slider { transform: translateX(calc(100% + 4px)); }
         /* Action Panel */
         .action-panel {
             max-height: 0;
@@ -303,7 +317,7 @@
                                 <div id="filter-both" data-filter="both" class="toggle-option active" role="button" tabindex="0">Both</div>
                             </div>
                         </div>
-
+                        
                         <!-- View Mode -->
                         <div>
                             <label class="block text-neutral-300 font-semibold mb-2 text-sm">View Mode</label>
@@ -311,6 +325,18 @@
                                 <div class="toggle-slider"></div>
                                 <div id="filter-priority" data-filter="priority" class="toggle-option active" role="button" tabindex="0">Priority</div>
                                 <div id="filter-flat" data-filter="flat" class="toggle-option" role="button" tabindex="0">Unit</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-neutral-300 font-semibold mb-2 text-sm flex justify-between">
+                                <span>Target</span>
+                                <span id="target-filter-label" class="text-xs text-indigo-400">Main</span>
+                            </label>
+                            <div class="mode-toggle target-mode-toggle" data-mode="main">
+                                <div class="toggle-slider"></div>
+                                <div id="target-main" data-target="main" class="toggle-option active" role="button" tabindex="0">Main</div>
+                                <div id="target-adv" data-target="adv" class="toggle-option" role="button" tabindex="0">Adv</div>
                             </div>
                         </div>
 
@@ -374,7 +400,7 @@
         <footer class="mt-16 border-t border-zinc-800 pt-8 pb-6 text-center">
             <div class="flex flex-wrap justify-center gap-4 mb-6">
                 <div class="px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400 uppercase tracking-wide">
-                    Priority Source: <span class="text-indigo-400 font-bold">MathonGo (2026)</span>
+                    Priority Source: <span class="text-indigo-400 font-bold">MathonGo</span>
                 </div>
                 <a href="https://cdnbbsr.s3waas.gov.in/s3f8e59f4b2fe7c5705bf878bbd494ccdf/uploads/2025/10/202510311323551056.pdf" target="_blank" class="px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400 uppercase tracking-wide hover:border-indigo-500/50 hover:text-indigo-400 transition-colors">
                     Official Syllabus PDF
@@ -477,7 +503,8 @@
                 TIMESTAMPS: 'jee_v3_time',
                 OPEN_STATES: 'jee_v3_ui_state',
                 VIEW_MODE: 'jee_v3_view_mode',
-                CLASS_FILTER: 'jee_v3_class_filter' // New key
+                CLASS_FILTER: 'jee_v3_class_filter', 
+                TARGET_MODE: 'jee_v3_target_mode',
             };
             const BANNER_DISMISSED_KEY = 'zenithBannerDismissed_v1';
             
@@ -551,7 +578,10 @@
                             { id: "CHE_B_02", name: "Solutions", priority: 'B', cls: '12' },
                             { id: "CHE_D_04", name: "Redox Reactions", priority: 'D', cls: '11' },
                             { id: "CHE_A_06", name: "Electrochemistry", priority: 'A', cls: '12' },
-                            { id: "CHE_B_06", name: "Chemical Kinetics", priority: 'B', cls: '12' }
+                            { id: "CHE_B_06", name: "Chemical Kinetics", priority: 'B', cls: '12' },
+                            { id: "CHE_ADV_01", name: "Solid State", priority: 'Adv', cls: '12', isAdv: true },
+                            { id: "CHE_ADV_02", name: "Surface Chemistry", priority: 'Adv', cls: '12', isAdv: true },
+                            { id: "CHE_ADV_03", name: "States of Matter", priority: 'Adv', cls: '11', isAdv: true },
                         ]},
                         { unitName: "Inorganic Chem", chapters: [
                             { id: "CHE_C_03", name: "Periodic Table", priority: 'C', cls: '11' },
@@ -559,7 +589,10 @@
                             { id: "CHE_B_05", name: "p-Block Elements", priority: 'B', cls: '11' }, /* Treated as 11 base for syllabus list */
                             { id: "CHE_A_04", name: "d and f Block", priority: 'A', cls: '12' },
                             { id: "CHE_A_02", name: "Coordination Compounds", priority: 'A', cls: '12' },
-                            { id: "CHE_C_06", name: "Salt Analysis", priority: 'C', cls: '12' }
+                            { id: "CHE_C_06", name: "Salt Analysis", priority: 'C', cls: '12' },
+                            { id: "CHE_ADV_04", name: "Hydrogen", priority: 'Adv', cls: '11', isAdv: true },
+                            { id: "CHE_ADV_05", name: "s-Block Elements", priority: 'Adv', cls: '11', isAdv: true },
+                            { id: "CHE_ADV_06", name: "Metallurgy", priority: 'Adv', cls: '12', isAdv: true },
                         ]},
                         { unitName: "Organic Chem", chapters: [
                             { id: "CHE_A_01", name: "GOC", priority: 'A', cls: '11' },
@@ -569,7 +602,10 @@
                             { id: "CHE_C_02", name: "Aldehydes & Ketones", priority: 'C', cls: '12' },
                             { id: "CHE_D_02", name: "Carboxylic Acids", priority: 'D', cls: '12' },
                             { id: "CHE_B_04", name: "Amines", priority: 'B', cls: '12' },
-                            { id: "CHE_B_07", name: "Biomolecules", priority: 'B', cls: '12' }
+                            { id: "CHE_B_07", name: "Biomolecules", priority: 'B', cls: '12' },
+                            { id: "CHE_ADV_07", name: "Polymers", priority: 'Adv', cls: '12', isAdv: true },
+                            { id: "CHE_ADV_08", name: "Chem in Everyday Life", priority: 'Adv', cls: '12', isAdv: true },
+                            { id: "CHE_ADV_09", name: "Environmental Chem", priority: 'Adv', cls: '11', isAdv: true },
                         ]}
                     ]
                 },
@@ -610,6 +646,7 @@
                             { id: "MAT_D_05", name: "Trig Ratios & Identities", priority: 'D', cls: '11' },
                             { id: "MAT_D_03", name: "Trig Equations", priority: 'D', cls: '11' },
                             { id: "MAT_D_01", name: "ITF", priority: 'D', cls: '12' },
+                            { id: "MAT_ADV_01", name: "Properties of Triangles", priority: 'Adv', cls: '11', isAdv: true },
                             { id: "MAT_C_02", name: "Statistics", priority: 'C', cls: '11' }
                         ]}
                     ]
@@ -630,7 +667,8 @@
                 timestamps: {},
                 openStates: {},
                 groupByPriority: true,
-                classFilter: 'both' // '11', '12', 'both'
+                classFilter: 'both', // '11', '12', 'both',
+                targetMode: 'main',
             };
 
             let searchTerm = '';
@@ -649,6 +687,7 @@
                     appData.openStates = JSON.parse(localStorage.getItem(KEYS.OPEN_STATES) || '{}');
                     appData.groupByPriority = localStorage.getItem(KEYS.VIEW_MODE) === 'flat' ? false : true;
                     appData.classFilter = localStorage.getItem(KEYS.CLASS_FILTER) || 'both';
+                    appData.targetMode = localStorage.getItem(KEYS.TARGET_MODE) || 'main';
                 } else {
                     // Check for Legacy (v2) data
                     const statusV2 = localStorage.getItem(LEGACY_KEYS.STATUS);
@@ -676,6 +715,7 @@
                 localStorage.setItem(KEYS.OPEN_STATES, JSON.stringify(appData.openStates));
                 localStorage.setItem(KEYS.VIEW_MODE, appData.groupByPriority ? 'priority' : 'flat');
                 localStorage.setItem(KEYS.CLASS_FILTER, appData.classFilter);
+                localStorage.setItem(KEYS.TARGET_MODE, appData.targetMode);
             }
 
             function getMeta(id) {
@@ -713,7 +753,7 @@
                 const percentEl = document.getElementById(`stat-subj-${subjName}`);
                 if (percentEl) {
                     percentEl.innerText = `${stats.percent}%`;
-                    percentEl.className = `text-xl font-bold ${stats.percent===100?'text-green-400':'text-indigo-500'}`;
+                    percentEl.className = `text-xl font-bold ${stats.percent===100?'text-green-400':'text-indigo-500'} text-glow`;
                 }
 
                 const barContainer = document.getElementById(`bar-subj-${subjName}`);
@@ -867,13 +907,17 @@
                     allChapters = allChapters.filter(c => c.cls === appData.classFilter);
                 }
 
+                if (appData.targetMode === 'main') {
+                    allChapters = allChapters.filter(c => !c.isAdv);
+                }
+
                 const stats = calculateStats(allChapters);
                 const total = stats.total || 1; // Avoid divide by zero
 
                 const html = `
                     <div class="flex items-end justify-between mb-2">
                         <div>
-                            <span class="text-6xl font-extrabold text-white">${stats.percent}%</span>
+                            <span class="text-6xl font-extrabold text-indigo-400 text-glow-strong">${stats.percent}%</span>
                             <span class="text-sm text-neutral-500 ml-1">Covered</span>
                         </div>
                     </div>
@@ -906,6 +950,18 @@
                 const c11 = document.getElementById('filter-11');
                 const c12 = document.getElementById('filter-12');
                 const cBoth = document.getElementById('filter-both');
+
+                const targetToggle = document.querySelector('.target-mode-toggle');
+                const tMain = document.getElementById('target-main');
+                const tAdv = document.getElementById('target-adv');
+                const tLabel = document.getElementById('target-filter-label');
+                
+                if(targetToggle) {
+                    targetToggle.dataset.mode = appData.targetMode;
+                    tMain.classList.toggle('active', appData.targetMode === 'main');
+                    tAdv.classList.toggle('active', appData.targetMode === 'adv');
+                    if(tLabel) tLabel.innerText = appData.targetMode === 'main' ? 'Main' : 'Advanced';
+                }
                 
                 classToggle.dataset.mode = appData.classFilter;
                 [c11, c12, cBoth].forEach(b => b.classList.remove('active'));
@@ -998,12 +1054,26 @@
                     if (appData.classFilter !== 'both') {
                         allCh = allCh.filter(c => c.cls === appData.classFilter);
                     }
-                    if (allCh.length === 0) return; // Skip subject if empty after filter
+                    // 2. Filter by Target (Main vs Adv) - THIS IS NEW
+                    if (appData.targetMode === 'main') {
+                        allCh = allCh.filter(c => !c.isAdv);
+                    }
+
+                    if (allCh.length === 0) return; 
 
                     if (appData.groupByPriority) {
-                        const prioMap = { A:[], B:[], C:[], D:[] };
-                        allCh.forEach(c => prioMap[c.priority].push(c));
-                        groups = Object.keys(prioMap).map(p => ({ name: `Priority ${p}`, chapters: prioMap[p] }));
+                        // Added 'Adv' to the map so these chapters get their own section
+                        const prioMap = { A:[], B:[], C:[], D:[], Adv:[] }; 
+                        
+                        allCh.forEach(c => {
+                            // Safety check if data has a priority not in map
+                            if(prioMap[c.priority]) prioMap[c.priority].push(c);
+                        });
+                        
+                        // Create groups (exclude Adv group if empty)
+                        groups = Object.keys(prioMap)
+                            .filter(p => prioMap[p].length > 0)
+                            .map(p => ({ name: `Priority ${p}`, chapters: prioMap[p] }));
                     } else {
                         // For unit view, we iterate original units but filter their chapters
                         groups = subject.units.map(u => {
@@ -1076,7 +1146,7 @@
                             <div class="flex justify-between items-center mb-3 pointer-events-none">
                                 <h2 class="text-xl font-bold text-neutral-200">${subject.subject}</h2>
                                 <div class="flex items-center gap-3">
-                                    <span id="stat-subj-${subjId}" class="text-xl font-bold ${subjStats.percent===100?'text-green-400':'text-indigo-500'}">${subjStats.percent}%</span>
+                                    <span id="stat-subj-${subjId}" class="text-xl font-bold ${subjStats.percent===100?'text-green-400':'text-indigo-500'} text-glow">${subjStats.percent}%</span>
                                     <svg class="w-5 h-5 text-neutral-500 arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                 </div>
                             </div>
@@ -1224,6 +1294,18 @@
                 searchTerm = e.target.value.trim();
                 renderSyllabus(); 
             }, 300)); // 300ms Debounce
+
+            const targetToggleBtn = document.querySelector('.target-mode-toggle');
+            if (targetToggleBtn) {
+                targetToggleBtn.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.toggle-option');
+                    if(btn) {
+                        appData.targetMode = btn.dataset.target;
+                        saveData();
+                        renderAll(); 
+                    }
+                });
+            }
 
             // FAB Logic
             const fabToggle = document.getElementById('fab-toggle');
