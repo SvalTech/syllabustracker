@@ -863,15 +863,22 @@
                 return null;
             }
 
-            // --- Targeted UI Updates ---
             function updateSubjectStats(subjName) {
                 const subjData = syllabus.find(s => s.subject === subjName);
                 if (!subjData) return;
                 
                 let allCh = subjData.units.flatMap(u => u.chapters);
                 
+                // --- FIX: Apply ALL filters, not just Class ---
+                
+                // 1. Class Filter
                 if (appData.classFilter !== 'both') {
                     allCh = allCh.filter(c => c.cls === appData.classFilter);
+                }
+            
+                // 2. Target Filter (Added this)
+                if (appData.targetMode === 'main') {
+                    allCh = allCh.filter(c => !c.isAdv);
                 }
                 
                 const stats = calculateStats(allCh);
@@ -883,7 +890,7 @@
                     percentEl.className = `text-xl font-bold ${stats.percent===100?'text-green-400':'text-indigo-500'} text-glow`;
                 }
             
-                // 2. Update Progress Bar (Keep these exclusive so colors stack correctly)
+                // 2. Update Progress Bar
                 const barContainer = document.getElementById(`bar-subj-${subjName}`);
                 if (barContainer) {
                     const total = stats.total || 1; 
@@ -894,7 +901,7 @@
                     `;
                 }
             
-                // 3. UPDATED: Update Text Counts
+                // 3. Update Text Counts
                 const totalEl = document.getElementById(`txt-subj-${subjName}-total`);
                 const mstEl = document.getElementById(`txt-subj-${subjName}-mst`);
                 const doneEl = document.getElementById(`txt-subj-${subjName}-done`);
@@ -902,10 +909,7 @@
             
                 if (totalEl) totalEl.innerText = `${stats.total} Chapters`;
                 if (mstEl) mstEl.innerText = `${stats.mastered} MST`;
-                
-                // FIX: Add mastered to completed for the "DONE" text so it doesn't drop
                 if (doneEl) doneEl.innerText = `${stats.completed + stats.mastered} DONE`;
-                
                 if (wipEl) wipEl.innerText = `${stats.inProgress} WIP`;
             }
 
@@ -913,7 +917,7 @@
                 const groupId = `${subjName}-${groupName}`.replace(/\s+/g, '-');
                 const percentEl = document.getElementById(`stat-grp-${groupId}`);
                 if (!percentEl) return;
-
+            
                 const subjData = syllabus.find(s => s.subject === subjName);
                 let chapters = [];
                 if (appData.groupByPriority) {
@@ -924,12 +928,15 @@
                     if (unit) chapters = unit.chapters;
                 }
                 
-                // Filter chapters
+                // --- FIX: Apply Filters ---
                 if (appData.classFilter !== 'both') {
                     chapters = chapters.filter(c => c.cls === appData.classFilter);
                 }
+                // Added Target Filter
+                if (appData.targetMode === 'main') {
+                    chapters = chapters.filter(c => !c.isAdv);
+                }
                 
-                // If filter makes group empty, percent is 0
                 const stats = calculateStats(chapters);
                 percentEl.innerText = `${stats.percent}%`;
                 percentEl.className = `text-xs font-bold ${stats.percent===100?'text-green-400':'text-neutral-500'}`;
