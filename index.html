@@ -654,10 +654,38 @@
             ];
 
             const statusConfig = {
-                'not-started': { text: 'To Do', color: 'text-neutral-500', bg: 'bg-neutral-800', border: 'border-neutral-700', weight: 0, dot: 'bg-neutral-500' },
-                'in-progress': { text: 'Doing', color: 'text-yellow-500', bg: 'bg-yellow-900/20', border: 'border-yellow-700/50', weight: 0.5, dot: 'bg-yellow-500' },
-                'completed': { text: 'Done', color: 'text-green-500', bg: 'bg-green-900/20', border: 'border-green-700/50', weight: 1, dot: 'bg-green-500' },
-                'mastered': { text: 'Mastered', color: 'text-indigo-400', bg: 'bg-indigo-900/20', border: 'border-indigo-700/50', weight: 1, dot: 'bg-indigo-400' }
+                'not-started': { 
+                    text: 'Pending', // Was 'To Do'
+                    color: 'text-neutral-500', 
+                    bg: 'bg-neutral-800', 
+                    border: 'border-neutral-700', 
+                    weight: 0, 
+                    dot: 'bg-neutral-500' 
+                },
+                'in-progress': { 
+                    text: 'Theory', // Was 'Syllabus' - much clearer
+                    color: 'text-yellow-500', 
+                    bg: 'bg-yellow-900/20', 
+                    border: 'border-yellow-700/50', 
+                    weight: 0.5, 
+                    dot: 'bg-yellow-500' 
+                },
+                'completed': { 
+                    text: '+ PYQs', 
+                    color: 'text-green-500', 
+                    bg: 'bg-green-900/20', 
+                    border: 'border-green-700/50', 
+                    weight: 1, 
+                    dot: 'bg-green-500' 
+                },
+                'mastered': { 
+                    text: 'Mastered', 
+                    color: 'text-indigo-400', 
+                    bg: 'bg-indigo-900/20', 
+                    border: 'border-indigo-700/50', 
+                    weight: 1, 
+                    dot: 'bg-indigo-400' 
+                }
             };
 
             // --- State ---
@@ -987,10 +1015,10 @@
                 const meta = getMeta(chapterId);
                 const status = appData.status[chapterId] || 'not-started';
 
+                // This automatically generates the new buttons (Syllabus, PYQs, etc.) based on statusConfig
                 const statusBtns = Object.keys(statusConfig).map(key => {
                     const cfg = statusConfig[key];
                     const active = status === key;
-                    // Use data-action instead of onclick
                     return `<button data-action="update-status" data-id="${chapterId}" data-status="${key}"
                         class="flex-1 py-2 text-xs font-medium rounded border ${active ? `${cfg.bg} ${cfg.color} ${cfg.border}` : 'bg-neutral-800 border-neutral-700 text-neutral-500 hover:bg-neutral-700'} transition">
                         ${cfg.text}
@@ -999,14 +1027,12 @@
 
                 return `
                     <div class="p-4 space-y-4">
-                        <!-- Status Selection (Grid on Mobile) -->
                         <div>
                             <label class="text-[10px] uppercase text-neutral-500 font-bold tracking-wider mb-2 block">Status</label>
                             <div class="grid grid-cols-2 gap-2 sm:flex sm:gap-2">${statusBtns}</div>
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <!-- Revision Counter -->
                             <div class="flex-1">
                                 <label class="text-[10px] uppercase text-neutral-500 font-bold tracking-wider mb-2 block">Revisions</label>
                                 <div class="flex items-center gap-3 bg-neutral-900 border border-neutral-800 rounded p-1.5 justify-center">
@@ -1016,26 +1042,23 @@
                                 </div>
                             </div>
                             
-                            <!-- Toggles -->
                             <div class="flex-1 flex flex-col justify-end gap-2">
-                                <button data-action="toggle-meta" data-id="${chapterId}" data-key="pyq"
-                                    class="flex items-center justify-between px-3 py-2 rounded text-xs font-medium border transition ${meta.pyq ? 'bg-green-900/20 border-green-800 text-green-400' : 'bg-neutral-900 border-neutral-800 text-neutral-500 hover:border-neutral-700'}">
-                                    <span>PYQs Solved</span>
-                                    <span class="w-3 h-3 rounded-full border ${meta.pyq ? 'bg-green-500 border-green-500' : 'border-neutral-600'}"></span>
-                                </button>
-                            </div>
+                                </div>
                         </div>
                     </div>
                 `;
             }
 
+            
             function renderChapterLeafContent(ch, isOpen) {
                 const status = appData.status[ch.id] || 'not-started';
                 const meta = getMeta(ch.id);
                 const cfg = statusConfig[status];
                 
                 let badgesHtml = '';
-                if (meta.pyq) badgesHtml += `<span class="badge badge-pyq mr-1">PYQ</span>`;
+                // Only show legacy PYQ badge if status is NOT 'completed' (which is now named PYQ)
+                // This prevents "PYQ PYQ" appearing on the screen
+                if (meta.pyq && status !== 'completed') badgesHtml += `<span class="badge badge-pyq mr-1">PYQ</span>`;
                 if (meta.rev > 0) badgesHtml += `<span class="badge badge-rev">R${meta.rev}</span>`;
 
                 return `
