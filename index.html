@@ -375,17 +375,23 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div class="flex items-center gap-4">
                         <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center border border-indigo-400/30">
-                            <!-- Mountain/Zenith Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="m8 3 4 8 5-5 5 15H2L8 3z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-white">Experience Zenith</h3>
-                            <p class="text-sm text-neutral-300 max-w-md">The exam tracker for aspirants who want to visualize their victory. Track tasks, mocks, and progress in one beautiful space. </p>
+                            <h3 class="text-lg font-bold text-white">Try StudyLocus</h3>
+                            <p class="text-sm text-neutral-300 max-w-md">
+                                The ultimate dashboard for student productivity. Manage tasks, visualize progress, and track your mocks in one centralized hub.
+                            </p>
                         </div>
                     </div>
                     <div class="flex-shrink-0 flex items-center gap-3 w-full sm:w-auto">
-                        <a href="https://sval.tech/zenith/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/30">
-                            Launch Zenith
+                        <a href="https://sval.tech/studylocus/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/30">
+                            Launch Dashboard
                         </a>
                         <button id="close-banner-btn" class="p-2 text-neutral-500 hover:text-white transition-colors rounded-md" aria-label="Close banner">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -396,6 +402,85 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-16 mb-8 max-w-3xl mx-auto">
+            <div class="p-6 rounded-xl border border-neutral-800 bg-neutral-900/30">
+                <div class="flex items-center gap-2 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10 10 10 0 0 1-10-10 10 10 0 0 1 10-10z"/></svg>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider">How Progress is Calculated</h3>
+                </div>
+                
+                <p class="text-xs text-neutral-400 mb-6 leading-relaxed">
+                    This tracker uses a <strong>Weighted Algorithm</strong> designed for JEE prep. Your total percentage reflects your "Exam Readiness" score, not just a simple count of chapters.
+                </p>
+
+                <div class="mb-8 py-5 px-4 bg-black/20 rounded-lg border border-white/5 flex flex-col items-center justify-center">
+                    <!-- <span class="text-[10px] uppercase tracking-widest text-neutral-500 mb-3 font-bold">The Math</span> -->
+                    <div class="flex items-center gap-3 sm:gap-4 font-serif text-neutral-300">
+                        <span class="text-lg sm:text-xl italic text-indigo-400">Score %</span>
+                        <span class="text-neutral-600 font-sans">=</span>
+                        <div class="flex flex-col items-center text-xs sm:text-sm">
+                            <span class="border-b border-neutral-600 pb-1.5 px-1 mb-1">Σ ( Chapter Priority × Status Value )</span>
+                            <span class="pt-0.5 text-neutral-500">Σ ( Total Potential Score )</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-xs">
+                    <div>
+                        <h4 class="font-semibold text-neutral-300 mb-3 border-b border-neutral-800 pb-2">1. Chapter Priority</h4>
+                        <div class="space-y-2 font-mono">
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Priority A (High)</span>
+                                <span class="bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded">3.0x</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Priority Adv</span>
+                                <span class="bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded">2.5x</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Priority B (Med)</span>
+                                <span class="text-neutral-400">2.0x</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Priority C (Low)</span>
+                                <span class="text-neutral-400">1.5x</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Priority D</span>
+                                <span class="text-neutral-600">1.0x</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-neutral-300 mb-3 border-b border-neutral-800 pb-2">2. Status Value</h4>
+                        <div class="space-y-2 font-mono">
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Pending</span>
+                                <span class="text-neutral-600">0.0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Theory Done</span>
+                                <span class="text-yellow-500">0.5</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">PYQs Solved</span>
+                                <span class="text-green-500">1.0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-neutral-500">Mastered</span>
+                                <span class="text-indigo-400">1.0</span>
+                            </div>
+                            <p class="text-[10px] text-neutral-600 mt-2 italic">
+                                *Completing PYQs gives full points (1.0). Mastery is a visual distinction only.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer class="mt-16 border-t border-zinc-800 pt-8 pb-6 text-center">
             <div class="flex flex-wrap justify-center gap-4 mb-6">
@@ -506,7 +591,7 @@
                 CLASS_FILTER: 'jee_v3_class_filter', 
                 TARGET_MODE: 'jee_v3_target_mode',
             };
-            const BANNER_DISMISSED_KEY = 'zenithBannerDismissed_v1';
+            const BANNER_DISMISSED_KEY = 'studylocusBannerDismissed_v1';
             
             // Legacy Keys (v2)
             const LEGACY_KEYS = {
@@ -771,12 +856,10 @@
                 
                 let allCh = subjData.units.flatMap(u => u.chapters);
                 
-                // Filter chapters for stats based on current class filter
                 if (appData.classFilter !== 'both') {
                     allCh = allCh.filter(c => c.cls === appData.classFilter);
                 }
                 
-                // Calculate new stats
                 const stats = calculateStats(allCh);
                 
                 // 1. Update Percentage
@@ -786,7 +869,7 @@
                     percentEl.className = `text-xl font-bold ${stats.percent===100?'text-green-400':'text-indigo-500'} text-glow`;
                 }
             
-                // 2. Update Progress Bar
+                // 2. Update Progress Bar (Keep these exclusive so colors stack correctly)
                 const barContainer = document.getElementById(`bar-subj-${subjName}`);
                 if (barContainer) {
                     const total = stats.total || 1; 
@@ -805,7 +888,10 @@
             
                 if (totalEl) totalEl.innerText = `${stats.total} Chapters`;
                 if (mstEl) mstEl.innerText = `${stats.mastered} MST`;
-                if (doneEl) doneEl.innerText = `${stats.completed} DONE`;
+                
+                // FIX: Add mastered to completed for the "DONE" text so it doesn't drop
+                if (doneEl) doneEl.innerText = `${stats.completed + stats.mastered} DONE`;
+                
                 if (wipEl) wipEl.innerText = `${stats.inProgress} WIP`;
             }
 
@@ -908,25 +994,54 @@
                 });
             }
 
-            // --- Statistics Calculation ---
-            function calculateStats(chapters) {
-                let total = chapters.length;
-                if (total === 0) return { percent: 0, mastered: 0, completed: 0, inProgress: 0, notStarted: 0, total: 0 };
+            // Add this configuration near your statusConfig
+            const priorityWeights = {
+                'A': 3.0,   // High Priority (Most valuable)
+                'B': 2.0,   // Medium
+                'C': 1.5,   // Low
+                'D': 1.0,   // Very Low
+                'Adv': 2.5  // Advanced topics
+            };
 
-                let weightedSum = 0, mastered = 0, completed = 0, inProgress = 0;
+            // Update status weights: PYQs (Completed) is now equal to Mastered
+            // Note: You must update statusConfig weights in your code too!
+            // Recommended: Syllabus=0.5, PYQs=1.0, Mastered=1.0
+
+            function calculateStats(chapters) {
+                let totalScore = 0;       // Current points earned
+                let maxPotentialScore = 0; // Total points possible
+                
+                let mastered = 0, completed = 0, inProgress = 0;
 
                 chapters.forEach(ch => {
                     const status = appData.status[ch.id] || 'not-started';
-                    const weight = statusConfig[status].weight;
-                    weightedSum += weight;
+                    
+                    // 1. Get Status Weight
+                    const statusWeight = statusConfig[status].weight;
+
+                    // 2. Get Chapter Weight
+                    const chapterWeight = priorityWeights[ch.priority] || 1;
+
+                    // 3. Calculate Weighted Scores
+                    // Now, if status is 'completed' (PYQs), statusWeight is 1.0
+                    // So (1.0 * 3.0) adds full points to the score, same as 'mastered'
+                    totalScore += (statusWeight * chapterWeight);
+                    maxPotentialScore += (1.0 * chapterWeight); 
+
+                    // Update Counts (Visuals)
                     if (status === 'mastered') mastered++;
                     else if (status === 'completed') completed++;
                     else if (status === 'in-progress') inProgress++;
                 });
 
+                const total = chapters.length;
+                if (total === 0) return { percent: 0, mastered: 0, completed: 0, inProgress: 0, notStarted: 0, total: 0 };
+
                 return {
-                    percent: Math.round((weightedSum / total) * 100),
-                    mastered, completed, inProgress,
+                    percent: Math.round((totalScore / maxPotentialScore) * 100),
+                    mastered, 
+                    completed, 
+                    inProgress,
                     notStarted: total - (mastered + completed + inProgress),
                     total
                 };
@@ -940,19 +1055,20 @@
             }
 
             function renderOverallStats() {
-                // Filter chapters globally based on Class Filter
                 let allChapters = syllabus.flatMap(s => s.units.flatMap(u => u.chapters));
                 
                 if (appData.classFilter !== 'both') {
                     allChapters = allChapters.filter(c => c.cls === appData.classFilter);
                 }
-
                 if (appData.targetMode === 'main') {
                     allChapters = allChapters.filter(c => !c.isAdv);
                 }
 
                 const stats = calculateStats(allChapters);
-                const total = stats.total || 1; // Avoid divide by zero
+                const total = stats.total || 1; 
+
+                // FIX: Calculate total 'Done' chapters for display
+                const totalDone = stats.mastered + stats.completed;
 
                 const html = `
                     <div class="flex items-end justify-between mb-2">
@@ -970,14 +1086,15 @@
 
                     <div class="grid grid-cols-2 gap-y-1 gap-x-2 text-xs mt-3">
                         <div class="flex justify-between text-neutral-400"><span>Mastered</span> <span class="text-indigo-400 font-mono">${stats.mastered}</span></div>
-                        <div class="flex justify-between text-neutral-400"><span>Done</span> <span class="text-green-500 font-mono">${stats.completed}</span></div>
+                        <div class="flex justify-between text-neutral-400"><span>Done</span> <span class="text-green-500 font-mono">${totalDone}</span></div>
                         <div class="flex justify-between text-neutral-400"><span>Doing</span> <span class="text-yellow-500 font-mono">${stats.inProgress}</span></div>
                         <div class="flex justify-between text-neutral-500"><span>To Do</span> <span class="text-neutral-300 font-mono">${stats.notStarted}</span></div>
                     </div>
                 `;
                 domCache.overallStatsContainer.innerHTML = html;
                 
-                // Update Filters UI state
+                // ... rest of the function (update Filters UI) ...
+                // (Keep the existing code for filters here)
                 const viewToggle = document.querySelector('.view-mode-toggle');
                 const pBtn = document.getElementById('filter-priority');
                 const fBtn = document.getElementById('filter-flat');
@@ -985,7 +1102,6 @@
                 if(appData.groupByPriority) { pBtn.classList.add('active'); fBtn.classList.remove('active'); }
                 else { pBtn.classList.remove('active'); fBtn.classList.add('active'); }
 
-                // Update Class Filter UI state
                 const classToggle = document.querySelector('.class-mode-toggle');
                 const c11 = document.getElementById('filter-11');
                 const c12 = document.getElementById('filter-12');
